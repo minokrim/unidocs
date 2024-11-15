@@ -1,0 +1,12 @@
+
+:root {
+    --primary-color: #dde8f1;
+    --secondary-color: #d3d5d4;
+    --tertiary-color: #bf1a2f;
+    --alternate-color: #575c55;
+}
+
+.home-main{
+    background-color: var(--primary-color);
+    height: 100vh;
+}
