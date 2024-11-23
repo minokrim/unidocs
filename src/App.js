@@ -1,19 +1,5 @@
-
-
-
 import './App.css';
-
-import NavDash from './dashboard/navdash';
-function App() {
-  return (
-   <div>
-    <NavDash />
-    
-   </div>
-
-import logo from './logo.svg';
-
-import './App.css';
+import Dashboard from './dashboard/dashboard';
 import Home from './home/home';
 import React, { useEffect, useState } from 'react';
 import axios from "axios"
@@ -36,13 +22,12 @@ function App() {
   },[])
 
   return (
-
-    <userContext.Provider value={user}>
-          <Home/>
+    <div>
+          <userContext.Provider value={user}>
+          {/* <Home/> */}
+          <Dashboard/>
     </userContext.Provider>
-
-    <Home/>
-
+    </div>
 
   );
 }
