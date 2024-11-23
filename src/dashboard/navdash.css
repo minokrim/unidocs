@@ -1,0 +1,50 @@
+
+.nav-con{
+    width: 10%;
+    height: 100vh;
+    background-color: rgb(92, 90, 90);
+}
+.admin-con{
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 30%;
+    
+    
+}
+.admin{
+    width: 50px;
+    height:50px
+}
+.admin-r{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icons{
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+.icon-con{
+   
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70%;
+        justify-content: space-evenly;
+   
+   
+
+}
+.icons:hover{
+    color: white;
+    cursor: pointer;
+}

@@ -1,3 +1,18 @@
+
+
+
+import './App.css';
+
+import NavDash from './dashboard/navdash';
+function App() {
+  return (
+   <div>
+    <NavDash />
+    
+   </div>
+
+import logo from './logo.svg';
+
 import './App.css';
 import Home from './home/home';
 import React, { useEffect, useState } from 'react';
@@ -21,9 +36,14 @@ function App() {
   },[])
 
   return (
+
     <userContext.Provider value={user}>
           <Home/>
     </userContext.Provider>
+
+    <Home/>
+
+
   );
 }
 
