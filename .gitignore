@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4939b320c67bd98b3751847b2aafef8de496fd52
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -5,6 +9,12 @@
 /.pnp
 .pnp.js
 
+<<<<<<< HEAD
+=======
+#environment variables
+.env
+
+>>>>>>> 4939b320c67bd98b3751847b2aafef8de496fd52
 # testing
 /coverage
 
@@ -21,3 +31,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4939b320c67bd98b3751847b2aafef8de496fd52
