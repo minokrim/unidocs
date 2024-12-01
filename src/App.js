@@ -1,8 +1,10 @@
-import './App.css';
-import Dashboard from './dashboard/dashboard';
-import Home from './home/home';
+
+
 import React, { useEffect, useState } from 'react';
 import axios from "axios"
+
+import Dashboard from './dashboard/dashboard';
+import HomePage from './homepage/homepage';
 
 export const userContext=React.createContext();
 
@@ -24,8 +26,11 @@ function App() {
   return (
     <div>
           <userContext.Provider value={user}>
-          {/* <Home/> */}
-          <Dashboard/>
+        {/*   <Home/> */}
+          <Dashboard />
+      {/*   <HomeOne /> */}
+     {/*  <Cards /> */}
+     {/*  <HomePage /> */}
     </userContext.Provider>
     </div>
 
