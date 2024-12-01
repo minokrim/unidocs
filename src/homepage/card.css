@@ -1,0 +1,44 @@
+.card-con{
+    width: 100%;
+ 
+   background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.c-con{
+height: 130px;
+background-color:white;
+display: flex;
+border-radius: 10px;
+border: solid black 1px;
+width: 40%;
+box-shadow: black 3px 3px 0px 0px;
+}
+.i-box{
+    width: 20%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.t-con{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+   
+    justify-content: center;
+}
+.ic{
+    height: 30px;
+    width: 30px;
+    color: royalblue;
+   
+}
+@media (max-width: 480px) {
+   .c-con{
+    width: 90%;
+    
+   }
+ 
+   }

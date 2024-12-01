@@ -38,3 +38,35 @@
   
     outline: none;
 }
+@media (max-width: 480px) {
+ .search-con{
+padding-left: 20%;
+    
+  
+ }
+ .input-con{
+    padding-left: 30px;
+    width: 90%;
+ }
+
+ .input{
+    width: 70%;
+    
+ }
+ .dash{
+    margin-top: 7%;
+ }
+ .d-dash{
+    display: none;
+ }
+ .smaller{
+    font-size: large;
+    margin-left: 10px;
+ }
+ .search-con{
+    flex-direction: column;
+ }
+ .dash{
+    width: 100%;
+ }
+}

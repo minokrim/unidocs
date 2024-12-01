@@ -1,22 +1,10 @@
-<<<<<<< HEAD
-import logo from './logo.svg';
-import '../App.css';
-import Home from './home/home';
-import NavDash from './dashboard/navdash';
-function App() {
-  return (
-   <div>
-    <NavDash />
-    
 
-   </div>
-  )
-=======
-import './App.css';
-import Dashboard from './dashboard/dashboard';
-import Home from './home/home';
+
 import React, { useEffect, useState } from 'react';
 import axios from "axios"
+
+import Dashboard from './dashboard/dashboard';
+import HomePage from './homepage/homepage';
 
 export const userContext=React.createContext();
 
@@ -38,12 +26,15 @@ function App() {
   return (
     <div>
           <userContext.Provider value={user}>
-          {/* <Home/> */}
-          <Dashboard/>
+        {/*   <Home/> */}
+          <Dashboard />
+      {/*   <HomeOne /> */}
+     {/*  <Cards /> */}
+     {/*  <HomePage /> */}
     </userContext.Provider>
     </div>
 
   );
->>>>>>> 08922bef6ddf665b3fc9c55739a966ee526da8a5
 }
 
+export default App;
