@@ -3,7 +3,7 @@ import { RiFileUploadFill } from "react-icons/ri";
 export default function Files() {
   return (
     
-    <div className="files-con">
+    <div className="files-con pt-2">
       <div className="test">
         <div className="butn-con">
           <button className="butn2">Upload File<RiFileUploadFill className="mb-1 ms-1 up-file"/></button>
