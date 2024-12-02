@@ -3,7 +3,7 @@ import Dashboard from './dashboard/dashboard';
 import Home from './home/home';
 import React, { useEffect, useState } from 'react';
 import axios from "axios"
-
+import UploadFiles from './uploadFile/uploadfile';
 export const userContext=React.createContext();
 
 
@@ -24,8 +24,9 @@ function App() {
   return (
     <div>
           <userContext.Provider value={user}>
-          {/* <Home/> */}
+          <Home/>
           <Dashboard/>
+          <UploadFiles/>
     </userContext.Provider>
     </div>
 

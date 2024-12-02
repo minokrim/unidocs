@@ -2,7 +2,7 @@
 .nav-con{
     width: 10%;
     height: 100vh;
-    background-color: rgb(92, 90, 90);
+    background-color: var(--secondary-color);
 }
 .admin-con{
    

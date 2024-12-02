@@ -3,16 +3,20 @@ import bodyParser from 'body-parser';
 import pg from "pg"
 import passport from 'passport';
 import GoogleStrategy from "passport-google-oauth2";
-import { Await } from 'react-router-dom';
 import session from 'express-session'; 
 import multer from 'multer';
 import env from "dotenv";
 import cors from "cors"
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
 
 const upload = multer({ dest: 'uploads/' })
 env.config();
 const app =express();
 const PORT=process.env.SERVER_PORT
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(cors({
     origin: 'http://localhost:3001',  
@@ -38,10 +42,10 @@ const db = new pg.Client({
 
 db.connect();//connecting node to pg
 
-app.post("/upload",upload.single("document"),async(req,res)=>{
-    const metadata=req.body;
+app.post("/upload/file/metadata",upload.single("file"),async(req,res)=>{
+    const metadata=req.body.metadata;
     const filePath=req.file.path;
-    const filename=req.body.filename
+    const filename=req.file.originalname;
 
     try{
         const fileupload= await db.query("INSERT INTO DOCUMENTS(FILENAME,FILEPATH,METADATA) VALUES($1,$2,$3)",[filename,filePath,JSON.stringify(metadata)])
@@ -49,6 +53,39 @@ app.post("/upload",upload.single("document"),async(req,res)=>{
     }
     catch(err){
         res.status(500).send("Failed to upload document");
+    }
+})
+
+app.get("/document/data",async(req,res)=>{
+    try {
+        const data=await db.query("SELECT * FROM DOCUMENTS")
+        console.log(data)
+        res.send(data)
+    } catch (error) {
+        res.status(500).send("Failed to get data from DB")
+    }
+})
+
+app.get("/document/filedata",async(req,res)=>{
+    const fileid=req.query.fileid;
+
+    const id = parseInt(fileid, 10);
+
+    try {
+        const data=await db.query("SELECT * FROM DOCUMENTS WHERE id=$1",[id])
+        console.log("File fetched from DB:", data.rows);  
+
+        if(data.rows.length===0){
+            return res.status(404).send("Document not found");
+        }
+        const fileData=data.rows[0];
+        const filePath = path.resolve(__dirname, fileData.filepath); 
+
+        res.download(filePath, fileData.filename);
+    } catch (error) {
+        res.status(500).send("Failed to get data from DB")
+        console.error("Error fetching file:", error);  
+
     }
 })
 
@@ -61,7 +98,7 @@ app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email
 
 app.get( '/auth/google/callback',passport.authenticate( 'google', {}),(req,res)=>{
     req.session.email = req.user.email;
-    res.redirect("http://localhost:3001")
+    res.redirect("http://localhost:3000")
 }
 );
 
@@ -112,6 +149,4 @@ passport.deserializeUser((user,cb)=>{
 
 app.listen(PORT,(req,res)=>{
     console.log(`Server running on port ${PORT}`)
-}) //code to run backend server
-//ensure backend is running on a different port from frontend
-//ensure to define a type of module in package.js to ensure you can use iport statements
+})

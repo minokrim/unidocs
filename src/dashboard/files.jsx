@@ -1,12 +1,15 @@
 import "./files.css";
 import { RiFileUploadFill } from "react-icons/ri";
+import TopFile from "../uploadFile/topfile";
 export default function Files() {
+
   return (
     
     <div className="files-con">
       <div className="test">
         <div className="butn-con">
-          <button className="butn2">Upload File<RiFileUploadFill className="mb-1 ms-1 up-file"/></button>
+          <button className="butn2">Upload File<RiFileUploadFill className="mb-1 ms-1 up-file"/>
+          </button>
         </div>
         <div className="cng-con">
           <div className="cng ">
@@ -22,7 +25,7 @@ export default function Files() {
         </div>
         <div className="fil-con">
         <div className="fil">
-          <p> data</p>
+          <TopFile/>
         </div>
         </div>
         
