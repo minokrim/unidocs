@@ -1,8 +1,12 @@
 import '../homepage/hom.css'
 import { FaSearch } from "react-icons/fa";
+import Nav from "../nav/nav"
 export default function(HomeOne){
+
 return (
-    <div className="hom imgs">
+    <main>
+        <Nav/>
+            <div className="hom imgs">
         <div className='hom-con'>
             <h1 className=''>Manage You Docs</h1>
             <h5 className='mt-2 d-flex text-center'>
@@ -18,6 +22,7 @@ return (
             </div>
         </div>
     </div>
+    </main>
 )
 
 }

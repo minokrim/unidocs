@@ -1,5 +1,9 @@
+ main{
+   display: flex;
+   flex-direction: column;
+ }
  .hom{
-    background-color:royalblue;
+    background-color:#dde8f1;
     height: 70vh;
     display:flex;
     align-items: center;
@@ -48,6 +52,7 @@ border-radius: 50px;
 background-color:royalblue;
 color: white;
  }
+
  @media (max-width: 480px) {
 .hom{
    height: 100vh;
