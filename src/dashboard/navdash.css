@@ -1,50 +1,83 @@
+.nav-con {
+  width: 100px;
+  height: 100vh;
+  background-color: #8b61c2;
+}
+.admin-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 30%;
+}
+.admin {
+  width: 50px;
+  height: 50px;
+}
+.admin-r {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icons {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+.icon-con {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70%;
+  justify-content: space-evenly;
+}
+.icons:hover {
+  color: white;
+  cursor: pointer;
+}
+.uni{
+  display: none;
+}
 
-.nav-con{
-    width: 10%;
-    height: 100vh;
-    background-color: var(--secondary-color);
-}
-.admin-con{
-   
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 30%;
-    
-    
-}
-.admin{
-    width: 50px;
-    height:50px
-}
-.admin-r{
+@media (max-width: 480px) {
+    .icon-con {
+        background-color: rgb(211, 211, 211);
+        padding: 20px;
+        display: none;
+      }
+      
+      .icon-con.active {
+        display: flex;
+        position: absolute;
+        top: 0;
+        width: 100vw;
+       height: 100vh;
+        
+       
+      }
+      .uni.active{
+        display: block;
+      }
+      .admin-con{
+z-index: 1000;
+position: absolute;
+      }
+  .nav-con {
+    position: fixed;
+    top: 0;
     width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color:white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.icons{
-    width: 30px;
-    height: 30px;
-    margin-bottom: 10px;
-}
-.icon-con{
-   
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 70%;
-        justify-content: space-evenly;
-   
-   
-
-}
-.icons:hover{
-    color: white;
-    cursor: pointer;
+  }
+  .admin{
+    width: 40px;
+    
+  }
+  .admin-con {
+    height: auto;
+  }
+ 
 }

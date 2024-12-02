@@ -17,7 +17,7 @@ export default function TopFile () {
 
     function spliceFilename(filename){
         if (filename.length>10){
-            return filename.slice(0,10)+"..."
+            return filename.slice(0,5)+"..."
         }
         else{
             return filename
@@ -25,7 +25,6 @@ export default function TopFile () {
     }
 
     function getFile(fileid){
-        // const data={fileid:fileid}
         axios.get(`http://localhost:5000/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
         .then((res)=>{
             console.log("Id sent succesfully")
