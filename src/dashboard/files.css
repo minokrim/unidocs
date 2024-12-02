@@ -1,6 +1,6 @@
 .files-con{
     width: 100%;
-    background-color: rgb(92, 90, 90);
+    background-color: var(--primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
