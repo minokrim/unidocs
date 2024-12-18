@@ -1,0 +1,32 @@
+.dash-con{
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content:top center;
+    align-items: center;
+    flex-direction: column;
+}
+.text-con{
+    width: 80%;
+}
+.aa{
+    font-size: 50px;
+    color: white;
+    overflow-wrap: anywhere;
+    justify-self: center;
+    text-align: center;
+}
+.bb{
+    line-height: 150%;
+    opacity: 0.7;
+    overflow-wrap: anywhere;
+    justify-self: center;
+    text-align: center;
+    color: white;
+}
+@media (max-width: 1000px) {
+.dash-con{
+    height: fit-content;
+}
+  
+  }
