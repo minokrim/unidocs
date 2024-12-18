@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios"
+import axios from "axios";
 import Dashboard from './dashboard/dashboard';
 import HomePage from './homepage/homepage';
-import { HashRouter,Route,Routes } from 'react-router-dom';
+import UploadFiles from './uploadFile/uploadfile';
+import { HashRouter,Routes,Route} from 'react-router-dom';
 export const userContext=React.createContext();
 
 function App() {
@@ -24,9 +25,9 @@ function App() {
       <HashRouter>
       <userContext.Provider value={user}>
         <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='dashboard' element={<Dashboard/>}/>
-        <Route path="*" element={<Dashboard />} />
+        <Route path='/h' element={<HomePage/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/' element={<UploadFiles/>}/>
         </Routes>
         </userContext.Provider>
       </HashRouter>
