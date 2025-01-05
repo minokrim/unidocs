@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { userContext } from "../context/userProvider";
 import { FaUser } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { SiGoogledocs } from "react-icons/si";
@@ -7,18 +5,48 @@ import { FaFolder } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import "./navdash.css"
+import { useState } from "react";
 
-export default function NavDash({show}) {
-  const {user,loading}=useContext(userContext);
+export default function NavDash() {
+  const [show, setShow] = useState(true);
+  const handleToggle = () => {
+    setShow(!show);
+  };
   return (
-    <div className="sidenav-body">  
-      {show && <div className="sidenav-holder">
-        <section className="logged-user">
-          <h5>Welcome</h5>
-          <FaUser/>
-          <p>{user}</p>
-        </section>
-        <section className="nav-con">
+    
+    <div className="nav-con">
+      <div className="admin-con" onClick={handleToggle}>
+        <div className="admin-r mt-3">
+          <FaUser  className="admin"  />
+        </div>
+        <h3 className="mt-2" >Admin</h3>
+       <div className={show? "uni" : "uni active"}>
+        <h3>
+          U
+        </h3>
+        <h3>
+          N
+        </h3>
+        <h3>
+          I
+        </h3>
+        <h3>
+          D
+        </h3>
+        <h3>
+          O
+        </h3>
+        <h3>
+          C
+        </h3>
+        <h3>
+          S
+        </h3>
+       </div>
+      </div>
+     
+
+      <div className={show? "icon-con" : "icon-con active"}>
         <div>
           <FaHome className="icons" />
         </div>
@@ -34,8 +62,7 @@ export default function NavDash({show}) {
         <div>
           <FaSearch className="icons" />
         </div>
-        </section>
-      </div>}
+      </div>
     </div>
   );
 }

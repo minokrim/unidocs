@@ -10,30 +10,13 @@ import cors from "cors"
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
-import fs from "fs"
-import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/ILovePDFFile.js';
-import mime from "mime-types"
-import speech from "@google-cloud/text-to-speech"
-import util from "util"
+
+
+const upload = multer({ dest: 'uploads/' })
 env.config();
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');  
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));  
-    }
-});
-const upload = multer({ storage: storage },)
 const app =express();
 const PORT=process.env.SERVER_PORT
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const secretKey=process.env.ILOVEPDF_SECRET
-const publicKey=process.env.ILOVEPDF_PUBLIC;
-
-const ilovepdf = new ILovePDFApi(publicKey, secretKey);
 
 app.use(cors({
     origin: 'http://localhost:3001',  
@@ -48,31 +31,16 @@ app.use(
       cookie: { maxAge: 1000*60*60*24},
     })
   );
-
-app.use(express.json());
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
-    setHeaders: (res, filePath) => {
-      const mimeType = mime.lookup(filePath);  
-      
-      if (mimeType) {
-        res.type(mimeType);  
-      } else {
-        res.type('application/octet-stream');
-      }
-    }
-  }));
-
 const db = new pg.Client({
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST||'db',
-    database: process.env.POSTGRES_DATABASE,
-    password: process.env.POSTGRES_PASSWORD,
-    port: process.env.POSTGRES_PORT||5432,
+    user: process.env.POSTGRES_USER,//default
+    host: process.env.POSTGRES_HOST,//default
+    database: process.env.POSTGRES_DATABASE,//name of database your table is in
+    password: process.env.POSTGRES_PASSWORD,//created when settingup pg
+    port: process.env.POSTGRES_PORT, //setup when you are setting up pg ususally 5432 i changed mine to 5433
   });
+//get postgres credentails to link node and db
 
-  
-db.connect();
+db.connect();//connecting node to pg
 
 app.post("/upload/file/metadata",upload.single("file"),async(req,res)=>{
     const metadata=req.body.metadata;
@@ -88,188 +56,10 @@ app.post("/upload/file/metadata",upload.single("file"),async(req,res)=>{
     }
 })
 
-app.post("/folder/create",async(req,res)=>{
-    const { folderName, folderDescription } = req.body;
-
-    if (!folderName || !folderDescription) {
-        return res.status(400).send("Folder name and description are required");
-    }
-
-
-    try {
-        const createFolder=await db.query("INSERT INTO FOLDERS(Folder_name,Folder_description) VALUES($1,$2)",[folderName,folderDescription])
-        res.status(201).send("Folder created successfully")
-    } catch (error) {
-        res.status(500).send("Failed to Create Folder");
-    }
-})
-
-app.get("/folder/data",async(req,res)=>{
-    try {
-        const data=await db.query("SELECT * FROM FOLDERS")
-        res.send(data)
-        console.log(data)
-    } catch (error) {
-        res.status(500).send("Failed to get data from DB")
-    }
-})
-
-app.post("/file/convert", upload.single("file"),async(req,res)=>{
-    const filepath=req.file.path;
-
-    try {
-        const task = ilovepdf.newTask("imagepdf");
-
-        await task.start();
-
-        const file = new ILovePDFFile(path.resolve(__dirname, filepath));
-
-        await task.addFile(file);
-        
-        await task.process();
-
-        const data=await task.download();
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
-
-        res.send(data);
-        console.log(data)
-        console.log(res)
-
-        fs.unlinkSync(filepath);
-    } catch (error) {
-        console.error("Error editing file:", error);
-        res.status(500).json({ error: "An error occurred while converting the file." });
-    }
-
-})
-
-app.post("/file/edit",upload.single("file"),async(req,res)=>{
-    const filepath=req.file.path;
-
-    try {
-        const task = ilovepdf.newTask("editpdf");
-        await task.start();
-
-        const file = new ILovePDFFile(path.resolve(__dirname, filepath));
-
-        await task.addFile(file);
-
-        const textElement = new Text({
-            coordinates: { x: 100, y: 100 },
-            dimensions: { w: 100, h: 100 },
-            text: 'test',
-        });
-        await task.addElement(textElement);
-        await task.process();
-        const data=await task.download();
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
-
-        res.send(data);
-
-    } catch (error) {
-        
-    }
-})
-
-app.post("/file/audio",upload.single("file"),async(req,res)=>{
-    const filePath=req.file.path;
-
-        try {
-            const task = ilovepdf.newTask("extract");
-
-            await task.start();
-
-            const file = new ILovePDFFile(path.resolve(__dirname, filePath));
-
-            await task.addFile(file);
-
-            await task.process();
-
-            const data=await task.download()
-
-            const textData = data.toString('utf16le'); 
-        try {
-            const client = new speech.TextToSpeechClient();
-            const request={
-                input: { ssml: `<speak>${textData}</speak>` },
-                voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
-                audioConfig: {audioEncoding: 'MP3'},
-            }
-            const [response] = await client.synthesizeSpeech(request);
-
-            const writeFile = util.promisify(fs.writeFile);
-
-            await writeFile('output.mp3', response.audioContent, 'binary');
-
-            console.log('Audio content written to file: output.mp3');
-
-            res.setHeader('Content-Type', 'audio/mp3');
-            res.setHeader('Content-Disposition', 'attachment; filename="output.mp3"');
-
-            res.send(response.audioContent);
-        } catch (error) {
-            console.error("Error in Text-to-Speech:", error);
-        }
-
-    } catch (error) {
-        console.error("Error processing file:", error);
-    }
-
-})
-
-app.post("/file/merge",upload.array("files",2),async(req,res)=>{
-    const files = req.files;
-
-    if (!files || files.length < 2) {
-        return res.status(400).json({ error: "Please upload two files for merging." });
-    }
-
-    const [filepath1, filepath2] = files.map(file => file.path);
-
-    try {
-        const task = ilovepdf.newTask("merge");
-
-        await task.start();
-
-        const file1 = new ILovePDFFile(path.resolve(__dirname, filepath1));
-        const file2 = new ILovePDFFile(path.resolve(__dirname, filepath2));
-
-        await task.addFile(file1);
-        await task.addFile(file2)
-        
-        await task.process();
-
-        const data=await task.download();
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
-
-        res.send(data);
-
-        try {
-            fs.unlinkSync(filepath1);
-        } catch (err) {
-            console.error(`Error deleting file ${filepath1}:`, err.message);
-        }
-        
-        try {
-            fs.unlinkSync(filepath2);
-        } catch (err) {
-            console.error(`Error deleting file ${filepath2}:`, err.message);
-        }
-    } catch (error) {
-        console.error("Error merging files:", error);
-        res.status(500).json({ error: "An error occurred while converting the file." });
-    }
-})
-
 app.get("/document/data",async(req,res)=>{
     try {
         const data=await db.query("SELECT * FROM DOCUMENTS")
+        console.log(data)
         res.send(data)
     } catch (error) {
         res.status(500).send("Failed to get data from DB")
@@ -308,14 +98,13 @@ app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email
 
 app.get( '/auth/google/callback',passport.authenticate( 'google', {}),(req,res)=>{
     req.session.email = req.user.email;
-    res.redirect("http://localhost:3001/#/Dashboard")
+    res.redirect("http://localhost:3001/Dashboard")
 }
 );
 
-app.get("/session/user",async(req,res)=>{
+app.get("/session",async(req,res)=>{
     if(req.session.email){
         res.json({ email: req.session.email })
-        console.log({email:req.session.email})
     }
     else{
         res.status(401).json({ error: "No user logged in" })
