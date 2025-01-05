@@ -1,67 +1,56 @@
- main{
-   display: flex;
-   flex-direction: column;
- }
- .hom{
-    background-color:#dde8f1;
-    height: 70vh;
-    display:flex;
-    align-items: center;
-    justify-content: center;
- }
- .imgs {
-    background-image: url(../images/img.png);
-    background-size: contain; /* Ensures the whole image fits */
-    background-position: bottom center; /* Position the image at the bottom *//* Prevents the image from repeating */
-    
- }
- .hom-con{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
- }
- .input-box{
-
-width: 100%;
-background-color: white;
-display: flex;
-justify-content: center;
-align-items: center;
-border-radius: 50px;
-
- }
- .input-hom{
-    width: 70%;
-    height:50px;
-    border: none;
-   
- }
- .input-hom:focus{
-    outline:none;
- }
- .search-ic{
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
- }
- .src-btn{
-width: 100px;
-height: 40px;
-border-radius: 50px;
-background-color:royalblue;
-color: white;
- }
-
- @media (max-width: 480px) {
-.hom{
-   height: 100vh;
-   
+.home-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:black;
+  height: 89.6vh;
 }
-.input-box{
-   width: 90%;
+
+.aaa {
+  font-size: 60px;
+  margin-top: 5%;
+  color: white;
+  overflow-wrap: anywhere;
+  justify-self: center;
+  text-align: center;
 }
-.src-btn{
-   margin-right: 5px;
+.bbb {
+  line-height: 150%;
+  opacity: 0.7;
+  overflow-wrap: anywhere;
+  justify-self: center;
+  text-align: center;
+  color: white;
 }
-  }
+.ccc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  color: white;
+}
+.t-l{
+   font-size: 20px;
+   padding-bottom: 40px;
+}
+
+.box1 {
+  width: 70%;
+  height: 70vh;
+ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.color{
+color: gray;
+}
+.signin {
+  height: 70px;
+  width: 230px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: dodgerblue;
+}

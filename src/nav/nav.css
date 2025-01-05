@@ -23,3 +23,11 @@
     font-size: 1.5rem;
     border: none;
 }
+.logg{
+    display: flex;
+    align-items: center;
+}
+.img{
+    height: 20vh;
+    width: 100px;
+}
