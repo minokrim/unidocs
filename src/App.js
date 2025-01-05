@@ -25,8 +25,8 @@ function App() {
       <userContext.Provider value={user}>
         <Routes>
         <Route path='/' element={<HomePage/>}/>
-        <Route path='dashboard' element={<Dashboard/>}/>
-        <Route path="*" element={<Dashboard />} />
+        <Route path='/dashboard' element={<Dashboard/>}/>
+        
         </Routes>
         </userContext.Provider>
       </HashRouter>
