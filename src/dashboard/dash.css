@@ -1,17 +1,18 @@
 .dash-con{
-    height: 100vh;
-    background-color: black;
+    height: max-content;
+    background-color: transparent;
     display: flex;
     justify-content:top center;
     align-items: center;
     flex-direction: column;
+    padding-top: 50px;
 }
 .text-con{
     width: 80%;
 }
 .aa{
     font-size: 50px;
-    color: white;
+    color: black;
     overflow-wrap: anywhere;
     justify-self: center;
     text-align: center;
@@ -22,7 +23,7 @@
     overflow-wrap: anywhere;
     justify-self: center;
     text-align: center;
-    color: white;
+    color: black;
 }
 @media (max-width: 1000px) {
 .dash-con{

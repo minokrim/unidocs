@@ -88,6 +88,32 @@ app.post("/upload/file/metadata",upload.single("file"),async(req,res)=>{
     }
 })
 
+app.post("/folder/create",async(req,res)=>{
+    const { folderName, folderDescription } = req.body;
+
+    if (!folderName || !folderDescription) {
+        return res.status(400).send("Folder name and description are required");
+    }
+
+
+    try {
+        const createFolder=await db.query("INSERT INTO FOLDERS(Folder_name,Folder_description) VALUES($1,$2)",[folderName,folderDescription])
+        res.status(201).send("Folder created successfully")
+    } catch (error) {
+        res.status(500).send("Failed to Create Folder");
+    }
+})
+
+app.get("/folder/data",async(req,res)=>{
+    try {
+        const data=await db.query("SELECT * FROM FOLDERS")
+        res.send(data)
+        console.log(data)
+    } catch (error) {
+        res.status(500).send("Failed to get data from DB")
+    }
+})
+
 app.post("/file/convert", upload.single("file"),async(req,res)=>{
     const filepath=req.file.path;
 
@@ -195,10 +221,55 @@ app.post("/file/audio",upload.single("file"),async(req,res)=>{
 
 })
 
+app.post("/file/merge",upload.array("files",2),async(req,res)=>{
+    const files = req.files;
+
+    if (!files || files.length < 2) {
+        return res.status(400).json({ error: "Please upload two files for merging." });
+    }
+
+    const [filepath1, filepath2] = files.map(file => file.path);
+
+    try {
+        const task = ilovepdf.newTask("merge");
+
+        await task.start();
+
+        const file1 = new ILovePDFFile(path.resolve(__dirname, filepath1));
+        const file2 = new ILovePDFFile(path.resolve(__dirname, filepath2));
+
+        await task.addFile(file1);
+        await task.addFile(file2)
+        
+        await task.process();
+
+        const data=await task.download();
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
+
+        res.send(data);
+
+        try {
+            fs.unlinkSync(filepath1);
+        } catch (err) {
+            console.error(`Error deleting file ${filepath1}:`, err.message);
+        }
+        
+        try {
+            fs.unlinkSync(filepath2);
+        } catch (err) {
+            console.error(`Error deleting file ${filepath2}:`, err.message);
+        }
+    } catch (error) {
+        console.error("Error merging files:", error);
+        res.status(500).json({ error: "An error occurred while converting the file." });
+    }
+})
+
 app.get("/document/data",async(req,res)=>{
     try {
         const data=await db.query("SELECT * FROM DOCUMENTS")
-        console.log(data)
         res.send(data)
     } catch (error) {
         res.status(500).send("Failed to get data from DB")
@@ -237,13 +308,14 @@ app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email
 
 app.get( '/auth/google/callback',passport.authenticate( 'google', {}),(req,res)=>{
     req.session.email = req.user.email;
-    res.redirect("http://localhost:3000/#/Dashboard")
+    res.redirect("http://localhost:3001/#/Dashboard")
 }
 );
 
-app.get("/session",async(req,res)=>{
+app.get("/session/user",async(req,res)=>{
     if(req.session.email){
         res.json({ email: req.session.email })
+        console.log({email:req.session.email})
     }
     else{
         res.status(401).json({ error: "No user logged in" })

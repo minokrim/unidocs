@@ -21,7 +21,7 @@ export default function Nav(){
             </div>
             <div className="cons">
         
-        <a className="anchor ms-4" href="">Sign Up</a>
+        <a className="anchor ms-4" onClick={handleSignin}>Sign In</a>
         
             </div>
 
