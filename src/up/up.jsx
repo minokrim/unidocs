@@ -5,7 +5,6 @@ import Upnav from "./upnav";
 export default function Up(){
 return(
 <div>
-  <Upnav />
 <div className="up-con">
       <div className="text-up">
         <h1 className="aaaa">Everything you need for file management</h1>

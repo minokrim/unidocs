@@ -5,9 +5,11 @@ main{
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: max-content;
     align-items: center;
     justify-content:  center;
     background-color: var(--primary-color);
+    
 }
 .uplaodfile-body h1{
     font-size: 4rem;
@@ -22,20 +24,19 @@ main{
     text-align: center;
     font-size: 1.5rem;
 }
-label{
+.upload-btn{
     display: flex;
     width: 20%;
-    height: 10%;
-    background-color: var(--secondary-color);
+    height: 4rem;
+    background-color: dodgerblue;
     color: white;
-    justify-content: center;
-    align-items: center;
     border: 0.11px solid grey;
-    border-radius: 10px;
+    border-radius: 20px;
     font-weight: 700;
     font-size: 1.5rem;
-    gap: 5px;
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
 }
 label:hover{
     background-color: rgb(117, 61, 190);
@@ -63,8 +64,9 @@ button{
     height: 3rem;
     background-color: var(--secondary-color);
     color: white;
+    background-color: dodgerblue;
     border: 0.11px solid grey;
-    border-radius: 10px;
+    border-radius: 20px;
     font-weight: 700;
     font-size: 1.5rem;
     cursor: pointer;

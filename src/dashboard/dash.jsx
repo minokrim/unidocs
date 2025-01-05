@@ -1,15 +1,10 @@
-import "../dash/dash.css";
-import Upnav from "../up/upnav";
+import "./dash.css";
 import "../up/up.css";
-import File from "./file";
 
 export default function Dash() {
   return (
-    
     <div>
-      <Upnav />
     <div className="dash-con">
-     
       <div className="text-con">
         <h1 className="aa">Everything you need for file management</h1>
         <h5 className="bb">
@@ -18,8 +13,6 @@ export default function Dash() {
           watermark PDFs with just a few clicks.
         </h5>
       </div>
-
-<File />
     </div>
     </div>
   );
