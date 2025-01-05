@@ -1,32 +1,7 @@
-.sidenav-body{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.sidenav-holder{
-  display: flex;
-  flex-direction: column;
-  background-color: black;
-  width: 100px;
-  align-items: center;
-  height: 100%;
-  gap: 50px;
-}
-.logged-user{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  font-size: 14px;
-  color: white;
-  align-items: center;
-}
 .nav-con {
-  display: flex;
-  flex-direction: column;
-  height: max-content;
-  width: 100%;
-  align-items: center;
-  gap: 70px;
+  width: 100px;
+  height: 100vh;
+  background-color: #8b61c2;
 }
 .admin-con {
   display: flex;
@@ -52,7 +27,6 @@
   width: 30px;
   height: 30px;
   margin-bottom: 10px;
-  color: white;
 }
 .icon-con {
   width: 100%;
