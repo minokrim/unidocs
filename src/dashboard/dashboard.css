@@ -1,5 +1,6 @@
 .dashboard{
     display: flex;
+    flex-direction: column;
     
 }
 .dash2{

@@ -1,14 +1,18 @@
+.home-container{
+  display: flex;
+  flex-direction: column;
+}
 .home-con {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color:black;
-  height: 89.6vh;
+  height: 100vh;
 }
 
 .aaa {
   font-size: 60px;
-  margin-top: 5%;
+  /* margin-top: 2%; */
   color: white;
   overflow-wrap: anywhere;
   justify-self: center;
@@ -36,11 +40,21 @@
 
 .box1 {
   width: 70%;
-  height: 70vh;
- 
+  /* height: 70vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.header-img{
+  width: 90vw;
+  height: 45vh;
+  background-color: rgb(139, 97, 194,0.5);
+  background-image: url("../images/images.png");
+  background-position: bottom;
+  border-radius: 20px;
+  background-repeat: repeat-x;
+  background-size: 50%;
+  background-position-y: 2000%;
 }
 .color{
 color: gray;
@@ -53,4 +67,21 @@ color: gray;
   justify-content: center;
   align-items: center;
   background-color: dodgerblue;
+}
+
+
+.section-2{
+  background-color: black;
+  display: flex;
+  justify-content: center;
+}
+.function-card-holder{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+}
+.section-2 img{
+  width: auto;
+  height: 50%;
 }
