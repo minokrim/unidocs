@@ -1,6 +1,4 @@
 import "./dash.css";
-import "../up/up.css";
-
 export default function Dash() {
   return (
     <div>

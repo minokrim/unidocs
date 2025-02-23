@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
+  z-index:2;
 }
 .sidenav-holder{
   display: flex;
@@ -11,6 +13,7 @@
   align-items: center;
   height: 100%;
   gap: 50px;
+
 }
 .logged-user{
   display: flex;
@@ -71,40 +74,24 @@
 }
 
 
-@media (max-width: 480px) {
-    .icon-con {
-        background-color: rgb(211, 211, 211);
-        padding: 20px;
-        display: none;
-      }
-      
-      .icon-con.active {
-        display: flex;
-        position: absolute;
-        top: 0;
-        width: 100vw;
-       height: 100vh;
-        
-       
-      }
-      .uni.active{
-        display: block;
-      }
-      .admin-con{
-z-index: 1000;
-position: absolute;
-      }
-  .nav-con {
-    position: fixed;
-    top: 0;
-    width: 70px;
+@media (max-width: 660px) {
+  .sidenav-holder{
+    width: 100vw;
+    height: 100vh;
+    gap:10px
   }
-  .admin{
-    width: 40px;
-    
+  .logged-user{
+    align-items: flex-end;
+    padding-right: 3em;
   }
-  .admin-con {
-    height: auto;
+
+  .uni.active{
+    display: block;
   }
+  .nav-con{
+    gap: 30px;
+    align-items: flex-start;
+    padding-left: 3em;
+    }
  
 }

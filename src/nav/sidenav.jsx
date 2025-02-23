@@ -9,12 +9,10 @@ import { FaSearch } from "react-icons/fa";
 import "./sidenav.css"
 
 export default function Sidenav({show}) {
-  console.log("Sidenav received show:", show); // ✅ Debugging
-
   const {user,loading}=useContext(userContext);
   return (
     <div className="sidenav-body">  
-      {show && <div className="sidenav-holder border-solid border-red-300">
+      {show && <div className="sidenav-holder">
         <section className="logged-user">
           <h5>Welcome</h5>
           <FaUser/>

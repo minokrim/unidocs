@@ -10,14 +10,16 @@ import Mergepdf from "../functionpages/mergepdf";
 import Up from "../up/up";
 import CreateFolder from "../functionpages/createfolder";
 import AllDocuments from "../documents/allDocs";
+import Footer from "../homepage/footer";
  export default function Dashboard({prop}){
     
     return(
         <div className="dashboard">
             <div className="dash2">
             <Navcombo/>
-            <AllDocuments/>
+            {/* <AllDocuments/> */}
             </div>
+            <Footer/>
         </div>
     )
  }
