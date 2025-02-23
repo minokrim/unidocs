@@ -1,7 +1,6 @@
 .search-holder{
    display: flex;
    flex-direction: column;
-   height: 100%;
 }
 .search-con{
     height:20vh;
@@ -50,6 +49,7 @@
 .sidenav-sec{
    display: flex;
    height: 100%;
+   border: 1px solid red;
 }
 
 @media (max-width: 480px) {

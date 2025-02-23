@@ -6,13 +6,15 @@ import { SiGoogledocs } from "react-icons/si";
 import { FaFolder } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
-import "./navdash.css"
+import "./sidenav.css"
 
-export default function NavDash({show}) {
+export default function Sidenav({show}) {
+  console.log("Sidenav received show:", show); // ✅ Debugging
+
   const {user,loading}=useContext(userContext);
   return (
     <div className="sidenav-body">  
-      {show && <div className="sidenav-holder">
+      {show && <div className="sidenav-holder border-solid border-red-300">
         <section className="logged-user">
           <h5>Welcome</h5>
           <FaUser/>
