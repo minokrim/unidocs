@@ -1,13 +1,9 @@
- import { useState } from 'react';
- import './search.css'
+ import React from 'react';
+ import './topnav.css'
  import { IoIosMenu } from "react-icons/io";
- import NavDash from './navdash';
-import Files from './files';
-export default function SearchNav(){
-      const [show, setShow] = useState(true);
-      const handleToggle = () => {
-        setShow(!show);
-      };
+
+export default function TopNav({handleToggle}){
+
     return <main className='search-holder'>
         <div className="search-con">
             <IoIosMenu  onClick={handleToggle} className='logo'/>
@@ -16,9 +12,5 @@ export default function SearchNav(){
             <h5 className='smaller'>Document Manage System</h5>
             </div>
         </div>
-        <section className='sidenav-sec'>
-            <NavDash show={show}/>
-            <Files/>
-        </section>
     </main>
  }

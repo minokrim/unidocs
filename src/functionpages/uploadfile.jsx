@@ -27,6 +27,6 @@ export default function UploadFiles(){
           }
 
     return <main>
-      <DefaultFunction functionName={"upload File"} handleFileUpload={handleFileUpload} filestate={file} setFile={setFile} file={file}/>
+      <DefaultFunction functionName={"upload File"} handleFileUpload={handleFileUpload} filestate={file} setFile={setFile} file={file} functionAction={"Upload File"}/>
     </main>
 }

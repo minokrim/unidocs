@@ -14,10 +14,9 @@ export default function DefaultFunction({handleFileUpload,functionName,setFile,f
                 <section className="filedetails-section">
                     {file && <div className="file-details">
                         <img src={documenticon} alt="FILE-ICON" className="file-image"/>
-                        <h2>FILE-NAME:{file.name}</h2>
-                        <button onClick={handleFileUpload}>{functionAction}</button>
+                        <h2 className="text-black">FILE-NAME:{file.name}</h2>
+                        <button onClick={handleFileUpload} className="text-white text-xl">{functionAction}</button>
                         </div>}
-                        {/* <button onClick={handleFileUpload}>Save to Files</button> */}
                 </section>
             </div>
         </main>

@@ -7,40 +7,11 @@
   justify-content: center;
   align-items: center;
   background-color:black;
-  height: 100vh;
-}
-
-.aaa {
-  font-size: 60px;
-  /* margin-top: 2%; */
-  color: white;
-  overflow-wrap: anywhere;
-  justify-self: center;
-  text-align: center;
-}
-.bbb {
-  line-height: 150%;
-  opacity: 0.7;
-  overflow-wrap: anywhere;
-  justify-self: center;
-  text-align: center;
-  color: white;
-}
-.ccc {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 50%;
-  color: white;
-}
-.t-l{
-   font-size: 20px;
-   padding-bottom: 40px;
+  width: 100%;
 }
 
 .box1 {
-  width: 70%;
-  /* height: 70vh; */
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,6 +26,9 @@
   background-repeat: repeat-x;
   background-size: 50%;
   background-position-y: 2000%;
+}
+.bg{
+  background-color: rgba(46, 25, 74, 0.9);
 }
 .color{
 color: gray;
@@ -84,4 +58,19 @@ color: gray;
 .section-2 img{
   width: auto;
   height: 50%;
+}
+
+@media screen and (max-width:660px) {
+  .section-2{
+    flex-direction: column;
+  }
+  .function-card-holder{
+    width: 100%;
+  }
+  .header-img{
+    background-position-y: 100%;
+    background-size: 100%;
+
+
+  }
 }

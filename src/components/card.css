@@ -8,8 +8,8 @@
     border: 0.5px solid silver;
     border-radius: 5px;
     width: 20%;
-    box-shadow: 1px 5px 5px 5px grey;
-    background-color: rgb(139, 97, 194,0.8);
+    box-shadow: 3px 3px 2px 3px grey;
+    background-color: rgba(139, 97, 194, 0.8);
     align-items: center;
     justify-content: center;
 }
@@ -22,4 +22,20 @@
     color: silver;
     font-size: 18px;
     font-weight: 500;
+}
+
+@media screen and (max-width:660px) {
+    .card-holder{
+        width: 100%;
+    }
+    .card-body{
+        width: 100%;
+    }
+    .card-body h2{
+        font-size: 16px;
+    }
+    .card-body p{
+        font-size: 12px;
+    }
+    
 }
