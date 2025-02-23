@@ -11,7 +11,7 @@
     width: 80%;
 }
 .aa{
-    font-size: 50px;
+    font-size: 5em;
     color: black;
     overflow-wrap: anywhere;
     justify-self: center;
@@ -31,3 +31,12 @@
 }
   
   }
+
+@media screen and (max-width:660px) {
+    .aa{
+        font-size: 2em;
+    }
+    .bb{
+        font-size: 1em;
+    }
+}

@@ -49,10 +49,9 @@
 .sidenav-sec{
    display: flex;
    height: 100%;
-   border: 1px solid red;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 660px) {
  .search-con{
 padding-left: 20%;
     

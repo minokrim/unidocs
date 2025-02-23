@@ -9,9 +9,7 @@ export default function AllDocuments(){
     function handlegetrequest(){
         axios.get("http://localhost:5000/document/data/")
         .then((response)=>{
-            console.log(response.data)
             setData(response.data.rows)
-            console.log("data:"+data)
         })
         .catch((err)=>{
             console.log(err)
@@ -24,9 +22,9 @@ export default function AllDocuments(){
 
     return <main className="flex flex-col">
         <UploadFiles/>
-        <section className="flex flex-row items-center gap-2 mt-10 mr-10 justify-end">
+        <section className="w-full flex flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-10 md:justify-end">
         <FaSearch className="text-2xl text-black"/>
-        <input type="name" name="search" className="border-solid bg-gray-200 w-[20em] h-[2em] rounded-2xl pl-5"/>
+        <input type="name" name="search" className="w-[15em] border-solid bg-gray-200 md:w-[20em] h-[2em] rounded-2xl pl-5"/>
         </section>
 
         <section className="mt-5">
@@ -42,12 +40,12 @@ export default function AllDocuments(){
                 <div className="bg-gray-200/20 text-black w-full flex flex-col gap-10">
                 {data.map((docs)=>(
                     <tr key={docs.id} className="flex w-full justify-around" >
-                        <td className="text-left text-purple-800 text-xl font-medium w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
+                        <td className="text-left text-purple-800 text-base md:text-xl font-medium w-[50px] md:w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
                         <td className="text-left w-[90px] whitespace-nowrap overflow-hidden text-ellipsis">{docs.metadata}</td>
                         <td className="text-left w-[10px] whitespace-nowrap overflow-hidden text-ellipsis"></td>
                         <td>2mb</td>
                         <td>pdf</td>
-                        <td className="cursor-pointer bg-purple-800 p-2 text-white text-lg"><a href={docs.link} target="_blank" rel="noopener noreferrer">View</a></td>
+                        <td className="cursor-pointer bg-purple-800 p-0.5 md:p-2 text-white text-lg"><a href={docs.link} target="_blank" rel="noopener noreferrer">View</a></td>
                     </tr>
                 ))}
                 </div>

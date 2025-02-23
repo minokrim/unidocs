@@ -10,7 +10,7 @@ export default function Navcombo(){
 
     return <main className="flex flex-col">
             <TopNav handleToggle={handleToggle}/>
-        <section className="flex">
+        <section className="flex flex-col md:flex-row">
             <Sidenav show={show}/>
             <Files/>
         </section>

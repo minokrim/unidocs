@@ -6,6 +6,8 @@
     justify-content: center;
     align-items: center;
     height: max-content;
+    position: relative;
+    z-index: 1;
 }
 .butn-con{
     width: 100%;
@@ -67,16 +69,18 @@
     align-items: center;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 660px) {
     .files-con {
         flex-direction: column;
     }
     .test{
-        width: 70%;
-        margin-left: 20%;
+        width: 90%;
     }
     .test > :first-child {
         
         margin-top: 5%;
+    }
+    .home-containers{
+        flex-direction: column;
     }
 }
