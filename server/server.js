@@ -36,7 +36,7 @@ const publicKey=process.env.ILOVEPDF_PUBLIC;
 const ilovepdf = new ILovePDFApi(publicKey, secretKey);
 
 app.use(cors({
-    origin: 'http://localhost:3001',  
+    origin: 'http://localhost:3000',  
     credentials: true                
   }));
 
