@@ -11,12 +11,14 @@ import Up from "../up/up";
 import CreateFolder from "../functionpages/createfolder";
 import AllDocuments from "../documents/allDocs";
 import Footer from "../homepage/footer";
+import Settings from "../setting/setting";
  export default function Dashboard({prop}){
     
     return(
         <div className="dashboard">
             <div className="dash2">
             <Navcombo/>
+            <Settings/>
             {/* <AllDocuments/> */}
             </div>
             <Footer/>
