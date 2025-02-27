@@ -7,10 +7,9 @@ export default function UserProvider({children}){
     const [loading,setloading]=useState(true)
 
     useEffect(()=>{
-      axios.get("http://localhost:5000/session/user",{withCredentials:true})
+      axios.get("http://localhost:5000/database/details",{withCredentials:true})
       .then((response)=>{
-        setUser(response.data.email);
-        console.log(response.data)
+        setUser(response.data.rows[0]);
       })
       .catch((err)=>{
         console.log(err);

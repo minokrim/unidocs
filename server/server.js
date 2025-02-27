@@ -108,7 +108,6 @@ app.get("/folder/data",async(req,res)=>{
     try {
         const data=await db.query("SELECT * FROM FOLDERS")
         res.send(data)
-        console.log(data)
     } catch (error) {
         res.status(500).send("Failed to get data from DB")
     }
@@ -299,8 +298,28 @@ app.get("/document/filedata",async(req,res)=>{
     }
 })
 
-app.get("/database/useremail",async(req,res)=>{
-    const email=await db.query("SELECT EMAIL FROM users")
+// app.get("/database/useremail",async(req,res)=>{
+//     const email=await db.query("SELECT * FROM users")
+//     console.log(email)
+// })
+
+app.get("/database/details",async(req,res)=>{
+    let user_email=req.session.email
+    try {
+        const users=await db.query("SELECT * FROM USERS WHERE EMAIL=$1",[user_email])
+        if(users.rows.length>0){
+            res.status(200)
+            res.json(users)
+            console.log(users)
+        }
+        else{
+            res.status(500);
+            res.json("invalid email please sign up or use correct email")
+        }
+    } catch (error) {
+        res.render(error)
+        res.status(500)
+    }
 })
 
 app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email"],})

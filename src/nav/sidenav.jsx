@@ -16,7 +16,7 @@ export default function Sidenav({show}) {
         <section className="logged-user">
           <h5>Welcome</h5>
           <FaUser/>
-          <p>{user}</p>
+          <p>{user.email}</p>
         </section>
         <section className="nav-con">
         <div>
