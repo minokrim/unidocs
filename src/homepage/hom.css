@@ -3,6 +3,13 @@
   justify-content: center;
   align-items: center;
   background-color:black;
+<<<<<<< HEAD
+  width: 100%;
+}
+
+.box1 {
+  width: 100%;
+=======
   height: 89.6vh;
 }
 
@@ -38,10 +45,28 @@
   width: 70%;
   height: 70vh;
  
+>>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+<<<<<<< HEAD
+.header-img{
+  width: 90vw;
+  height: 45vh;
+  background-color: rgb(139, 97, 194,0.5);
+  background-image: url("../images/images.png");
+  background-position: bottom;
+  border-radius: 20px;
+  background-repeat: repeat-x;
+  background-size: 50%;
+  background-position-y: 2000%;
+}
+.bg{
+  background-color: rgba(46, 25, 74, 0.9);
+}
+=======
+>>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda
 .color{
 color: gray;
 }
@@ -54,3 +79,38 @@ color: gray;
   align-items: center;
   background-color: dodgerblue;
 }
+<<<<<<< HEAD
+
+
+.section-2{
+  background-color: black;
+  display: flex;
+  justify-content: center;
+}
+.function-card-holder{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+}
+.section-2 img{
+  width: auto;
+  height: 50%;
+}
+
+@media screen and (max-width:660px) {
+  .section-2{
+    flex-direction: column;
+  }
+  .function-card-holder{
+    width: 100%;
+  }
+  .header-img{
+    background-position-y: 100%;
+    background-size: 100%;
+
+
+  }
+}
+=======
+>>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda

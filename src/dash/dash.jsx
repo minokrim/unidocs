@@ -1,8 +1,12 @@
+<<<<<<< HEAD:src/dashboard/dash.jsx
+import "./dash.css";
+=======
 import "../dash/dash.css";
 import Upnav from "../up/upnav";
 import "../up/up.css";
 import File from "./file";
 
+>>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda:src/dash/dash.jsx
 export default function Dash() {
   return (
     
