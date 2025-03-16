@@ -16,6 +16,8 @@ import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/ILovePDFFile.js';
 import mime from "mime-types"
 import speech from "@google-cloud/text-to-speech"
 import util from "util"
+import bcrypt from "bcrypt";
+
 env.config();
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -73,6 +75,8 @@ const db = new pg.Client({
 
   
 db.connect();
+
+const saltRounds = 10;
 
 app.post("/upload/file/metadata",upload.single("file"),async(req,res)=>{
     const metadata=req.body.metadata;
@@ -310,7 +314,6 @@ app.get("/database/details",async(req,res)=>{
         if(users.rows.length>0){
             res.status(200)
             res.json(users)
-            console.log(users)
         }
         else{
             res.status(500);
@@ -319,6 +322,37 @@ app.get("/database/details",async(req,res)=>{
     } catch (error) {
         res.render(error)
         res.status(500)
+    }
+})
+
+app.post("/updated/details",async(req,res)=>{
+    console.log("Received request:", req.body); 
+
+
+    const email=req.body.email;
+    const first_name=req.body.firstName;
+    const profile_pic=req.body.profilePic;
+    const last_name=req.body.lastName;
+console.log(email,first_name,profile_pic,last_name)
+    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+    try {
+        let user=await db.query("SELECT * FROM USERS WHERE EMAIL=$1",[email])
+        if(user.rows.length>0){
+            try {
+                const update=await db.query("UPDATE USERS SET email=$1,first_name=$2,password=$3,profile_pic=$4,last_name=$5 where email=$6",[email,first_name,hashedPassword,profile_pic,last_name,email])
+                res.status(200);
+                res.json("db updated succesfully")
+                console.log(update);
+            } catch (error) {
+                res.status(500);
+                res.json("server error")
+            }
+        }
+
+    } catch (error) {
+        res.status(400);
+        res.json("user does not exist")
     }
 })
 
