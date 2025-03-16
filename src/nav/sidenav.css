@@ -1,0 +1,96 @@
+<<<<<<< HEAD:src/nav/sidenav.css
+.sidenav-body{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  z-index:2;
+}
+.sidenav-holder{
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  width: 100px;
+  align-items: center;
+  height: 100%;
+  gap: 50px;
+
+}
+.logged-user{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 14px;
+  color: white;
+  align-items: center;
+}
+=======
+>>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda:src/dashboard/navdash.css
+.nav-con {
+  width: 100px;
+  height: 100vh;
+  background-color: #8b61c2;
+}
+.admin-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 30%;
+}
+.admin {
+  width: 50px;
+  height: 50px;
+}
+.admin-r {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icons {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+.icon-con {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70%;
+  justify-content: space-evenly;
+}
+.icons:hover {
+  color: white;
+  cursor: pointer;
+}
+.uni{
+  display: none;
+}
+
+
+@media (max-width: 660px) {
+  .sidenav-holder{
+    width: 100vw;
+    height: 100vh;
+    gap:10px
+  }
+  .logged-user{
+    align-items: flex-end;
+    padding-right: 3em;
+  }
+
+  .uni.active{
+    display: block;
+  }
+  .nav-con{
+    gap: 30px;
+    align-items: flex-start;
+    padding-left: 3em;
+    }
+ 
+}

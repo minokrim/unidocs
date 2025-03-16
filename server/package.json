@@ -10,6 +10,12 @@
   "author": "ayo",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
+    "@google-cloud/text-to-speech": "^5.6.0",
+    "@ilovepdf/ilovepdf-nodejs": "^0.3.0",
+    "bcrypt": "^5.1.1",
+=======
+>>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

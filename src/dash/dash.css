@@ -10,8 +10,13 @@
     width: 80%;
 }
 .aa{
+<<<<<<< HEAD:src/dashboard/dash.css
+    font-size: 5em;
+    color: black;
+=======
     font-size: 50px;
     color: white;
+>>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda:src/dash/dash.css
     overflow-wrap: anywhere;
     justify-self: center;
     text-align: center;
@@ -30,3 +35,12 @@
 }
   
   }
+
+@media screen and (max-width:660px) {
+    .aa{
+        font-size: 2em;
+    }
+    .bb{
+        font-size: 1em;
+    }
+}

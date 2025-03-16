@@ -9,12 +9,12 @@ main{
     justify-content:  center;
     background-color: var(--primary-color);
 }
-.uplaodfile-body h1{
+.uplaodfile-body>h1{
     font-size: 4rem;
     margin-bottom: 0px;
     padding-bottom: 0px;
 }
-.uplaodfile-body p{
+.uplaodfile-body>p{
     margin-top: 0px;
     padding-top: 0px;
     width: 80%;
@@ -71,4 +71,18 @@ button{
 }
 button:hover{
     background-color: rgb(117, 61, 190);
+}
+
+
+
+@media (max-width: 660px) {
+    .upload-btn{
+        width: 80%;
+    }
+    .file-details>h2{
+        font-size: 1em;
+    }
+    .file-details>button{
+        width: 80%;
+    }
 }
