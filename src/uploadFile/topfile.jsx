@@ -32,7 +32,6 @@ export default function TopFile () {
             const fileURL = window.URL.createObjectURL(new Blob([res.data]));
                 const link = document.createElement('a');
                 link.href = fileURL;
-                console.log(fileURL)
                 link.setAttribute('download', "document.pdf");
                 document.body.appendChild(link);
                 link.click();
