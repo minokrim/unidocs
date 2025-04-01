@@ -38,7 +38,7 @@ const publicKey=process.env.ILOVEPDF_PUBLIC;
 const ilovepdf = new ILovePDFApi(publicKey, secretKey);
 
 app.use(cors({
-    origin: 'http://localhost:3000',  
+    origin: 'http://localhost:3001',  
     credentials: true                
   }));
 
@@ -361,7 +361,7 @@ app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email
 
 app.get( '/auth/google/callback',passport.authenticate( 'google', {}),(req,res)=>{
     req.session.email = req.user.email;
-    res.redirect("http://localhost:3000/#/Dashboard")
+    res.redirect("http://localhost:3001/#/Dashboard")
 }
 );
 
