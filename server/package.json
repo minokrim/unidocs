@@ -10,26 +10,23 @@
   "author": "ayo",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "@google-cloud/text-to-speech": "^5.6.0",
     "@ilovepdf/ilovepdf-nodejs": "^0.3.0",
     "bcrypt": "^5.1.1",
+=======
+>>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
-    "fs": "^0.0.1-security",
-    "jsonwebtoken": "^9.0.2",
-    "mime-types": "^2.1.35",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.7",
     "passport": "^0.7.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7",
-    "pdf-lib": "^1.17.1",
-    "pg": "^8.13.1",
-    "react-scripts": "5.0.1",
-    "util": "^0.12.5"
+    "pg": "^8.13.1"
   }
 }
