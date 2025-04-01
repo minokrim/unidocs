@@ -2,24 +2,33 @@ import React from 'react';
 import Dashboard from './dashboard/dashboard';
 import HomeOne from "../src/homepage/hom"
 import UploadFiles from './functionpages/uploadfile';
-import Up from './up/up';
-import Dash from './dashboard/dash';
-import UserProvider from './context/userProvider';
-import { HashRouter,Routes,Route} from 'react-router-dom';
+import TopNav from './nav/topnav';
+import Sidenav from './nav/sidenav';
+import Files from './dashboard/files';
 import Jpgpdf from './functionpages/jpgpdf';
 import Pdfaudio from './functionpages/pdfaudio';
+import Mergepdf from './functionpages/mergepdf';
+import Up from './up/up';
+import CreateFolder from './functionpages/createfolder';
+import AllDocuments from './documents/allDocs';
+import Dash from './dashboard/dash';
+import UserProvider from './context/userProvider';
+import SharedLayout from './components/sharedlayout';
+import { HashRouter,Routes,Route} from 'react-router-dom';
 function App() {
   return (
     <div>
       <HashRouter>
       <UserProvider>
         <Routes>
-        <Route path='/' element={<HomeOne/>}/>
-        <Route path='/dashboard' element={<Dashboard/>}/>
-        <Route path='/fileUpload' element={<UploadFiles/>}/>
-        <Route path='/jpg-pdf' element={<Jpgpdf/>}/>
-        <Route path='/pdf-audio' element={<Pdfaudio/>}/>
-        </Routes>
+          <Route path="/" element={<SharedLayout/>}>
+          <Route index element={<Files />} />
+          <Route path="files" element={<Files />} />
+          <Route path="documents" element={<AllDocuments />} />
+          <Route path="settings" element={<CreateFolder />} />
+          <Route path="search" element={<Mergepdf />} />
+          </Route>
+          </Routes>
         </UserProvider>
       </HashRouter>
     </div>
