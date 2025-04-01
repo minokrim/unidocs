@@ -1,8 +1,4 @@
-import "../dash/dash.css";
-import Upnav from "../up/upnav";
-import "../up/up.css";
-import File from "./file";
-
+import "./dash.css";
 export default function Dash() {
   return (
     
@@ -15,7 +11,7 @@ export default function Dash() {
         <h5 className="bb">
           Every tool you need to use PDFs, at your fingertips. All are 100% FREE
           and easy to use! Merge, split, compress, convert, rotate, unlock and
-          watermark PDFs with just a few click
+          watermark PDFs with just a few click..
         </h5>
       </div>
 
