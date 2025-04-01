@@ -18,8 +18,7 @@ import Settings from "../setting/setting";
         <div className="dashboard">
             <div className="dash2">
             <Navcombo/>
-            <Settings/>
-            {/* <AllDocuments/> */}
+            <AllDocuments/>
             </div>
             <Footer/>
         </div>
