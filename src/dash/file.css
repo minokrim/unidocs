@@ -1,61 +1,85 @@
-.container{
-    height: 100%;
-} 
-.files{
-    width: 300px;
-    height: 180px;
-    width: 100%;
-    height: 170px;
-    width: 300px;
-    height: 180px;
-    background-color:#E6E6FA;
+.files-con{
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: transform 0.3s ease;
-    border-radius: 5px;
+    height: max-content;
+    position: relative;
+    z-index: 1;
 }
-.files:hover {
-    transform: scale(0.9);
-    cursor: pointer;
-    filter: brightness(0.8);
-}
-
-.row{
-    display: flex;
-    width: 90vw;
-    justify-content: center,space-between;
-    align-items: center; 
-    gap: 15px;
-}
-
-.content-con{
+.butn-con{
     width: 100%;
-    height: 100%;
     display: flex;
-    flex-direction: column;
+    align-items: center; 
     justify-content: center;
-    text-align: left;
-    align-items: flex-start;
 }
-.content{
+.butn2{
+    width: 95%;
+    height: 50px;
+    border-radius: 10px;
+    background-color: rgb(52, 52, 200);
+}
+.cng{
+    width: 90%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    width: 10em;
-    text-overflow: ellipsis;
-    align-items: flex-start;
+    align-items: center;
+    height: 30px;
 }
-.icon-file{
-    height: 2em;
-    width: auto;
+.test{
+    width: 30%;
+}
+.cng-con{
+    width: 100%;
+    display: flex;
+ align-items: center; 
+    justify-content: center;
+}
+.fil-con{
+    width: 100%;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    height: 300px;
 }
 
-@media screen and (max-width:660px) {
-    .cont{
-        padding: 1em;
-        align-items: center;
-        justify-content: center;
+.fil{
+    width: 95%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.up-file{
+    height: 20px;
+    width: 20px;
+}
+.fill-cont{
+    border: 1px solid black;
+    background-color: rgb(139, 97, 194);
+}
+.home-containers{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@media (max-width: 660px) {
+    .files-con {
+        flex-direction: column;
+    }
+    .test{
+        width: 90%;
+    }
+    .test > :first-child {
+        
+        margin-top: 5%;
+    }
+    .home-containers{
+        flex-direction: column;
     }
 }
