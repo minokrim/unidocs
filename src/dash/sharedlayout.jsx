@@ -11,7 +11,7 @@ export default function SharedLayout(){
         <TopNav handleToggle={handleToggle}/>
         <section className="flex flex-col md:flex-row">
             <Sidenav show={show}/>
-            <div className="content flex-1 p-4 border border-solid border-red-500">
+            <div className="content flex-1 p-4">
                 <Outlet/>
             </div>
         </section>

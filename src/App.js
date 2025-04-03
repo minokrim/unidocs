@@ -21,7 +21,8 @@ function App() {
       <HashRouter>
       <UserProvider>
         <Routes>
-          <Route path="/" element={<SharedLayout/>}>
+        <Route path="/" element={<HomeOne />} />
+          <Route path="/home" element={<SharedLayout/>}>
           <Route index element={<Files />} />
           <Route path="files" element={<Files />} />
           <Route path="documents" element={<AllDocuments />} />
