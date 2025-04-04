@@ -1,9 +1,11 @@
 import "./dash.css";
+import UpNav from "../up/upnav";
+import File from "./file";
 export default function Dash() {
   return (
     
     <div>
-      <Upnav />
+      <UpNav />
     <div className="dash-con">
      
       <div className="text-con">
