@@ -86,7 +86,7 @@ async function uploadprofilePic() {
     }
 }
 
-    return <main className="bg-white h-[100vh] flex flex-col py-10 items-center">
+    return <main className="bg-white h-[100vh] flex flex-col py-10 items-center w-full">
             <h1 className="ml-24 text-6xl">Profile</h1>
 
             <div className="flex w-full justify-around">
