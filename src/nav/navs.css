@@ -1,7 +1,8 @@
 .nav-bar{
-    height: 60px;
+    height: 70px;
     background-color: black;
-    display: flex;align-items: center;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 .logo-con{
@@ -9,13 +10,23 @@
     align-items: center;
 }
 .logo{
-    height: 60px;
-    width: 60px;
+    width: 100px;
+    height: 50%;
 }
 .cons{
     margin-right: 3%;
 }
 .anchor{
-    color: white;
+    color: rgb(139, 97, 194);
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
     text-decoration: none;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+}
+.anchor:hover{
+    background-color: dodgerblue;
+    color: white;
 }

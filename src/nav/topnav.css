@@ -1,16 +1,19 @@
-<<<<<<< HEAD:src/nav/topnav.css
 .search-holder{
    display: flex;
    flex-direction: column;
 }
-=======
->>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda:src/dashboard/search.css
 .search-con{
     height:20vh;
     width: 100%;
-    background-color: #8b61c2;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+}
+.search-con>img{
+   width: auto;
+   height: 10em;
 }
 .dash{
     width: 30%;
@@ -27,8 +30,6 @@
     height: 40px;
     border-radius:0 10px 10px 0;
     border-left: 0;
-   
-    
 }
 .search-box{
     background-color: greenyellow;
@@ -45,16 +46,12 @@
   
     outline: none;
 }
-<<<<<<< HEAD:src/nav/topnav.css
 .sidenav-sec{
    display: flex;
    height: 100%;
 }
 
 @media (max-width: 660px) {
-=======
-@media (max-width: 480px) {
->>>>>>> 8c2e6fc33f807d72434db578ba68512d3b536eda:src/dashboard/search.css
  .search-con{
 padding-left: 20%;
     

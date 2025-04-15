@@ -17,8 +17,8 @@ import Settings from "../setting/setting";
     return(
         <div className="dashboard">
             <div className="dash2">
-            <Navcombo/>
-            <AllDocuments/>
+            {/* <Navcombo/>
+            <AllDocuments/> */}
             </div>
             <Footer/>
         </div>
