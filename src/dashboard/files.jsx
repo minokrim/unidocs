@@ -1,81 +1,47 @@
 import "./files.css";
-import { RiFileUploadFill } from "react-icons/ri";
+// import { RiFileUploadFill } from "react-icons/ri";
 import TopFile from "../uploadFile/topfile";
+import TaskFunction from "./taskFunction";
+import Dash from "./dash";
+import TopFolder from "../uploadFile/topFolder";
 export default function Files() {
 
   return (
-    
     <div className="files-con">
+      <Dash/>
+      <TaskFunction/>
+
+      <section className="home-containers">
       <div className="test">
-        <div className="butn-con">
-          <button className="butn2">Upload File<RiFileUploadFill className="mb-1 ms-1 up-file"/>
-          </button>
-        </div>
         <div className="cng-con">
-          <div className="cng ">
-            <div className="w-50 mt-3">
-            <p>recent</p>
-
-            </div>
-            <div className=" d-flex justify-content-end w-50 mt-3">
-            <p className="end">view all</p>
-
-            </div>
-          </div>
         </div>
         <div className="fil-con">
-        <div className="fil">
+
+        <div className="fil fill-cont">
           <TopFile/>
         </div>
+        
         </div>
         
       </div>
+
       <div className="test">
-        <div className="butn-con">
-          <button className="butn2">Upload File<RiFileUploadFill className="mb-1 ms-1 up-file"/></button>
-        </div>
-        <div className="cng-con">
-          <div className="cng ">
-            <div className="w-50 mt-3">
-            <p>recent</p>
-
-            </div>
-            <div className=" d-flex justify-content-end w-50 mt-3">
-            <p className="end">view all</p>
-
-            </div>
-          </div>
-        </div>
         <div className="fil-con">
-        <div className="fil">
-          <p> data</p>
+        <div className="fil fill-cont">
+          <TopFolder/>
         </div>
         </div>
         
       </div>
+
       <div className="test">
-        <div className="butn-con">
-          <button className="butn2">Upload File<RiFileUploadFill className="mb-1 ms-1 up-file"/></button>
-        </div>
-        <div className="cng-con">
-          <div className="cng ">
-            <div className="w-50 mt-3">
-            <p>recent</p>
-
-            </div>
-            <div className=" d-flex justify-content-end w-50 mt-3">
-            <p className="end">view all</p>
-
-            </div>
-          </div>
-        </div>
         <div className="fil-con">
-        <div className="fil">
-          <p> data</p>
+        <div className="fil fill-cont">
+
         </div>
         </div>
-        
       </div>
+      </section>
     </div>
     
   );
