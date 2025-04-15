@@ -12,6 +12,7 @@ import Up from './up/up';
 import CreateFolder from './functionpages/createfolder';
 import AllDocuments from './documents/allDocs';
 import Dash from './dashboard/dash';
+import Settings from './setting/setting';
 import UserProvider from './context/userProvider';
 import SharedLayout from './components/sharedlayout';
 import { HashRouter,Routes,Route} from 'react-router-dom';
@@ -26,8 +27,12 @@ function App() {
           <Route index element={<Files />} />
           <Route path="files" element={<Files />} />
           <Route path="documents" element={<AllDocuments />} />
-          <Route path="settings" element={<CreateFolder />} />
-          <Route path="search" element={<Mergepdf />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="mergepdf" element={<Mergepdf />} />
+          <Route path="pdfaudio" element={<Pdfaudio />} />
+          <Route path="jpgpdf" element={<Jpgpdf />} />
+          <Route path="uploadfile" element={<UploadFiles />} />
+          <Route path="createfolder" element={<CreateFolder />} />
           </Route>
           </Routes>
         </UserProvider>
