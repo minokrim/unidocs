@@ -3,8 +3,7 @@ import Upnav from "../up/upnav"
 import { File } from "../dashboardf";
 export default function Dash() {
   return (
-    
-    <div>
+     <div>
       <Upnav />
     <div className="dash-con">
      
