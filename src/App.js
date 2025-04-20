@@ -22,11 +22,11 @@ function App() {
       <HashRouter>
       <UserProvider>
         <Routes>
-        {/* <Route path="/home" element={<HomeOne />} /> */}
-          <Route path="/" element={<SharedLayout/>}>
-          <Route index element={<Files />} />
-          <Route path="files" element={<Files />} />
-          <Route path="documents" element={<AllDocuments />} />
+          <Route path="/" element={<HomeOne/>}/>
+          <Route path='/app' element={<SharedLayout />}>
+          <Route path="dashboard" element={<Dashboard/>} />
+          <Route path="files" element={<Files/>} />
+          <Route path="documents" element={<AllDocuments/>} />
           <Route path="settings" element={<Settings />} />
           <Route path="mergepdf" element={<Mergepdf />} />
           <Route path="pdfaudio" element={<Pdfaudio />} />

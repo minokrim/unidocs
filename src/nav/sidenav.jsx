@@ -20,22 +20,22 @@ export default function Sidenav({show}) {
           <p>{user.email}</p>
         </section>
         <section className="nav-con">
-        <Link to="/">
+        <Link to="/app/files">
           <FaHome className="icons" />
         </Link>
 
-        <Link to="/documents">
+        <Link to="/app/documents">
           <FaFolder className="icons" />
         </Link>
 
-        <Link to="/Folders">
+        <Link to="/app/Folders">
           <SiGoogledocs className="icons" />
         </Link>
 
-        <Link to="/settings">
+        <Link to="/app/settings">
           <IoSettings className="icons" />
         </Link>
-        <Link to="/search">
+        <Link to="/app/search">
           <FaSearch className="icons" />
         </Link>
         </section>
