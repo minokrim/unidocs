@@ -302,41 +302,39 @@ app.get("/document/filedata",async(req,res)=>{
     }
 })
 
-// app.get("/database/useremail",async(req,res)=>{
-//     const email=await db.query("SELECT * FROM users")
-//     console.log(email)
-// })
-
-app.get("/database/details",async(req,res)=>{
-    let user_email=req.session.email
+app.get("/database/details", async (req, res) => {
+    let user_email = req.session.email;
     try {
-        const users=await db.query("SELECT * FROM USERS WHERE EMAIL=$1",[user_email])
-        if(users.rows.length>0){
-            res.status(200)
-            res.json(users)
-        }
-        else{
-            res.status(500);
-            res.json("invalid email please sign up or use correct email")
-        }
+      const result = await db.query("SELECT * FROM USERS WHERE EMAIL=$1", [user_email]);
+      if (result.rows.length > 0) {
+        const user = result.rows[0];
+  
+        user.profile_pic_url = `http://localhost:5000/uploads/${user.profile_pic}`;
+
+  
+        res.status(200).json(user);
+      } else {
+        res.status(400).json("Invalid email. Please sign up or use the correct email.");
+      }
     } catch (error) {
-        res.render(error)
-        res.status(500)
+      console.error("Error retrieving user:", error);
+      res.status(500).json("Internal server error.");
     }
-})
+  });
+  
 
-app.post("/updated/details",async(req,res)=>{
-    console.log("Received request:", req.body); 
-
-
+app.post("/updated/details",upload.single('profile_pic'),async(req,res)=>{
     const email=req.body.email;
     const first_name=req.body.firstName;
-    const profile_pic=req.body.profilePic;
+    const profile_pic = req.file?.filename;
     const last_name=req.body.lastName;
 console.log(email,first_name,profile_pic,last_name)
+console.log("Received request:", req.body);
+
+
     const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
-    try {
+    try {   
         let user=await db.query("SELECT * FROM USERS WHERE EMAIL=$1",[email])
         if(user.rows.length>0){
             try {
@@ -355,6 +353,18 @@ console.log(email,first_name,profile_pic,last_name)
         res.json("user does not exist")
     }
 })
+
+app.post("/upload/profile-pic", upload.single("profile_pic"), async (req, res) => {
+    
+    try {
+        const filename = req.file.filename;  
+        console.log(filename)
+        res.status(200).json({ message: "Image uploaded successfully", filename });
+    } catch (err) {
+        console.error("Upload error:", err);
+        res.status(500).json({ message: "Image upload failed" });
+    }
+});
 
 app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email"],})
   );
