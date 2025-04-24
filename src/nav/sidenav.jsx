@@ -11,13 +11,14 @@ import { Link } from "react-router-dom";
 
 export default function Sidenav({show}) {
   const {user,loading}=useContext(userContext);
+  console.log(user.profile_pic_url);
   return (
     <div className="sidenav-body">  
       {show && (<div className="sidenav-holder">
         <section className="logged-user">
           <h5>Welcome</h5>
-          <FaUser/>
-          <p>{user.email}</p>
+          <img src={user.profile_pic_url} alt="" className="rounded-full w-1/2"/>
+          <p>{user.first_name}</p>
         </section>
         <section className="nav-con">
         <Link to="/app/files">
