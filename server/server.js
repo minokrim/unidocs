@@ -17,6 +17,8 @@ import mime from "mime-types"
 import speech from "@google-cloud/text-to-speech"
 import util from "util"
 import bcrypt from "bcrypt";
+import pdfRoutes from './routes/pdfRoute.js';
+import  createfolderRoutes from "./routes/createFolderRoute.js"
 
 env.config();
 const storage = multer.diskStorage({
@@ -38,7 +40,7 @@ const publicKey=process.env.ILOVEPDF_PUBLIC;
 const ilovepdf = new ILovePDFApi(publicKey, secretKey);
 
 app.use(cors({
-    origin: 'http://localhost:3001',  
+    origin: 'http://localhost:3000',  
     credentials: true                
   }));
 
@@ -92,21 +94,22 @@ app.post("/upload/file/metadata",upload.single("file"),async(req,res)=>{
     }
 })
 
-app.post("/folder/create",async(req,res)=>{
-    const { folderName, folderDescription } = req.body;
+// app.post("/folder/create",async(req,res)=>{
+//     const { folderName, folderDescription } = req.body;
 
-    if (!folderName || !folderDescription) {
-        return res.status(400).send("Folder name and description are required");
-    }
+//     if (!folderName || !folderDescription) {
+//         return res.status(400).send("Folder name and description are required");
+//     }
 
 
-    try {
-        const createFolder=await db.query("INSERT INTO FOLDERS(Folder_name,Folder_description) VALUES($1,$2)",[folderName,folderDescription])
-        res.status(201).send("Folder created successfully")
-    } catch (error) {
-        res.status(500).send("Failed to Create Folder");
-    }
-})
+//     try {
+//         const createFolder=await db.query("INSERT INTO FOLDERS(Folder_name,Folder_description) VALUES($1,$2)",[folderName,folderDescription])
+//         res.status(201).send("Folder created successfully")
+//     } catch (error) {
+//         res.status(500).send("Failed to Create Folder");
+//     }
+// })
+app.use('/', createfolderRoutes);
 
 app.get("/folder/data",async(req,res)=>{
     try {
@@ -117,36 +120,37 @@ app.get("/folder/data",async(req,res)=>{
     }
 })
 
-app.post("/file/convert", upload.single("file"),async(req,res)=>{
-    const filepath=req.file.path;
+// app.post("/file/convert", upload.single("file"),async(req,res)=>{
+//     const filepath=req.file.path;
 
-    try {
-        const task = ilovepdf.newTask("imagepdf");
+//     try {
+//         const task = ilovepdf.newTask("imagepdf");
 
-        await task.start();
+//         await task.start();
 
-        const file = new ILovePDFFile(path.resolve(__dirname, filepath));
+//         const file = new ILovePDFFile(path.resolve(__dirname, filepath));
 
-        await task.addFile(file);
+//         await task.addFile(file);
         
-        await task.process();
+//         await task.process();
 
-        const data=await task.download();
+//         const data=await task.download();
 
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
+//         res.setHeader('Content-Type', 'application/pdf');
+//         res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
 
-        res.send(data);
-        console.log(data)
-        console.log(res)
+//         res.send(data);
+//         console.log(data)
+//         console.log(res)
 
-        fs.unlinkSync(filepath);
-    } catch (error) {
-        console.error("Error editing file:", error);
-        res.status(500).json({ error: "An error occurred while converting the file." });
-    }
+//         fs.unlinkSync(filepath);
+//     } catch (error) {
+//         console.error("Error editing file:", error);
+//         res.status(500).json({ error: "An error occurred while converting the file." });
+//     }
 
-})
+// })
+app.use('/', pdfRoutes);
 
 app.post("/file/edit",upload.single("file"),async(req,res)=>{
     const filepath=req.file.path;
@@ -371,7 +375,7 @@ app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email
 
 app.get( '/auth/google/callback',passport.authenticate( 'google', {}),(req,res)=>{
     req.session.email = req.user.email;
-    res.redirect("http://localhost:3001/#/app")
+    res.redirect("http://localhost:3000/#/app")
 }
 );
 

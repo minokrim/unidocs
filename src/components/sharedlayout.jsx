@@ -14,6 +14,7 @@ export default function SharedLayout(){
             <Sidenav show={show}/>
             <div className="content flex-1 p-4">
                 <Outlet/>
+                <Files/>
             </div>
         </section>
     </main>

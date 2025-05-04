@@ -27,7 +27,7 @@ export default function Files() {
 
       <div className="test">
         <div className="fil-con">
-        <div className="fil fill-cont">
+        <div className="fil fill-cont overflow-auto scroll-smooth scrollbar-none">
           <TopFolder/>
         </div>
         </div>
