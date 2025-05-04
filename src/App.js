@@ -1,14 +1,10 @@
 import React from 'react';
-import Dashboard from './dashboard/dashboard';
 import HomeOne from "../src/homepage/hom"
 import UploadFiles from './functionpages/uploadfile';
-import TopNav from './nav/topnav';
-import Sidenav from './nav/sidenav';
 import Files from './dashboard/files';
 import Jpgpdf from './functionpages/jpgpdf';
 import Pdfaudio from './functionpages/pdfaudio';
 import Mergepdf from './functionpages/mergepdf';
-import Up from './up/up';
 import CreateFolder from './functionpages/createfolder';
 import AllDocuments from './documents/allDocs';
 import Dash from './dashboard/dash';
@@ -24,7 +20,6 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeOne/>}/>
           <Route path='/app' element={<SharedLayout />}>
-          <Route path="dashboard" element={<Dashboard/>} />
           <Route path="files" element={<Files/>} />
           <Route path="documents" element={<AllDocuments/>} />
           <Route path="settings" element={<Settings />} />
