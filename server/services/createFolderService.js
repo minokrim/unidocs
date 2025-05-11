@@ -1,19 +1,11 @@
 import express from 'express';
-import pg from "pg"
+import { db } from '../config/db.js';
 import env from "dotenv";
 
 const app =express();
 env.config();
 
-const db = new pg.Client({
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST||'db',
-    database: process.env.POSTGRES_DATABASE,
-    password: process.env.POSTGRES_PASSWORD,
-    port: process.env.POSTGRES_PORT||5432,
-  });
 
-  db.connect();
 
 export const createFolder=async (folderName,folderDescription)=>{
     try {
