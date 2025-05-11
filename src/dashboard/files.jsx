@@ -1,5 +1,4 @@
 import "./files.css";
-// import { RiFileUploadFill } from "react-icons/ri";
 import TopFile from "../uploadFile/topfile";
 import TaskFunction from "./taskFunction";
 import Dash from "./dash";
@@ -27,7 +26,7 @@ export default function Files() {
 
       <div className="test">
         <div className="fil-con">
-        <div className="fil fill-cont overflow-auto scroll-smooth scrollbar-none">
+        <div className="fil fill-cont">
           <TopFolder/>
         </div>
         </div>

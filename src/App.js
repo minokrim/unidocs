@@ -7,7 +7,6 @@ import Pdfaudio from './functionpages/pdfaudio';
 import Mergepdf from './functionpages/mergepdf';
 import CreateFolder from './functionpages/createfolder';
 import AllDocuments from './documents/allDocs';
-import Dash from './dashboard/dash';
 import Settings from './setting/setting';
 import UserProvider from './context/userProvider';
 import SharedLayout from './components/sharedlayout';

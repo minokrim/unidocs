@@ -108,7 +108,7 @@ async function uploadprofilePic() {
         const fullPicUrl = `http://localhost:5000/${uploadedPath}?t=${Date.now()}`;
         setPreviewPic(fullPicUrl); 
         await updatedetails(fullPicUrl); 
-        await refreshUser();             // Refetch updated data from server
+        await refreshUser(); 
     } catch (err) {
         console.error("Error uploading image", err);
     }

@@ -11,14 +11,14 @@ export default function Pdfaudio(){
           .post("http://localhost:5000/file/audio", formData, { responseType: "blob" })
           .then((res) => {
   
-            const blob = new Blob([res.data], { type: "audi/mp3" });
+            const blob = new Blob([res.data], { type: "audio/mp3" });
       
             const fileURL = window.URL.createObjectURL(blob);
             console.log(fileURL)
       
             const link = document.createElement("a");
             link.href = fileURL;
-            link.setAttribute("download", "output.mp3"); // Set the filename
+            link.setAttribute("download", "output.mp3");
       
             document.body.appendChild(link);
             link.click();

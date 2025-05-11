@@ -7,13 +7,6 @@ export default function Nav(){
     }
 
     return <div className="nav-main">
-      {/*   <section className="nav-body">
-            <div className="logg">
-        <img className="" src={logo} alt="" />
-        <h4>UniDocs</h4>
-        </div>
-            <button onClick={handleSignin}>Sign In</button>
-        </section> */}
         <div className="nav-bar">
             <div className="logo-con">
             <img className="logo" src={logo} alt="" />

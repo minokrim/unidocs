@@ -1,6 +1,5 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import pg from "pg"
+import { connectDB } from './config/db.js';
 import passport from 'passport';
 import GoogleStrategy from "passport-google-oauth2";
 import session from 'express-session'; 
@@ -11,16 +10,18 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
-import fs from "fs"
 import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/ILovePDFFile.js';
 import mime from "mime-types"
-import speech from "@google-cloud/text-to-speech"
-import util from "util"
 import bcrypt from "bcrypt";
 import pdfRoutes from './routes/pdfRoute.js';
 import  createfolderRoutes from "./routes/createFolderRoute.js"
+import audioRoutes from "./routes/pdfRoute.js"
+import mergeRoutes from "./routes/pdfRoute.js"
 
 env.config();
+
+await connectDB();
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');  
@@ -67,16 +68,16 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
     }
   }));
 
-const db = new pg.Client({
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST||'db',
-    database: process.env.POSTGRES_DATABASE,
-    password: process.env.POSTGRES_PASSWORD,
-    port: process.env.POSTGRES_PORT||5432,
-  });
+// const db = new pg.Client({
+//     user: process.env.POSTGRES_USER,
+//     host: process.env.POSTGRES_HOST||'db',
+//     database: process.env.POSTGRES_DATABASE,
+//     password: process.env.POSTGRES_PASSWORD,
+//     port: process.env.POSTGRES_PORT||5432,
+//   });
 
   
-db.connect();
+// db.connect();
 
 const saltRounds = 10;
 
@@ -94,21 +95,6 @@ app.post("/upload/file/metadata",upload.single("file"),async(req,res)=>{
     }
 })
 
-// app.post("/folder/create",async(req,res)=>{
-//     const { folderName, folderDescription } = req.body;
-
-//     if (!folderName || !folderDescription) {
-//         return res.status(400).send("Folder name and description are required");
-//     }
-
-
-//     try {
-//         const createFolder=await db.query("INSERT INTO FOLDERS(Folder_name,Folder_description) VALUES($1,$2)",[folderName,folderDescription])
-//         res.status(201).send("Folder created successfully")
-//     } catch (error) {
-//         res.status(500).send("Failed to Create Folder");
-//     }
-// })
 app.use('/', createfolderRoutes);
 
 app.get("/folder/data",async(req,res)=>{
@@ -120,36 +106,6 @@ app.get("/folder/data",async(req,res)=>{
     }
 })
 
-// app.post("/file/convert", upload.single("file"),async(req,res)=>{
-//     const filepath=req.file.path;
-
-//     try {
-//         const task = ilovepdf.newTask("imagepdf");
-
-//         await task.start();
-
-//         const file = new ILovePDFFile(path.resolve(__dirname, filepath));
-
-//         await task.addFile(file);
-        
-//         await task.process();
-
-//         const data=await task.download();
-
-//         res.setHeader('Content-Type', 'application/pdf');
-//         res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
-
-//         res.send(data);
-//         console.log(data)
-//         console.log(res)
-
-//         fs.unlinkSync(filepath);
-//     } catch (error) {
-//         console.error("Error editing file:", error);
-//         res.status(500).json({ error: "An error occurred while converting the file." });
-//     }
-
-// })
 app.use('/', pdfRoutes);
 
 app.post("/file/edit",upload.single("file"),async(req,res)=>{
@@ -182,97 +138,11 @@ app.post("/file/edit",upload.single("file"),async(req,res)=>{
     }
 })
 
-app.post("/file/audio",upload.single("file"),async(req,res)=>{
-    const filePath=req.file.path;
+app.use("/",audioRoutes);
 
-        try {
-            const task = ilovepdf.newTask("extract");
 
-            await task.start();
+app.use('/', mergeRoutes);
 
-            const file = new ILovePDFFile(path.resolve(__dirname, filePath));
-
-            await task.addFile(file);
-
-            await task.process();
-
-            const data=await task.download()
-
-            const textData = data.toString('utf16le'); 
-        try {
-            const client = new speech.TextToSpeechClient();
-            const request={
-                input: { ssml: `<speak>${textData}</speak>` },
-                voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
-                audioConfig: {audioEncoding: 'MP3'},
-            }
-            const [response] = await client.synthesizeSpeech(request);
-
-            const writeFile = util.promisify(fs.writeFile);
-
-            await writeFile('output.mp3', response.audioContent, 'binary');
-
-            console.log('Audio content written to file: output.mp3');
-
-            res.setHeader('Content-Type', 'audio/mp3');
-            res.setHeader('Content-Disposition', 'attachment; filename="output.mp3"');
-
-            res.send(response.audioContent);
-        } catch (error) {
-            console.error("Error in Text-to-Speech:", error);
-        }
-
-    } catch (error) {
-        console.error("Error processing file:", error);
-    }
-
-})
-
-app.post("/file/merge",upload.array("files",2),async(req,res)=>{
-    const files = req.files;
-
-    if (!files || files.length < 2) {
-        return res.status(400).json({ error: "Please upload two files for merging." });
-    }
-
-    const [filepath1, filepath2] = files.map(file => file.path);
-
-    try {
-        const task = ilovepdf.newTask("merge");
-
-        await task.start();
-
-        const file1 = new ILovePDFFile(path.resolve(__dirname, filepath1));
-        const file2 = new ILovePDFFile(path.resolve(__dirname, filepath2));
-
-        await task.addFile(file1);
-        await task.addFile(file2)
-        
-        await task.process();
-
-        const data=await task.download();
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
-
-        res.send(data);
-
-        try {
-            fs.unlinkSync(filepath1);
-        } catch (err) {
-            console.error(`Error deleting file ${filepath1}:`, err.message);
-        }
-        
-        try {
-            fs.unlinkSync(filepath2);
-        } catch (err) {
-            console.error(`Error deleting file ${filepath2}:`, err.message);
-        }
-    } catch (error) {
-        console.error("Error merging files:", error);
-        res.status(500).json({ error: "An error occurred while converting the file." });
-    }
-})
 
 app.get("/document/data",async(req,res)=>{
     try {
@@ -371,7 +241,7 @@ app.post("/upload/profile-pic", upload.single("profile_pic"), async (req, res) =
 });
 
 app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email"],})
-  );
+  ); 
 
 app.get( '/auth/google/callback',passport.authenticate( 'google', {}),(req,res)=>{
     req.session.email = req.user.email;
