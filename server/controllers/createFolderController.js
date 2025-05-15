@@ -1,4 +1,4 @@
-import { createFolder } from "../services/createFolderService.js";
+import { createFolder,allFolder } from "../services/createFolderService.js";
 
 export const createfolder=async(req,res)=>{
     const { folderName, folderDescription } = req.body;
@@ -11,5 +11,15 @@ export const createfolder=async(req,res)=>{
     }
     catch(error){
         res.status(500).send("Failed to Create Folder");
+    }
+}
+
+export const allfolder=async(req,res)=>{
+    try {
+        const result=await allFolder();
+        res.send(result)
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Failed to retrieve folders');
     }
 }

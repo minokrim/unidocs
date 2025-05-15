@@ -1,7 +1,6 @@
 import express from 'express';
-import { connectDB } from './config/db.js';
+import { connectDB, db } from './config/db.js';
 import passport from 'passport';
-import GoogleStrategy from "passport-google-oauth2";
 import session from 'express-session'; 
 import multer from 'multer';
 import env from "dotenv";
@@ -15,8 +14,10 @@ import mime from "mime-types"
 import bcrypt from "bcrypt";
 import pdfRoutes from './routes/pdfRoute.js';
 import  createfolderRoutes from "./routes/createFolderRoute.js"
-import audioRoutes from "./routes/pdfRoute.js"
-import mergeRoutes from "./routes/pdfRoute.js"
+import authRoutes from "./routes/authRoutes.js"
+import configurePassport from './passport/googleStrategy.js';
+import fileRoutes from "./routes/fileRoute.js"
+configurePassport();
 
 env.config();
 
@@ -31,8 +32,27 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage: storage },)
+
 const app =express();
 const PORT=process.env.SERVER_PORT
+
+app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: true,
+      cookie: { 
+        maxAge: 1000*60*60*24,
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        sameSite: 'lax'
+      },
+    })
+  );
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const secretKey=process.env.ILOVEPDF_SECRET
@@ -44,15 +64,6 @@ app.use(cors({
     origin: 'http://localhost:3000',  
     credentials: true                
   }));
-
-app.use(
-    session({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: true,
-      cookie: { maxAge: 1000*60*60*24},
-    })
-  );
 
 app.use(express.json());
 
@@ -68,43 +79,20 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
     }
   }));
 
-// const db = new pg.Client({
-//     user: process.env.POSTGRES_USER,
-//     host: process.env.POSTGRES_HOST||'db',
-//     database: process.env.POSTGRES_DATABASE,
-//     password: process.env.POSTGRES_PASSWORD,
-//     port: process.env.POSTGRES_PORT||5432,
-//   });
-
-  
-// db.connect();
-
 const saltRounds = 10;
 
-app.post("/upload/file/metadata",upload.single("file"),async(req,res)=>{
-    const metadata=req.body.metadata;
-    const filePath=req.file.path;
-    const filename=req.file.originalname;
-
-    try{
-        const fileupload= await db.query("INSERT INTO DOCUMENTS(FILENAME,FILEPATH,METADATA) VALUES($1,$2,$3)",[filename,filePath,JSON.stringify(metadata)])
-        res.status(201).send("Document upload successful")
-    }
-    catch(err){
-        res.status(500).send("Failed to upload document");
-    }
-})
+app.use('/',fileRoutes)
 
 app.use('/', createfolderRoutes);
 
-app.get("/folder/data",async(req,res)=>{
-    try {
-        const data=await db.query("SELECT * FROM FOLDERS")
-        res.send(data)
-    } catch (error) {
-        res.status(500).send("Failed to get data from DB")
-    }
-})
+// app.get("/folder/data",async(req,res)=>{
+//     try {
+//         const data=await db.query("SELECT * FROM FOLDERS")
+//         res.send(data)
+//     } catch (error) {
+//         res.status(500).send("Failed to get data from DB")
+//     }
+// })
 
 app.use('/', pdfRoutes);
 
@@ -138,20 +126,6 @@ app.post("/file/edit",upload.single("file"),async(req,res)=>{
     }
 })
 
-app.use("/",audioRoutes);
-
-
-app.use('/', mergeRoutes);
-
-
-app.get("/document/data",async(req,res)=>{
-    try {
-        const data=await db.query("SELECT * FROM DOCUMENTS")
-        res.send(data)
-    } catch (error) {
-        res.status(500).send("Failed to get data from DB")
-    }
-})
 
 app.get("/document/filedata",async(req,res)=>{
     const fileid=req.query.fileid;
@@ -240,15 +214,6 @@ app.post("/upload/profile-pic", upload.single("profile_pic"), async (req, res) =
     }
 });
 
-app.get("/auth/google",passport.authenticate("google", {scope: ["profile","email"],})
-  ); 
-
-app.get( '/auth/google/callback',passport.authenticate( 'google', {}),(req,res)=>{
-    req.session.email = req.user.email;
-    res.redirect("http://localhost:3000/#/app")
-}
-);
-
 app.get("/session/user",async(req,res)=>{
     if(req.session.email){
         res.json({ email: req.session.email })
@@ -259,41 +224,7 @@ app.get("/session/user",async(req,res)=>{
     }
 })
 
-passport.use("google",new GoogleStrategy({
-    clientID:process.env.GOOGLE_CLIENTID,
-    clientSecret:process.env.GOOGLE_CLIENTSECRET,
-    callbackURL: process.env.GOOGLE_CALLBACKURL,
-    userProfileURL:"https://www.googleapis.com/oauth2/v3/userinfo"
-},
-async (accessToken, refreshToken,profile,done)=>{
-    try{
-        const email=profile.emails[0].value
-        const checkUser= await db.query("SELECT * FROM USERS where EMAIL=$1",[email])
-        if(checkUser.rows.length>0){
-            console.log("login success")
-        }
-        else{
-            const newUser=await db.query("INSERT INTO USERS(EMAIL,PASSWORD) VALUES($1,$2)",[profile.emails[0].value,"google"])
-        }
-        profile.email=email;
-        
-    }
-    catch(err){
-        console.log(err)
-    }
-    return done(null, profile); 
-
-}
-))
-
-passport.serializeUser((user,cb)=>{
-    cb(null,user)
-})
-
-passport.deserializeUser((user,cb)=>{
-    cb(null,user)
-})
-
+app.use("/auth", authRoutes);
 
 app.listen(PORT,(req,res)=>{
     console.log(`Server running on port ${PORT}`)
