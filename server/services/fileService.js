@@ -19,3 +19,20 @@ export const allFiles=async()=>{
         return{status:(500),message:"Failed to get data from DB"}
     }
 }
+
+export const downloadFile=async(id)=>{
+        try {
+            const data=await db.query("SELECT * FROM DOCUMENTS WHERE id=$1",[id])
+            console.log("File fetched from DB:", data.rows);  
+    
+            if(data.rows.length===0){
+                 return{status:(404),message:("Document not found")};
+            }
+            const fileData=data.rows[0];
+            return fileData
+
+        } catch (error) {
+            return{status:(500),message:("Failed to get data from DB"),error};
+    
+        }
+}

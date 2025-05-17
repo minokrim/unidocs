@@ -26,9 +26,14 @@ useEffect(()=>{
     
 },[user])
 
-async function toggleEditDetails(){
-    if(editdetails){
-        await uploadprofilePic()
+async function toggleEditDetails() {
+    if (editdetails) {
+        if (profilePic) {
+            await uploadprofilePic();
+        } else {
+            await updatedetails(user.profile_pic_url); 
+            await refreshUser();
+        }
     }
     setEditDetails(!editdetails);
 }
@@ -71,14 +76,14 @@ async function updatedetails(uploadedPath) {
     formData.append("lastName", lastName);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("profile_pic",profilePic)
-
+    if (profilePic) {
+        formData.append("profile_pic", profilePic);
+      }
     try {
         const response = await axios.post("http://localhost:5000/updated/details", formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
-        console.log(response);
 
         setUser((prevUser) => ({
             ...prevUser,
@@ -104,7 +109,7 @@ async function uploadprofilePic() {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
-        const uploadedPath = response.data.path;
+        const uploadedPath = response.data.data.path;
         const fullPicUrl = `http://localhost:5000/${uploadedPath}?t=${Date.now()}`;
         setPreviewPic(fullPicUrl); 
         await updatedetails(fullPicUrl); 
@@ -135,7 +140,7 @@ const handlePicChange = (e) => {
                 </label>
             </section>
 
-            <form action="submit" className="flex flex-col justify-around gap-5 text-black px-5">
+            <form className="flex flex-col justify-around gap-5 text-black px-5">
                 <div className="flex gap-3">
                 <h3 className="w-[5em]">First-Name</h3>
                 {editdetails && <FaEdit color="purple" className="text-3xl self-center" />}
