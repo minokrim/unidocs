@@ -11,12 +11,12 @@ import path from 'path';
 import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
 import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/ILovePDFFile.js';
 import mime from "mime-types"
-import bcrypt from "bcrypt";
 import pdfRoutes from './routes/pdfRoute.js';
 import  createfolderRoutes from "./routes/createFolderRoute.js"
 import authRoutes from "./routes/authRoutes.js"
 import configurePassport from './passport/googleStrategy.js';
 import fileRoutes from "./routes/fileRoute.js"
+import userRoutes from "./routes/userRoute.js"
 configurePassport();
 
 env.config();
@@ -79,22 +79,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
     }
   }));
 
-const saltRounds = 10;
-
 app.use('/',fileRoutes)
 
 app.use('/', createfolderRoutes);
 
-// app.get("/folder/data",async(req,res)=>{
-//     try {
-//         const data=await db.query("SELECT * FROM FOLDERS")
-//         res.send(data)
-//     } catch (error) {
-//         res.status(500).send("Failed to get data from DB")
-//     }
-// })
-
 app.use('/', pdfRoutes);
+
+app.use("/",userRoutes)
+
+app.use("/auth", authRoutes);
 
 app.post("/file/edit",upload.single("file"),async(req,res)=>{
     const filepath=req.file.path;
@@ -127,93 +120,6 @@ app.post("/file/edit",upload.single("file"),async(req,res)=>{
 })
 
 
-app.get("/document/filedata",async(req,res)=>{
-    const fileid=req.query.fileid;
-
-    const id = parseInt(fileid, 10);
-
-    try {
-        const data=await db.query("SELECT * FROM DOCUMENTS WHERE id=$1",[id])
-        console.log("File fetched from DB:", data.rows);  
-
-        if(data.rows.length===0){
-            return res.status(404).send("Document not found");
-        }
-        const fileData=data.rows[0];
-        const filePath = path.resolve(__dirname, fileData.filepath); 
-
-        res.download(filePath, fileData.filename);
-    } catch (error) {
-        res.status(500).send("Failed to get data from DB")
-        console.error("Error fetching file:", error);  
-
-    }
-})
-
-app.get("/database/details", async (req, res) => {
-    let user_email = req.session.email;
-    try {
-      const result = await db.query("SELECT * FROM USERS WHERE EMAIL=$1", [user_email]);
-      if (result.rows.length > 0) {
-        const user = result.rows[0];
-  
-        user.profile_pic_url = `http://localhost:5000/uploads/${user.profile_pic}`;
-
-  
-        res.status(200).json(user);
-      } else {
-        res.status(400).json("Invalid email. Please sign up or use the correct email.");
-      }
-    } catch (error) {
-      console.error("Error retrieving user:", error);
-      res.status(500).json("Internal server error.");
-    }
-  });
-  
-
-app.post("/updated/details",upload.single('profile_pic'),async(req,res)=>{
-    const email=req.body.email;
-    const first_name=req.body.firstName;
-    const profile_pic = req.file?.filename;
-    const last_name=req.body.lastName;
-console.log(email,first_name,profile_pic,last_name)
-console.log("Received request:", req.body);
-
-
-    const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-
-    try {   
-        let user=await db.query("SELECT * FROM USERS WHERE EMAIL=$1",[email])
-        if(user.rows.length>0){
-            try {
-                const update=await db.query("UPDATE USERS SET email=$1,first_name=$2,password=$3,profile_pic=$4,last_name=$5 where email=$6",[email,first_name,hashedPassword,profile_pic,last_name,email])
-                res.status(200);
-                res.json("db updated succesfully")
-                console.log(update);
-            } catch (error) {
-                res.status(500);
-                res.json("server error")
-            }
-        }
-
-    } catch (error) {
-        res.status(400);
-        res.json("user does not exist")
-    }
-})
-
-app.post("/upload/profile-pic", upload.single("profile_pic"), async (req, res) => {
-    
-    try {
-        const filename = req.file.filename;  
-        console.log(filename)
-        res.status(200).json({ message: "Image uploaded successfully", filename });
-    } catch (err) {
-        console.error("Upload error:", err);
-        res.status(500).json({ message: "Image upload failed" });
-    }
-});
-
 app.get("/session/user",async(req,res)=>{
     if(req.session.email){
         res.json({ email: req.session.email })
@@ -223,8 +129,6 @@ app.get("/session/user",async(req,res)=>{
         res.status(401).json({ error: "No user logged in" })
     }
 })
-
-app.use("/auth", authRoutes);
 
 app.listen(PORT,(req,res)=>{
     console.log(`Server running on port ${PORT}`)
