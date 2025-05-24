@@ -10,13 +10,13 @@ export default function Files() {
       <Dash/>
       <TaskFunction/>
 
-      <section className="home-containers">
+      <section className="home-containers flex">
       <div className="test">
         <div className="cng-con">
         </div>
         <div className="fil-con">
 
-        <div className="fil fill-cont">
+        <div className="fil fill-cont p-2">
           <TopFile/>
         </div>
         
@@ -26,7 +26,7 @@ export default function Files() {
 
       <div className="test">
         <div className="fil-con">
-        <div className="fil fill-cont">
+        <div className="fil fill-cont p-2">
           <TopFolder/>
         </div>
         </div>

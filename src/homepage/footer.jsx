@@ -5,7 +5,7 @@ import { TiSocialLinkedin } from "react-icons/ti";
 import { TiSocialYoutube } from "react-icons/ti";
 import "./hom.css"
 export default function Footer(){
-    return <main className="bg flex p-5 gap-3 md:justify-around">
+    return <main className="bg-gradient-to-b from-white to-purple-950 flex p-5 gap-3 md:justify-around">
 
         <section>
             <h2>About</h2>
