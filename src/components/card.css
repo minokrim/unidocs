@@ -1,6 +1,7 @@
 .card-holder{
     width: 70%;
-    height: 120px;
+    height: 100%;
+
 }
 .card-body{
     display: flex;
@@ -8,10 +9,12 @@
     border: 0.5px solid silver;
     border-radius: 5px;
     width: 20%;
-    box-shadow: 3px 3px 2px 3px grey;
+    box-shadow: 3px 3px 2px 3px white;
     background-color: rgba(139, 97, 194, 0.8);
     align-items: center;
     justify-content: center;
+    text-align: center;
+    padding-top: 70%;
 }
 .card-body h2{
     align-self: center;

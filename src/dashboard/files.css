@@ -7,6 +7,7 @@
     height: max-content;
     position: relative;
     z-index: 1;
+
 }
 .butn-con{
     width: 100%;
@@ -73,7 +74,7 @@
         flex-direction: column;
     }
     .test{
-        width: 90%;
+        width: 100%;
     }
     .test > :first-child {
         

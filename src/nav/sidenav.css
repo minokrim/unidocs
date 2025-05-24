@@ -1,14 +1,14 @@
 .sidenav-body{
   display: flex;
   flex-direction: column;
-  height: 100%;
   position: relative;
   z-index:2;
+  height: 100%;
+  width: 100%;
 }
 .sidenav-holder{
   display: flex;
   flex-direction: column;
-  background-color: black;
   width: 100px;
   align-items: center;
   height: 100%;
@@ -73,16 +73,28 @@
   display: none;
 }
 
+@media (max-width: 768px) {
+  .sidenav-body{
+    width: 100px;
+  }
+  .sidenav-holder{
+    width: 100%;
+  }
+}
+
 
 @media (max-width: 660px) {
   .sidenav-holder{
-    width: 100vw;
     height: 100vh;
-    gap:10px
+    gap:10px;
+    width: 100%;
+
   }
   .logged-user{
-    align-items: flex-end;
-    padding-right: 3em;
+    font-size: 14px;
+  }
+  .logged-user>h5{
+    font-size: 14px;
   }
 
   .uni.active{
@@ -90,8 +102,6 @@
   }
   .nav-con{
     gap: 30px;
-    align-items: flex-start;
-    padding-left: 3em;
     }
  
 }

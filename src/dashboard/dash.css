@@ -33,10 +33,15 @@
   }
 
 @media screen and (max-width:660px) {
+    .text-con{
+    width: 100%;
+}
     .aa{
-        font-size: 2em;
+        font-size: 1.2em;
+        width: 100%;
     }
     .bb{
         font-size: 1em;
+        width: 80%;
     }
 }

@@ -29,11 +29,11 @@ export default function TopFolder(){
         handleFolderRetrieval()
     },[])
 
-    return <main className="grid grid-cols-2 justify-around gap-10">
+    return <main className="topfile-body grid grid-cols-3 justify-around gap-10 h-[100%] overflow-scroll">
         {data.map((data)=>(
-            <div key={data.id} className=" flex flex-col items-center first-line:w-full">
-                <FaFolder className="text-6xl"/>
-                <p className="text-2xl">{spliceFolderName(data.folder_name)}</p>
+            <div key={data.id} className="flex flex-col items-center first-line:w-full">
+                <FaFolder className="text-3xl md:text-5xl"/>
+                <p className="text-md md:text-md">{spliceFolderName(data.folder_name)}</p>
             </div>
         ))}
     </main>

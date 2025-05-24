@@ -48,14 +48,12 @@ export default function TopFile () {
         handlegetrequest()
     },[])
     
-    return <main>
-        <div className="topfile-body">   
+    return <main className="topfile-body grid grid-cols-3 justify-around gap-10 h-[100%] overflow-scroll">
             {Data.map((docs)=>(
                 <section key={docs.id} className="topfiles" onClick={() => getFile(docs.id)}>
-                <img src={documenticon} alt="file icon" />
-                <p>{spliceFilename(docs.filename)}</p>
+                <img src={documenticon} alt="file icon" className="w-auto h-[3em]"/>
+                <p className="text-md md:text-xl">{spliceFilename(docs.filename)}</p>
             </section>
             ))}
-        </div>
     </main>
 }

@@ -3,6 +3,8 @@ import { FaSearch } from "react-icons/fa";
 import TopNav from "../nav/topnav";
 import axios from "axios";
 import UploadFiles from "../functionpages/uploadfile";
+import { MdDelete } from "react-icons/md";
+
 export default function AllDocuments(){
     const [data,setData]=useState([])
 
@@ -30,22 +32,24 @@ export default function AllDocuments(){
         <section className="mt-5">
             <table className="flex flex-col justify-around gap-0 items-center text-black">
                 <tr className="flex bg-gray-200/20 w-full py-5 mb-0 justify-around">
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Folder</th>
-                    <th>Size</th>
-                    <th>Type</th>
-                    <th>Link</th>
+                    <th className="w-[5em] text-end">Title</th>
+                    <th className="w-[5em] text-end">Descr</th>
+                    <th className="w-[5em] text-end">Folder</th>
+                    <th className="w-[5em] text-end ">Size</th>
+                    <th className="w-[5em] text-end">Type</th>
+                    <th className="w-[5em] text-end">Link</th>
+                    <th className="w-[5em] text-end">Delete</th>
                 </tr>
                 <div className="bg-gray-200/20 text-black w-full flex flex-col gap-10">
                 {data.map((docs)=>(
                     <tr key={docs.id} className="flex w-full justify-around" >
-                        <td className="text-left text-purple-800 text-base md:text-xl font-medium w-[50px] md:w-[100px] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
-                        <td className="text-left w-[90px] whitespace-nowrap overflow-hidden text-ellipsis">{docs.metadata}</td>
-                        <td className="text-left w-[10px] whitespace-nowrap overflow-hidden text-ellipsis"></td>
-                        <td>2mb</td>
-                        <td>pdf</td>
+                        <td className="text-left text-purple-800 text-base md:text-xl font-medium w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
+                        <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis border-solid">{docs.metadata}</td>
+                        <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">Folder</td>
+                        <td className="w-[5em]">2mb</td>
+                        <td className="w-[5em]">pdf</td>
                         <td className="cursor-pointer bg-purple-800 p-0.5 md:p-2 text-white text-lg"><a href={docs.link} target="_blank" rel="noopener noreferrer">View</a></td>
+                        <td className="text-2xl"><MdDelete /></td>
                     </tr>
                 ))}
                 </div>
