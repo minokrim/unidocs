@@ -2,13 +2,17 @@
 import passport from 'passport';
 import GoogleStrategy from "passport-google-oauth2";
 import { db } from '../config/db.js';
+
 const configurePassport = () => {
+console.log("GOOGLE_CLIENTID:", process.env.GOOGLE_CLIENTID); // Not undefined
+console.log("GOOGLE_CLIENTSECRET:", process.env.GOOGLE_CLIENTSECRET);
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENTID,
     clientSecret: process.env.GOOGLE_CLIENTSECRET,
     callbackURL: process.env.GOOGLE_CALLBACKURL,
-    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
   }, async (accessToken, refreshToken, profile, done) => {
+    console.log(profile)
     try {
       const email = profile.emails[0].value;
       const checkUser = await db.query("SELECT * FROM USERS WHERE EMAIL=$1", [email]);

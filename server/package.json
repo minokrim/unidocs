@@ -31,5 +31,8 @@
     "pg": "^8.13.1",
     "react-scripts": "5.0.1",
     "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "wait-port": "^1.1.0"
   }
 }

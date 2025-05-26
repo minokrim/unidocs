@@ -17,11 +17,18 @@ import authRoutes from "./routes/authRoutes.js"
 import configurePassport from './passport/googleStrategy.js';
 import fileRoutes from "./routes/fileRoute.js"
 import userRoutes from "./routes/userRoute.js"
-configurePassport();
+
 
 env.config();
 
-await connectDB();
+console.log("GOOGLE_CLIENTID:", process.env.GOOGLE_CLIENTID);
+console.log("GOOGLE_CLIENTSECRET:", process.env.GOOGLE_CLIENTSECRET);
+
+configurePassport();
+
+
+
+// await connectDB();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -119,6 +126,12 @@ app.post("/file/edit",upload.single("file"),async(req,res)=>{
     }
 })
 
+app.get("/",(req,res)=>{
+  alert("welcome")
+})
+db.query("SELECT * FROM users")
+  .then(res => console.log(res.rows+"dddd"))
+  .catch(err => console.error("DB ERROR", err));
 
 app.get("/session/user",async(req,res)=>{
     if(req.session.email){

@@ -1,6 +1,5 @@
 import express from 'express';
 import passport from 'passport';
-import { db } from '../config/db.js'; // Adjust path if needed
 
 const router = express.Router();
 
@@ -10,6 +9,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 // Google callback route
 router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/" }), (req, res) => {
     req.session.email = req.user.email;
+    console.log('Authenticated user:', req.user);
     res.redirect("http://localhost:3000/#/app");
 });
 
