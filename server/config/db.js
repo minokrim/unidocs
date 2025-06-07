@@ -1,57 +1,46 @@
+// config/db.js
 import pg from "pg";
-import env from 'dotenv';
-import waitPort from "wait-port"
+import dotenv from 'dotenv';
+import waitPort from "wait-port";
+
+dotenv.config();
+
 const { Client } = pg;
 
-env.config();
+const portNum = parseInt(process.env.POSTGRES_PORT || "5432", 10);
+const db = new Client({
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST || 'db',
+  database: process.env.POSTGRES_DATABASE,
+  password: process.env.POSTGRES_PASSWORD,
+  port: portNum,
+});
 
-const portNum = parseInt(process.env.POSTGRES_PORT, 10) || 5432;
-console.log('DB port used:', portNum);
-let isConnected = false;
-
- const db = new Client({
-    user: process.env.POSTGRES_USER,
-    host: process.env.POSTGRES_HOST||'db',
-    database: process.env.POSTGRES_DATABASE,
-    password: process.env.POSTGRES_PASSWORD,
-    port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
-  });
-
-  // const connectDB = async () => {
-  //   if (isConnected) return; 
-  //   try {
-  //     await db.connect();
-  //     isConnected = true;
-  //     console.log('PostgreSQL connected ✅');
-  //   } catch (error) {
-  //     console.error('Failed to connect to PostgreSQL ❌', error);
-  //     process.exit(1);
-  //   }
-  // };
+let connected = false;
 
 const connectDB = async () => {
-  console.log('POSTGRES_PORT raw:', process.env.POSTGRES_PORT);
-console.log('POSTGRES_PORT parsed:', parseInt(process.env.POSTGRES_PORT, 10));
+  if (connected) return;
+
   const open = await waitPort({
     host: process.env.POSTGRES_HOST || 'db',
-    port: parseInt(process.env.POSTGRES_PORT, 10) || 5432,
-    timeout: 10000, // 10 seconds
+    port: portNum,
+    timeout: 10000,
     output: 'silent',
   });
 
-  if (open) {
-    console.log('PostgreSQL is ready ✅');
-    await connectDB();
-  } else {
-    console.error('❌ PostgreSQL connection timeout');
+  if (!open) {
+    console.error("❌ DB port not open after timeout");
+    process.exit(1);
+  }
+
+  try {
+    await db.connect();
+    connected = true;
+    console.log("✅ Connected to PostgreSQL");
+  } catch (err) {
+    console.error("❌ Error connecting to DB:", err);
     process.exit(1);
   }
 };
 
-// waitForDB();
-
-
-  export { db, connectDB };
-
-
-  
+export { db, connectDB };

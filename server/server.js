@@ -10,7 +10,6 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
 import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/ILovePDFFile.js';
-import mime from "mime-types"
 import pdfRoutes from './routes/pdfRoute.js';
 import  createfolderRoutes from "./routes/createFolderRoute.js"
 import authRoutes from "./routes/authRoutes.js"
@@ -47,7 +46,7 @@ app.use(
     session({
       secret: process.env.SESSION_SECRET,
       resave: false,
-      saveUninitialized: true,
+      saveUninitialized: false,
       cookie: { 
         maxAge: 1000*60*60*24,
         secure: process.env.NODE_ENV === 'production',
@@ -67,24 +66,27 @@ const publicKey=process.env.ILOVEPDF_PUBLIC;
 
 const ilovepdf = new ILovePDFApi(publicKey, secretKey);
 
+await connectDB();
+
 app.use(cors({
     origin: 'http://localhost:3000',  
-    credentials: true                
+    credentials: true   ,
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']             
   }));
 
 app.use(express.json());
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
-    setHeaders: (res, filePath) => {
-      const mimeType = mime.lookup(filePath);  
-      
-      if (mimeType) {
-        res.type(mimeType);  
-      } else {
-        res.type('application/octet-stream');
-      }
-    }
-  }));
+
+app.get("/getusers",async(req,res)=>{
+  try {
+      const result=await db.query("SELECT * FROM USERS")
+      console.log(result.rows)
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 
 app.use('/',fileRoutes)
 
@@ -127,10 +129,10 @@ app.post("/file/edit",upload.single("file"),async(req,res)=>{
 })
 
 app.get("/",(req,res)=>{
-  alert("welcome")
+  res.json("welcome")
 })
 db.query("SELECT * FROM users")
-  .then(res => console.log(res.rows+"dddd"))
+  .then(res => console.log(res.rows,"dddd"))
   .catch(err => console.error("DB ERROR", err));
 
 app.get("/session/user",async(req,res)=>{

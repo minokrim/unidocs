@@ -19,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeOne/>}/>
           <Route path='/app' element={<SharedLayout />}>
+            <Route index element={<Files />} /> 
           <Route path="files" element={<Files/>} />
           <Route path="documents" element={<AllDocuments/>} />
           <Route path="settings" element={<Settings />} />
