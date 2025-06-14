@@ -10,9 +10,10 @@ export const uploadFiles=async(filename,filePath,metadata)=>{
         throw new Error("Failed to upload document");    }
 }
 
-export const allFiles=async()=>{
+
+export const filteredFiles=async(filteringLogic,orderlogic)=>{
     try {
-        const data=await db.query("SELECT * FROM DOCUMENTS")
+        const data=await db.query(`SELECT * FROM DOCUMENTS ORDER BY ${filteringLogic} ${orderlogic}`)
         return data;
         
     } catch (error) {

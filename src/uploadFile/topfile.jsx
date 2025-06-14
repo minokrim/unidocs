@@ -25,7 +25,7 @@ export default function TopFile () {
     }
 
     function getFile(fileid){
-        axios.get(`http://localhost:5000/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
+        axios.get(`http://localhost:5000/document/data/`, {params: { fileid: fileid },responseType: "blob"})        
         .then((res)=>{
             console.log("Id sent succesfully")
 

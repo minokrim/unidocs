@@ -1,4 +1,4 @@
-import { uploadFiles,allFiles,downloadFile } from "../services/fileService.js";
+import { uploadFiles,filteredFiles,downloadFile } from "../services/fileService.js";
 import path from "path";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -28,9 +28,23 @@ export const uploadfile=async(req,res)=>{
     }
 }
 
-export const allfiles = async (req, res) => {
+// export const allfiles = async (req, res) => {
+//     try {
+//         const result = await allFiles();
+//         res.send(result)
+
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Failed to retrieve files');
+//     }
+// };
+
+export const filteredfiles = async (req, res) => {
+    const logic=req.body.logic
+    const orderlogic=req.body.order
+    console.log(orderlogic)
     try {
-        const result = await allFiles();
+        const result = await filteredFiles(logic,orderlogic);
         res.send(result)
 
     } catch (error) {

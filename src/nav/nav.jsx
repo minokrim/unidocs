@@ -7,7 +7,6 @@ export default function Nav(){
       const navigate = useNavigate();
 
     function handleSignin(){
-            // Clear any existing tokens
     localStorage.removeItem('jwtToken');
         window.location.href="http://localhost:5000/auth/google"
     }

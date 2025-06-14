@@ -8,7 +8,9 @@ import Mergepdf from './functionpages/mergepdf';
 import CreateFolder from './functionpages/createfolder';
 import AllDocuments from './documents/allDocs';
 import Settings from './setting/setting';
+import AllFolders from './folder/folder';
 import UserProvider from './context/userProvider';
+import FolderProvider from './context/folderProvider';
 import SharedLayout from './components/sharedlayout';
 import { HashRouter,Routes,Route} from 'react-router-dom';
 function App() {
@@ -16,12 +18,14 @@ function App() {
     <div>
       <HashRouter>
       <UserProvider>
+        <FolderProvider>
         <Routes>
           <Route path="/" element={<HomeOne/>}/>
           <Route path='/app' element={<SharedLayout />}>
-            <Route index element={<Files />} /> 
+          <Route index element={<Files />} /> 
           <Route path="files" element={<Files/>} />
           <Route path="documents" element={<AllDocuments/>} />
+          <Route path="folders" element={<AllFolders/>} />
           <Route path="settings" element={<Settings />} />
           <Route path="mergepdf" element={<Mergepdf />} />
           <Route path="pdfaudio" element={<Pdfaudio />} />
@@ -30,6 +34,7 @@ function App() {
           <Route path="createfolder" element={<CreateFolder />} />
           </Route>
           </Routes>
+        </FolderProvider>
         </UserProvider>
       </HashRouter>
     </div>

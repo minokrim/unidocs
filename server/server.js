@@ -78,16 +78,6 @@ app.use(cors({
 app.use(express.json());
 
 
-app.get("/getusers",async(req,res)=>{
-  try {
-      const result=await db.query("SELECT * FROM USERS")
-      console.log(result.rows)
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-
 app.use('/',fileRoutes)
 
 app.use('/', createfolderRoutes);
@@ -127,13 +117,6 @@ app.post("/file/edit",upload.single("file"),async(req,res)=>{
         
     }
 })
-
-app.get("/",(req,res)=>{
-  res.json("welcome")
-})
-db.query("SELECT * FROM users")
-  .then(res => console.log(res.rows,"dddd"))
-  .catch(err => console.error("DB ERROR", err));
 
 app.get("/session/user",async(req,res)=>{
     if(req.session.email){

@@ -28,11 +28,11 @@ export default function Sidenav() {
         </Link>
 
         <Link to="/app/documents">
-          <FaFolder className="icons" />
+          <SiGoogledocs className="icons" />
         </Link>
 
-        <Link to="/app/Folders">
-          <SiGoogledocs className="icons" />
+        <Link to="/app/folders">
+          <FaFolder className="icons" />
         </Link>
 
         <Link to="/app/settings">
