@@ -38,12 +38,9 @@ export default function Sidenav() {
         <Link to="/app/settings">
           <IoSettings className="icons" />
         </Link>
-        <Link to="/app/search">
-          <FaSearch className="icons" />
-        </Link>
         
         <Link>
-        <IoLogOutSharp className="text-white text-4xl"/>
+        <IoLogOutSharp className="text-red-700 text-4xl "/>
         </Link>
         </section>
       </div>

@@ -12,13 +12,15 @@ export const uploadfile=async(req,res)=>{
     const metadata=req.body.metadata;
     const filePath=req.file.path;
     const filename=req.file.originalname;
+    const filesize=Math.floor(req.file.size/(1024*1024))
+    console.log(filesize)
 
     if (!filePath || !filename) {
         return res.status(400).send("No file uploaded");
     }
 
     try {
-        const result=await uploadFiles(filename,filePath,metadata)
+        const result=await uploadFiles(filename,filePath,metadata,filesize)
         res.status(result.status).send(result.message);
 
     } catch (error) {
@@ -42,7 +44,6 @@ export const uploadfile=async(req,res)=>{
 export const filteredfiles = async (req, res) => {
     const logic=req.body.logic
     const orderlogic=req.body.order
-    console.log(orderlogic)
     try {
         const result = await filteredFiles(logic,orderlogic);
         res.send(result)

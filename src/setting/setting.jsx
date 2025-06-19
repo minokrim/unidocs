@@ -128,13 +128,13 @@ const handlePicChange = (e) => {
     }
 };
 
-    return <main className="bg-white h-full md:h-[100vh] flex flex-col justify-start md:justify-between pt-5 items-center w-full bordersolid border-red-500 border-4">
+    return <main className="bg-white h-full md:h-[100vh] flex flex-col justify-start md:justify-between pt-5 items-center w-full">
             <h1 className="ml-0 md:ml-24 text-6xl text-black self-center justify-center w-[100%]">PROFILE</h1>
 
             <div className="flex w-full justify-around md:justify-between content-center items-center flex-col md:flex-row">
 
             <section className="flex w-[90%] mb-20 justify-center">
-                <img src={previewPic||user.profile_pic_url||dp} alt="profile" className="h-[5em] w-[5em] md:h-[10em] md:w-[10em] rounded-full"/>
+                <img src={previewPic} alt="profile" className="h-[5em] w-[5em] md:h-[10em] md:w-[10em] rounded-full"/>
                 <label htmlFor="imageInput">
                 {editdetails && <FaEdit color="purple" className="text-3xl self-end md:self-center absolute" />}
                 <input type="file" name="file" id="imageInput" className="hidden" onChange={handlePicChange}/>

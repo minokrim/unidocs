@@ -1,8 +1,8 @@
 import { db } from '../config/db.js';
 
-export const uploadFiles=async(filename,filePath,metadata)=>{
+export const uploadFiles=async(filename,filePath,metadata,filesize)=>{
     try{
-        await db.query("INSERT INTO DOCUMENTS(FILENAME,FILEPATH,METADATA) VALUES($1,$2,$3)",[filename,filePath,JSON.stringify(metadata)])
+        await db.query("INSERT INTO DOCUMENTS(FILENAME,FILEPATH,METADATA,file_size) VALUES($1,$2,$3,$4)",[filename,filePath,JSON.stringify(metadata),filesize])
         return { status: 201, message: "Document upload successful" };
     }
     catch(err){
@@ -13,7 +13,15 @@ export const uploadFiles=async(filename,filePath,metadata)=>{
 
 export const filteredFiles=async(filteringLogic,orderlogic)=>{
     try {
-        const data=await db.query(`SELECT * FROM DOCUMENTS ORDER BY ${filteringLogic} ${orderlogic}`)
+        let data;
+            const allowedColumns = ['created_at', 'filename', 'id']; // adjust to match your DB columns
+            const allowedOrders = ['ASC', 'DESC'];
+        if(filteringLogic && orderlogic && allowedColumns.includes(filteringLogic) && allowedOrders.includes(orderlogic)){
+          data=await db.query(`SELECT * FROM DOCUMENTS ORDER BY ${filteringLogic} ${orderlogic}`)
+        }
+        else{
+         data=await db.query(`SELECT * FROM DOCUMENTS`)
+        }
         return data;
         
     } catch (error) {

@@ -75,7 +75,7 @@ export default function AllDocuments(){
                         <td className="text-left text-purple-800 text-base md:text-xl font-medium w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis border-solid">{docs.metadata}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">Folder</td>
-                        <td className="w-[5em]">2mb</td>
+                        <td className="w-[5em]">{docs.filesize}mb</td>
                         <td className="w-[5em]">pdf</td>
                         <td className="cursor-pointer bg-purple-800 p-0.5 md:p-2 text-white text-lg"><a href={docs.link} target="_blank" rel="noopener noreferrer">View</a></td>
                         <td className="text-2xl"><MdDelete /></td>

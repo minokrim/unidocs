@@ -2,13 +2,14 @@ import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { FaFolder } from "react-icons/fa";
 
-export default function TopFolder(){
+export default function TopFolder({onFolderCount}){
     const [data,setData]=useState([]);
 
     const handleFolderRetrieval=()=>{
         axios.get("http://localhost:5000/folder/data/")
         .then((response)=>{
             setData(response.data.rows)
+            onFolderCount?.(response.data.rowCount)
         })
         .catch((error)=>{
             console.log(error)

@@ -2,13 +2,15 @@ import React, { useState,useEffect } from "react";
 import axios from "axios"
 import documenticon from "../images/document.png"
 import "./topfile.css"
-export default function TopFile () {
+
+export default function TopFile ({onFileCountUpdate}) {
     const [Data,setData]=useState([]);
     function handlegetrequest(){
-        axios.get("http://localhost:5000/document/data/")
+        axios.post("http://localhost:5000/document/data/")
         .then((response)=>{
             console.log(response.data)
             setData(response.data.rows)
+            onFileCountUpdate?.(response.data.rowCount)
         })
         .catch((err)=>{
             console.log(err)
