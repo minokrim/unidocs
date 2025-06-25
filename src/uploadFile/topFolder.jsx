@@ -6,7 +6,7 @@ export default function TopFolder({onFolderCount}){
     const [data,setData]=useState([]);
 
     const handleFolderRetrieval=()=>{
-        axios.get("http://localhost:5000/folder/data/")
+        axios.post("http://localhost:5000/folder/data/")
         .then((response)=>{
             setData(response.data.rows)
             onFolderCount?.(response.data.rowCount)

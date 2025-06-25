@@ -15,10 +15,20 @@ export const createFolder=async (folderName,folderDescription)=>{
     }
 }
 
-export const allFolder=async()=>{
+export const allFolder=async(filteringLogic,orderlogic,id)=>{
     try {
-        const data=await db.query("SELECT * FROM FOLDERS")
-        return(data)
+        let data;
+            const allowedColumns = ['created_at', 'folder_name', 'id'];
+            const allowedOrders = ['ASC', 'DESC'];
+        if(filteringLogic && orderlogic && allowedColumns.includes(filteringLogic) && allowedOrders.includes(orderlogic)){
+          data=await db.query(`SELECT * FROM FOLDERS WHERE user_id=$1 ORDER BY ${filteringLogic} ${orderlogic}`,[3])
+
+        }
+        else{
+         data=await db.query(`SELECT * FROM FOLDERS WHERE user_id=$1`,[id])
+        }
+        console.log(data)
+        return data;
     } catch (error) {
         return{status:(500),message:("Failed to get data from DB")}
     }

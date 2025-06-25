@@ -12,15 +12,15 @@ export const uploadfile=async(req,res)=>{
     const metadata=req.body.metadata;
     const filePath=req.file.path;
     const filename=req.file.originalname;
-    const filesize=Math.floor(req.file.size/(1024*1024))
-    console.log(filesize)
+    const filesize=(req.file.size/(1024*1024))
+    const roundedFilesize=filesize.toFixed(4)
 
     if (!filePath || !filename) {
         return res.status(400).send("No file uploaded");
     }
 
     try {
-        const result=await uploadFiles(filename,filePath,metadata,filesize)
+        const result=await uploadFiles(filename,filePath,metadata,roundedFilesize)
         res.status(result.status).send(result.message);
 
     } catch (error) {
@@ -46,7 +46,7 @@ export const filteredfiles = async (req, res) => {
     const orderlogic=req.body.order
     try {
         const result = await filteredFiles(logic,orderlogic);
-        res.send(result)
+        return res.status(200).json({ rows: result.rows });
 
     } catch (error) {
         console.error(error);

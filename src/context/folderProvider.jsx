@@ -1,17 +1,25 @@
-import { Children, createContext, useEffect, useState } from "react";
+import { Children, createContext, useEffect, useState,useContext} from "react";
 import axios from "axios";
+import { userContext } from "./userProvider";
+
 export const folderContext=createContext()
 
 export default function FolderProvider({children}){
     const[folders,setFolders]=useState([])
     const[loading,setloading]=useState(true)
+    const {user,loading:userLoading}=useContext(userContext);
+        
 
-    useEffect(()=>{
-        getFolders()
-    },[])
 
-    const getFolders=()=>{
-      axios.get("http://localhost:5000/folder/data", { withCredentials: true })
+useEffect(() => {
+    if (!userLoading && user?.id) {
+        console.log('Fetching folders for user:', user.id);
+        getFolders(user.id);
+    }
+}, [userLoading, user?.id]);
+
+    const getFolders=(userid)=>{
+      axios.post("http://localhost:5000/folder/data",{id:userid}, { withCredentials: true } )
         .then((response) => {
           setFolders(response.data.rows);
           console.log(response.data.rows)

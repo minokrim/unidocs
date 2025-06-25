@@ -4,7 +4,6 @@ import { createfolder,allfolder } from '../controllers/createFolderController.js
 const router = express.Router();
 
 router.post('/folder/create', createfolder);
-router.get('/folder/data', allfolder);
-
+router.post('/folder/data', allfolder);
 
 export default router;

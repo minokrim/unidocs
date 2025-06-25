@@ -14,7 +14,7 @@ export const uploadFiles=async(filename,filePath,metadata,filesize)=>{
 export const filteredFiles=async(filteringLogic,orderlogic)=>{
     try {
         let data;
-            const allowedColumns = ['created_at', 'filename', 'id']; // adjust to match your DB columns
+            const allowedColumns = ['created_at', 'filename', 'id',"file_size"]; // adjust to match your DB columns
             const allowedOrders = ['ASC', 'DESC'];
         if(filteringLogic && orderlogic && allowedColumns.includes(filteringLogic) && allowedOrders.includes(orderlogic)){
           data=await db.query(`SELECT * FROM DOCUMENTS ORDER BY ${filteringLogic} ${orderlogic}`)

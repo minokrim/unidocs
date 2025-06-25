@@ -14,7 +14,7 @@ export default function UploadFiles(){
     }
         const formData=new FormData();
         formData.append("file",file);
-                console.log(file)
+        console.log(file)
         formData.append("metadata",file.name);
         console.log(formData)
             axios.post("http://localhost:5000/upload/file/metadata",formData)
