@@ -5,20 +5,20 @@ import { userContext } from "../context/userProvider";
 export default function UseFilteredData({filteringLogic, orderLogic, searchTerm, type}){
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-        const[id,setId]=useState("")
-    const {user}=useContext(userContext);
+    const {user,loading:userLoading,user_id}=useContext(userContext)
+    console.log("user:id"+user_id)
 
     useEffect(()=>{
-        setId(user.id)
-        axios.post(`http://localhost:5000/${type}/data`,{logic:filteringLogic,order:orderLogic,id:id},{ withCredentials: true })
+        if(!userLoading && user?.id){
+        axios.post(`http://localhost:5000/${type}/data`,{logic:filteringLogic,order:orderLogic,id:user.id},{ withCredentials: true })
         .then((response)=>{
-            console.log(response.data.rows)
             setData(response.data.rows)
         })
         .catch((err)=>{
             console.log(err)
         })
-    }, [filteringLogic, orderLogic, type])
+        }
+    }, [filteringLogic, orderLogic, type,user.id, userLoading])
 
         useEffect(()=>{
             const search = searchTerm.toLowerCase();

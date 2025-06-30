@@ -18,14 +18,14 @@ export default function Nav(){
       const token = params.get('token');
 
       if (token) {
-        // Store the token
         localStorage.setItem('jwtToken', token);
         
-        // Clear the token from URL
         window.history.pushState({}, document.title, window.location.pathname);
         
-        // Redirect to app
         navigate('/app');
+      }
+      else{
+        navigate('/')
       }
     };
 

@@ -4,7 +4,7 @@ import passport from 'passport';
 const router = express.Router();
 
 // Google authentication route
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"],prompt: "select_account"}));
 
 // Google callback route
 router.get("/google/callback",  (req, res, next) => {

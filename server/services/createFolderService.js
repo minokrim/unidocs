@@ -21,13 +21,12 @@ export const allFolder=async(filteringLogic,orderlogic,id)=>{
             const allowedColumns = ['created_at', 'folder_name', 'id'];
             const allowedOrders = ['ASC', 'DESC'];
         if(filteringLogic && orderlogic && allowedColumns.includes(filteringLogic) && allowedOrders.includes(orderlogic)){
-          data=await db.query(`SELECT * FROM FOLDERS WHERE user_id=$1 ORDER BY ${filteringLogic} ${orderlogic}`,[3])
+          data=await db.query(`SELECT * FROM FOLDERS WHERE user_id=$1 ORDER BY ${filteringLogic} ${orderlogic}`,[id])
 
         }
         else{
          data=await db.query(`SELECT * FROM FOLDERS WHERE user_id=$1`,[id])
         }
-        console.log(data)
         return data;
     } catch (error) {
         return{status:(500),message:("Failed to get data from DB")}

@@ -17,9 +17,11 @@ export const createfolder=async(req,res)=>{
 export const allfolder=async(req,res)=>{
     const logic=req.body.logic
     const orderlogic=req.body.order
-    const id=req.body.id
-console.log("User ID:", id); // logs: undefined
+    const id=req.body.id;
+console.log("User ID:", req.body.id); // logs: undefined
     console.log("Request Body:", req.body); // Debug entire body
+    console.log("Request Body Keys:", Object.keys(req.body));
+console.log("req.body.id exists?", 'id' in req.body);
 
     try {
         const result=await allFolder(logic,orderlogic,id);

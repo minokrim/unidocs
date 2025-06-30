@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { folderContext } from "../context/folderProvider"
+// import { folderContext } from "../context/folderProvider"
 import FolderCard from "../components/foldercard"
 import { FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function AllFolders(){
         const[searchTerm,setSearchTerm]=useState("")
     
         const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"folder"})
-    const{folders,loading}=useContext(folderContext)
+    // const{folders,loading}=useContext(folderContext)
     return <main className="flex flex-col justify-around mt-5">
         <section>
             <div className="flex justify-between">
@@ -50,7 +50,7 @@ export default function AllFolders(){
         </section>
 
 
-        <section className="flex justify-between pt-5 flex-wrap gap-3 md:gap-0">
+        <section className="flex pt-5 flex-wrap gap-5 md:gap-0">
         {filteredData.map((fold)=>(
             <div key={fold.id}>
                 <FolderCard name={fold.folder_name} time={new Date(fold.created_at).toLocaleDateString()}/>

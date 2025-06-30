@@ -1,4 +1,4 @@
-import { uploadFiles,filteredFiles,downloadFile } from "../services/fileService.js";
+import { uploadFiles,filteredFiles,downloadFile,deleteFile,filetoFolder} from "../services/fileService.js";
 import path from "path";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -44,8 +44,9 @@ export const uploadfile=async(req,res)=>{
 export const filteredfiles = async (req, res) => {
     const logic=req.body.logic
     const orderlogic=req.body.order
+    const id=req.body.id
     try {
-        const result = await filteredFiles(logic,orderlogic);
+        const result = await filteredFiles(logic,orderlogic,id);
         return res.status(200).json({ rows: result.rows });
 
     } catch (error) {
@@ -67,5 +68,31 @@ export const downloadfile=async(req,res)=>{
         res.download(filePath, result.filename);
     } catch (error) {
         
+    }
+}
+
+export const deletefile=async(req,res)=>{
+    const fileid=req.body.fileId
+    console.log(fileid)
+
+    try {
+        const result=await deleteFile(fileid.id)
+        console.log(result)
+        res.status(result.status).send(result.message);
+    } catch (error) {
+        res.status(500).send("Failed to delete file");
+    }
+}
+
+export const filetofolder=async(req,res)=>{
+    const file_id=req.body.file_id;
+    const folder_id=req.body.folder_id
+    console.log(folder_id)
+
+    try {
+        const result=await filetoFolder(file_id,folder_id)
+        res.status(result.status).send(result.message);
+    } catch (error) {
+        res.status(500).send("Failed to store file in folder");
     }
 }

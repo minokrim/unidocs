@@ -7,16 +7,17 @@ export const folderContext=createContext()
 export default function FolderProvider({children}){
     const[folders,setFolders]=useState([])
     const[loading,setloading]=useState(true)
-    const {user,loading:userLoading}=useContext(userContext);
+//     const {user,loading:userLoading}=useContext(userContext)
+//     console.log(user.id)
         
 
 
-useEffect(() => {
-    if (!userLoading && user?.id) {
-        console.log('Fetching folders for user:', user.id);
-        getFolders(user.id);
-    }
-}, [userLoading, user?.id]);
+// useEffect(() => {
+//     if (!userLoading && user?.id) {
+//         console.log('Fetching folders for user:', user.id);
+//         getFolders(user.id);
+//     }
+// }, [userLoading, user?.id]);
 
     const getFolders=(userid)=>{
       axios.post("http://localhost:5000/folder/data",{id:userid}, { withCredentials: true } )
