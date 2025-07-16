@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import HomeOne from "../src/homepage/hom"
 import UploadFiles from './functionpages/uploadfile';
 import Files from './dashboard/files';
@@ -12,8 +12,14 @@ import AllFolders from './folder/folder';
 import UserProvider from './context/userProvider';
 import FolderProvider from './context/folderProvider';
 import SharedLayout from './components/sharedlayout';
+import FolderFiles from './folder/folderFile';
 import { HashRouter,Routes,Route} from 'react-router-dom';
+import ViewDoc from './documents/viewdoc';
 function App() {
+  const[frameData,setFrameData]=useState("");
+  console.log(frameData)
+
+
   return (
     <div>
       <HashRouter>
@@ -24,7 +30,7 @@ function App() {
           <Route path='/app' element={<SharedLayout />}>
           <Route index element={<Files />} /> 
           <Route path="files" element={<Files/>} />
-          <Route path="documents" element={<AllDocuments/>} />
+          <Route path="documents" element={<AllDocuments setFrameData={setFrameData}/>} />
           <Route path="folders" element={<AllFolders/>} />
           <Route path="settings" element={<Settings />} />
           <Route path="mergepdf" element={<Mergepdf />} />
@@ -32,6 +38,8 @@ function App() {
           <Route path="jpgpdf" element={<Jpgpdf />} />
           <Route path="uploadfile" element={<UploadFiles />} />
           <Route path="createfolder" element={<CreateFolder />} />
+          <Route path="folderfile" element={<FolderFiles/>} />
+          <Route path="viewdoc" element={<ViewDoc frameData={frameData}/>} />
           </Route>
           </Routes>
         </FolderProvider>

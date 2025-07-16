@@ -2,17 +2,14 @@ import React, { useState,useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import TopNav from "../nav/topnav";
 import axios from "axios";
-import UploadFiles from "../functionpages/uploadfile";
-import { MdDelete } from "react-icons/md";
 import { AiOutlineSortDescending } from "react-icons/ai";
 import { TbSortDescendingLetters } from "react-icons/tb";
-import UseFilteredData from "../components/filteringLogic";
+import { useSearchParams } from 'react-router-dom';
 import dots from "../images/dots2.png";
 import FileOptions from "../components/fileOptions";
 import AddtoFolder from "../components/addtoFolder";
-import { useNavigate } from "react-router-dom";
 
-export default function AllDocuments({setFrameData}){
+export default function FolderFiles(){
     const [data,setData]=useState([])
     const[filteringLogic,setFilteringLogic]=useState("id")
     const [orderLogic,setOrderLogic]=useState("ASC")
@@ -20,9 +17,12 @@ export default function AllDocuments({setFrameData}){
     const[hoverState,setHoverState]=useState(false)
     const[fileId,setFileId]=useState(null)
     const[hoverPosition,setHoverPosition]=useState({x:0,y:0,bottom:0,top:0,right:0,left:0})
-    const [showAddModal, setShowAddModal] = useState(false);
-    const [selectedFileId, setSelectedFileId] = useState(null);
-    const navigate=useNavigate();
+
+
+      const [searchParams] = useSearchParams();
+      const folderId = searchParams.get('folderId');
+      const userId = searchParams.get('userId');
+
 
     function handleMouseOver(e,id){
         const position=e.target.getBoundingClientRect()
@@ -47,47 +47,30 @@ export default function AllDocuments({setFrameData}){
         setHoverState(true)
     }
 
-    function filetoFolder(fileId){
-        setSelectedFileId(fileId);
-        setShowAddModal(true);
+
+console.log("folderId:", folderId, "userId:", userId);
+    function renderFileinFolder(){
+        console.log(userId,folderId)
+        axios.post("http://localhost:5000/document/fileinfolder",{userId:userId,folderId:folderId})
+    .then((res)=>{
+        console.log(res)
+        setData(res.data)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
     }
+console.log("folderId:", folderId, "userId:", userId);
 
-    function openFile(fileid){
-        axios.get(`http://localhost:5000/document/filedata/open`, {params: { fileid: fileid },responseType: "blob"})    
-        .then((res)=>{
-            const blob = new Blob([res.data], { type:'application/pdf' });
-            const fileURL = URL.createObjectURL(blob);
+    useEffect(()=>{
+          console.log("useEffect triggered with:", folderId, userId);
+  if (folderId && userId) {
+    renderFileinFolder();
+  }
+    },[folderId, userId])
 
-            setFrameData(fileURL)
-            navigate("/app/viewdoc")
-        })    
-
-    }
-
-        function getFile(fileid){
-        axios.get(`http://localhost:5000/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
-        .then((res)=>{
-            const fileURL = window.URL.createObjectURL(new Blob([res.data]), { type: 'application/pdf' });
-                const link = document.createElement('a');
-                link.href = fileURL;
-                console.log(fileURL)
-                link.setAttribute('download', "document.pdf");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-    }
-
-
-
-    const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"document"})
-
-    return <main className="flex flex-col h-full items-center">
-        <UploadFiles/>
-        <section className="w-[90%] flex flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-10 md:justify-between">
+    return <main className="flex flex-col h-full">
+        <section className="w-full flex flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-10 md:justify-between">
         <div className="flex items-center gap-3 text-black font-bold">
         <FaSearch className="text-2xl text-black"/>
         <input type="name" name="search" onChange={(e)=>{setSearchTerm(e.target.value)}} className="w-[15em] border-solid bg-gray-200 md:w-[20em] h-[2em] rounded-2xl pl-5"/>
@@ -110,29 +93,29 @@ export default function AllDocuments({setFrameData}){
         </section>
         </section>
 
-        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll">
-            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-full">
+        <section className="mt-5 h-full z-10">
+            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full">
                 <thead className="flex justify-around w-full">
-                    <tr className="flex w-full py-5 mb-0 justify-around">
+                    <tr className="flex bg-gray-200/20 w-full py-5 mb-0 justify-around">
                     <th className="w-[5em] text-end">Title</th>
                     <th className="w-[5em] text-end">Descr</th>
                     <th className="w-[5em] text-end">Folder</th>
                     <th className="w-[5em] text-end ">Size</th>
                     <th className="w-[5em] text-end">Type</th>
                     <th className="w-[5em] text-end">Link</th>
-                    <th className="w-[5em] text-end">Options</th>
+                    <th className="w-[5em] text-end">Delete</th>
                 </tr>
                 </thead>
-                <tbody className="text-black w-full flex flex-col gap-10 h-full">
+                <tbody className="bg-gray-200/20 text-black w-full flex flex-col gap-10 h-full">
                 {
-                filteredData.map((docs)=>(
-                    <tr key={docs.id} className="flex w-full justify-around py-5 pb-5" >
+                data.map((docs)=>(
+                    <tr key={docs.id} className="flex w-full justify-around py-2 pb-5" >
                         <td className="text-left text-purple-800 text-base md:text-xl font-medium w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis border-solid">{docs.metadata}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.folder_name||"Nil"}</td>
                         <td className="w-[5em]">{docs.file_size}Mb</td>
                         <td className="w-[5em]">pdf</td>
-                        <td className="cursor-pointer bg-purple-800 p-0.5 md:p-2 text-white text-lg rounded-md" onClick={() => openFile(docs.id)}>View</td>
+                        <td className="cursor-pointer bg-purple-800 p-0.5 md:p-2 text-white text-lg rounded-md"><a href={docs.link} target="_blank" rel="noopener noreferrer">View</a></td>
                         <td className="text-2xl" onMouseOut={handleMouseOut} onMouseOver={(e)=>{handleMouseOver(e,docs.id)}}><img src={dots} alt="" className="h-5 w-auto box-border cursor-pointer" /></td>
                     </tr>
                 ))}
@@ -146,13 +129,8 @@ export default function AllDocuments({setFrameData}){
                 x:hoverPosition.x,
                 y:hoverPosition.y
             }}>
-                <FileOptions id={fileId} addtoFolder={filetoFolder}/>
-                </div>}
-
-            {showAddModal && <div className="relative z-100 bottom-100 left-80">
-                <AddtoFolder fileId={selectedFileId} userId={filteredData[0].user_id} onclose={() => setShowAddModal(false)} />
+                <FileOptions id={fileId}/>
                 </div>}
         </section>
-
     </main>
 }

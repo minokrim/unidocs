@@ -32,3 +32,14 @@ export const allFolder=async(filteringLogic,orderlogic,id)=>{
         return{status:(500),message:("Failed to get data from DB")}
     }
 }
+
+export const deleteFolder=async(id)=>{
+    console.log(id)
+    try {
+        const query=await db.query("DELETE FROM folders WHERE id=$1",[id])
+        console.log(query)
+        return { status: 201, message: "Document delete successful" };
+    } catch (error) {
+    return{status:(500),message:("Failed to delete data from DB"),error};
+    }
+}

@@ -64,7 +64,7 @@ datasets: [{
         </div>
         <div className="fil-con">
 
-        <div className="fil fill-cont p-2">
+        <div className="fil fill-cont p-2 bg-gradient-to-b from-black to-purple-950">
           <TopFile onFileCountUpdate={setFileCount}/>
         </div>
         
@@ -74,7 +74,7 @@ datasets: [{
 
       <div className="test">
         <div className="fil-con">
-        <div className="fil fill-cont p-2">
+        <div className="fil fill-cont p-2 bg-gradient-to-b from-black to-purple-950">
           <TopFolder onFolderCount={setFolderCount}/>
         </div>
         </div>
@@ -83,7 +83,7 @@ datasets: [{
 
       <div className="test">
         <div className="fil-con">
-        <div className="fil fill-cont">
+        <div className="fil fill-cont bg-gradient-to-b from-black to-purple-950">
           <Doughnut data={data} options={options}/>
         </div>
         </div>

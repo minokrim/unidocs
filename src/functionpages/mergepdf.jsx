@@ -4,7 +4,7 @@ import axios from "axios";
 import documenticon from "../images/document.png";
 import "./mergepdf.css";
 import { FaPlus } from "react-icons/fa";
-
+import Swal from "sweetalert2";
 export default function Mergepdf() {
     const [file1, setFile1] = useState(null);
     const [file2, setFile2] = useState(null);
@@ -36,9 +36,25 @@ export default function Mergepdf() {
                 document.body.removeChild(link);
 
                 window.URL.revokeObjectURL(fileURL);
+
+            Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Files has been merges succesfully",
+            showConfirmButton: false,
+            timer: 1500,
+            })
+
+                setFile1(null)
+                setFile2(null)
+
             })
             .catch((err) => {
-                console.error("Error downloading file:", err);
+          Swal.fire({
+            icon: "error",
+            title: "Files merge failed",
+            text: "Try again",
+          })
             });
     }
 

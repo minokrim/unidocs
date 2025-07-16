@@ -22,8 +22,8 @@ useEffect(()=>{
         setLastName(user.last_name||"")
         setEmail(user.email)
         setPassword(user.password||"")
-        setProfilePic(null)
-        setPreviewPic(user.profile_pic_url || "");
+        setProfilePic(dp)
+        setPreviewPic(user.profile_pic_url);
     
 },[user])
 
@@ -39,37 +39,6 @@ async function toggleEditDetails() {
     setEditDetails(!editdetails);
 }
 
-// async function updatedetails (uploadedPath) {
-//     const data = {
-//         firstName: firstName,
-//         lastName: lastName,
-//         email: email,
-//         password: password,
-//         profilePic: uploadedPath||user.profilePic
-//     };
-
-//     const formData=new FormData()
-//     formData.append("profile_pic",profilePic)
-
-//     axios.post("http://localhost:5000/updated/details", data,{withCredentials:true},formData, {
-//         headers: { "Content-Type": "multipart/form-data" },
-//         withCredentials: true
-//     })
-//         .then((res) => {
-//             console.log(res);
-
-//             setUser((prevUser) => ({
-//                 ...prevUser,
-//                 first_name: firstName,
-//                 last_name: lastName,
-//                 password: password,
-//                 profilePic: uploadedPath || prevUser.profilePic
-//             }));
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// }
 
 async function updatedetails(uploadedPath) {
     const formData = new FormData();
@@ -93,6 +62,7 @@ async function updatedetails(uploadedPath) {
             password: password,
             profile_pic_url: uploadedPath
         }));
+        console.log(uploadedPath)
     } catch (err) {
         console.log(err);
     }
@@ -129,48 +99,50 @@ const handlePicChange = (e) => {
 };
 
     return <main className="bg-white h-full md:h-[100vh] flex flex-col justify-start md:justify-between pt-5 items-center w-full">
-            <h1 className="ml-0 md:ml-24 text-6xl text-black self-center justify-center w-[100%]">PROFILE</h1>
+            <h1 className="ml-0 md:ml-24 self-center justify-center w-[100%] text-purple-600">PROFILE SETTINGS</h1>
 
-            <div className="flex w-full justify-around md:justify-between content-center items-center flex-col md:flex-row">
+            <div className="flex w-full justify-around content-center items-center flex-col md:flex-row">
 
-            <section className="flex w-[90%] mb-20 justify-center">
-                <img src={previewPic} alt="profile" className="h-[5em] w-[5em] md:h-[10em] md:w-[10em] rounded-full"/>
-                <label htmlFor="imageInput">
-                {editdetails && <FaEdit color="purple" className="text-3xl self-end md:self-center absolute" />}
+            <section className="flex flex-col w-max mb-20 justify-center border border-solid border-1 border-purple-400 items-center p-5 rounded-lg gap-5">
+                <img src={previewPic} alt="profile" className="h-[5em] w-[5em] md:h-[10em] md:w-[10em] rounded-full border border-solid border-red-500"/>
+                {editdetails && <label htmlFor="imageInput" className="bg-white text-purple-600 border-purple-600 rounded-lg w-max p-2 border-2 border-solid ">Upload Photo</label>}
                 <input type="file" name="file" id="imageInput" className="hidden" onChange={handlePicChange}/>
-                </label>
             </section>
 
-            <form className="w-full flex flex-col justify-center content-center md:justify-around gap-5 text-black">
+            <form className="w-max flex flex-col justify-center content-center md:justify-around gap-3 text-black">
                 
-                <div className="flex flex-col md:flex-row gap-3">
-                <h3 className="w-full md:w-[5em]">First-Name</h3>
-                {editdetails && <FaEdit color="purple" className="text-3xl self-end md:self-center" />}
-                <input type="text" value={firstName} onChange={(e)=>{setFirstName(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800 bg-purple-800/60 text-black font-bold pl-5 "/>
+                <div className="flex flex-col gap-1 w-max">
+                <h3 className="w-full md:w-[5em] font-normal text-xl">First-Name</h3>
+                {editdetails && <FaEdit color="purple" className="text-3xl self-start" />}
+                <input type="text" value={firstName} onChange={(e)=>{setFirstName(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-3">
-                <h3 className="w-full md:w-[5em]">Last-Name</h3>
-                {editdetails && <FaEdit color="purple" className="text-3xl self-end md:self-center" />}
-                <input type="text" value={lastName} onChange={(e)=>{setLastName(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800  bg-purple-800/60 text-black font-bold pl-5"/>
+                <div className="flex flex-col gap-1 w-max">
+                <h3 className="w-full md:w-[5em] font-normal text-xl">Last-Name</h3>
+                {editdetails && <FaEdit color="purple" className="text-3xl self-start" />}
+                <input type="text" value={lastName} onChange={(e)=>{setLastName(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-3">
-                <h3 className="w-full md:w-[5em]">Email</h3>
-                <input type="text" value={email} disabled className="w-full md:w-[25em] border border-solid border-gray-800  bg-purple-800/60 text-black font-bold pl-5"/>
+                <div className="flex flex-col gap-1 w-max">
+                <h3 className="w-full md:w-[5em] font-normal text-xl">Email</h3>
+                <input type="text" value={email} disabled className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-3">
-                <h3 className="w-full md:w-[5em]">Password</h3>
-                {editdetails && <FaEdit color="purple" className="text-3xl self-end md:self-center" />}
-                <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800  bg-purple-800/60 text-black font-bold pl-5"/>
+                <div className="flex flex-col gap-1 w-max">
+                <h3 className="w-full md:w-[5em] font-normal text-xl">Password</h3>
+                {editdetails && <FaEdit color="purple" className="text-3xl self-start" />}
+                <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
                 </div>
             </form>
 
             </div>
 
-            <button className="w-[70%] md:w-[40%] bg-purple-700 text-white px-6 py-2 rounded-lg" onClick={toggleEditDetails}>
+            <section className="w-full md:w-[70%] flex justify-end items-center gap-3 mt-5 BORDER">
+                <button className="w-[50%] md:w-[20%] bg-purple-700 text-white rounded-lg" onClick={toggleEditDetails}>
             {editdetails ? "Save Details" : "Edit Details"}
             </button>
+
+            <button className="bg-white w-[50%] md:w-[20%] border-red-600 rounded-lg text-red-600 font-semibold text-lg">Delete Account</button>
+            </section>
     </main>
 }

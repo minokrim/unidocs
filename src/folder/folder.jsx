@@ -1,21 +1,49 @@
-import { useContext, useState } from "react"
-// import { folderContext } from "../context/folderProvider"
+import { useContext, useState,useRef } from "react"
 import FolderCard from "../components/foldercard"
 import { FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { CiSearch } from "react-icons/ci";
-import { FaSearch } from "react-icons/fa";
 import UseFilteredData from "../components/filteringLogic";
 import { AiOutlineSortDescending } from "react-icons/ai";
 import { TbSortDescendingLetters } from "react-icons/tb";
-
+import FolderOptions from "../components/folderOptions";
 export default function AllFolders(){
         const[filteringLogic,setFilteringLogic]=useState("id")
         const [orderLogic,setOrderLogic]=useState("ASC")
         const[searchTerm,setSearchTerm]=useState("")
+        const [menuOpen, setMenuOpen] = useState(false);
+        const [folderId,setFolderId]=useState(null)
+        const[hoverPosition,setHoverPosition]=useState({x:0,y:0,bottom:0,top:0,right:0,left:0})
+
+let hoverTimeout = useRef(null);
+
+function handleMenuToggle(e, status,folderIdArg) {
+    if (folderIdArg !== undefined) setFolderId(folderIdArg);
+    if (status) {
+        clearTimeout(hoverTimeout.current); 
+        setMenuOpen(true);
+
+        if (e) { 
+            const position = e.target.getBoundingClientRect();
+            setHoverPosition({
+                x: position.x + window.scrollX,
+                y: position.y + window.scrollY,
+                bottom: position.bottom,
+                top: position.top + window.scrollY,
+                right: position.right,
+                left: position.left + window.scrollX,
+            });
+        }
+    } else {
+        hoverTimeout.current = setTimeout(() => {
+            setMenuOpen(false);
+        }, 150);
+    }
+}
+
     
         const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"folder"})
-    // const{folders,loading}=useContext(folderContext)
+        const selectedFolder = filteredData.find(f => f.id === folderId);
+
     return <main className="flex flex-col justify-around mt-5">
         <section>
             <div className="flex justify-between">
@@ -53,9 +81,23 @@ export default function AllFolders(){
         <section className="flex pt-5 flex-wrap gap-5 md:gap-0">
         {filteredData.map((fold)=>(
             <div key={fold.id}>
-                <FolderCard name={fold.folder_name} time={new Date(fold.created_at).toLocaleDateString()}/>
+                <FolderCard name={fold.folder_name} onToggleMenu={(e) => handleMenuToggle(e, true,fold.id)} onMouseLeave={() => handleMenuToggle(null, false)} time={new Date(fold.created_at).toLocaleDateString()}/>
             </div>
         ))}
+
+        {menuOpen && (<div className="absolute z-30" style={{
+        top:hoverPosition.top+30,
+        left:hoverPosition.left-50,
+        bottom:hoverPosition.bottom,
+        right:hoverPosition.right,
+        x:hoverPosition.x,
+        y:hoverPosition.y
+        }} 
+        onMouseEnter={() => handleMenuToggle(null, true)} 
+        onMouseLeave={() => handleMenuToggle(null, false)}>
+        {menuOpen && (<div><FolderOptions  id={folderId} userid={filteredData[3].user_id}/></div>)}
+        </div>)}
         </section>
     </main>
+    
 }

@@ -6,7 +6,6 @@ export default function UseFilteredData({filteringLogic, orderLogic, searchTerm,
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const {user,loading:userLoading,user_id}=useContext(userContext)
-    console.log("user:id"+user_id)
 
     useEffect(()=>{
         if(!userLoading && user?.id){

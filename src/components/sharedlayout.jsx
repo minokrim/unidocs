@@ -18,7 +18,7 @@ export default function SharedLayout(){
             < Sidenav/>
             </div>
             )}
-            <div className="scroll w-[100vw] h-[70rem] overflow-y-scroll overflow-x-hidden z-10 pl-3 pr-4">
+            <div className="scroll w-[100vw] h-[70rem] overflow-y-scroll overflow-x-hidden z-10 pl-0 pr-0">
                 <Outlet/>
             </div>
         </section>

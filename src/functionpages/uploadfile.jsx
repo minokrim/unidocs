@@ -1,33 +1,58 @@
-import React,{useState,} from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import "./uploadfile.css"
+import "./uploadfile.css";
 import DefaultFunction from "./functionDefault";
-export default function UploadFiles(){
-    const [file,setFile]=useState(null)
-    const [metaData,setMetaData]=useState("")
-    // const [editFilePath,setEditFilePath]=useState()
-    // const [fileData,setFileData]=useState()
-    function handleFileUpload(e){
-      if (!file) {
-        alert("Please select a file before uploading.");
-        return;
-    }
-        const formData=new FormData();
-        formData.append("file",file);
-        console.log(file)
-        formData.append("metadata",file.name);
-        console.log(formData)
-            axios.post("http://localhost:5000/upload/file/metadata",formData)
-            .then((response)=>{
-              console.log("file upload sucess")
-            })
-            .catch((err)=>{
-              console.log(err)
-            })
-        
-          }
+import { userContext } from "../context/userProvider";
+import Swal from "sweetalert2";
 
-    return <main>
-      <DefaultFunction functionName={"upload File"} handleFileUpload={handleFileUpload} filestate={file} setFile={setFile} file={file} functionAction={"Upload File"}/>
+export default function UploadFiles() {
+  const [file, setFile] = useState(null);
+  const [metaData, setMetaData] = useState("");
+  const { user, loading: userLoading, user_id } = useContext(userContext);
+
+  function handleFileUpload(e) {
+    if (!file) {
+      alert("Please select a file before uploading.");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("metadata", file.name);
+    formData.append("userId", user.id);
+
+    if (!userLoading && user.id) {
+      axios
+        .post("http://localhost:5000/upload/file/metadata", formData)
+        .then((response) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "File has been uploaded",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setFile(null);
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "File upload failed",
+            text: "Try again",
+          });
+        });
+    }
+  }
+
+  return (
+    <main>
+      <DefaultFunction
+        functionName={"upload File"}
+        handleFileUpload={handleFileUpload}
+        filestate={file}
+        setFile={setFile}
+        file={file}
+        functionAction={"Upload File"}
+      />
     </main>
+  );
 }

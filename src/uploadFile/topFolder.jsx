@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { FaFolder } from "react-icons/fa";
 import UseFilteredData from "../components/filteringLogic";
+import { folderContext } from "../context/folderProvider";
 
 export default function TopFolder({onFolderCount}){
     const[filteringLogic,setFilteringLogic]=useState("id")
@@ -9,7 +10,6 @@ export default function TopFolder({onFolderCount}){
     const[searchTerm,setSearchTerm]=useState("")
 
     const filteredFolder=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"folder"})
-
 
     function spliceFolderName(folder_name){
         if (folder_name.length>10){
@@ -22,7 +22,10 @@ export default function TopFolder({onFolderCount}){
     
 
     useEffect(()=>{
-    },[filteredFolder])
+    if (onFolderCount) {
+      onFolderCount(filteredFolder.length);
+    }
+    },[filteredFolder,onFolderCount])
 
     return <main className="topfile-body grid grid-cols-3 justify-around gap-10 h-[100%] overflow-scroll">
         {filteredFolder.map((data)=>(

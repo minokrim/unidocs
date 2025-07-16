@@ -3,7 +3,8 @@ import UseFilteredData from "./filteringLogic"
 import { FaFolder } from "react-icons/fa"
 import { FaPlus } from "react-icons/fa"
 import axios from "axios"
-export default function AddtoFolder({fileId,onclose}){
+import Swal from "sweetalert2"
+export default function AddtoFolder({fileId,onclose,userId}){
         const[filteringLogic,setFilteringLogic]=useState("id")
         const [orderLogic,setOrderLogic]=useState("ASC")
         const[searchTerm,setSearchTerm]=useState("")
@@ -21,14 +22,23 @@ export default function AddtoFolder({fileId,onclose}){
         }
 
         function handleFiletoFolder(){
-            axios.post("http://localhost:5000/document/addtofolder",{file_id:fileId,folder_id:selectedFolder})
+            axios.post("http://localhost:5000/document/addtofolder",{file_id:fileId,folder_id:selectedFolder,userId:userId})
             .then((res)=>{
-                console.log(res)
                 onclose()
-                return res
+                Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Files stored to folder",
+                showConfirmButton: false,
+                timer: 1500,
+                })
             })
             .catch((err)=>{
-                return err
+              Swal.fire({
+                icon: "error",
+                title: "Save to folder failed",
+                text: "Try again",
+              })
             })
         }
 

@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import DefaultFunction from "./functionDefault";
 import axios from "axios";
+import Swal from "sweetalert2";
 export default function Jpgpdf(){
         const [file,setFile]=useState(null)
     
@@ -25,9 +26,21 @@ export default function Jpgpdf(){
             document.body.removeChild(link);
       
             window.URL.revokeObjectURL(fileURL);
+            Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Files converted to pdf succesfully",
+            showConfirmButton: false,
+            timer: 1500,
+            })
+            setFile(null)
           })
           .catch((err) => {
-            console.error("Error downloading file:", err);
+          Swal.fire({
+            icon: "error",
+            title: "File conversion to audio failed",
+            text: "Try again",
+          })
           });
       }
       

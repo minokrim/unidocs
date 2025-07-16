@@ -1,4 +1,4 @@
-import { createFolder,allFolder } from "../services/createFolderService.js";
+import { createFolder,allFolder,deleteFolder } from "../services/createFolderService.js";
 
 export const createfolder=async(req,res)=>{
     const { folderName, folderDescription } = req.body;
@@ -29,5 +29,17 @@ console.log("req.body.id exists?", 'id' in req.body);
     } catch (error) {
         console.error(error);
         res.status(500).send('Failed to retrieve folders');
+    }
+}
+
+export const deletefolder=async(req,res)=>{
+    const folderId=req.body.fileId
+    console.log(folderId)
+    try {
+        const result=await deleteFolder(folderId)
+        console.log(result)
+        res.status(result.status).send(result.message);
+    } catch (error) {
+        res.status(500).send("Failed to delete file");
     }
 }

@@ -1,8 +1,8 @@
 import { db } from '../config/db.js';
 
-export const uploadFiles=async(filename,filePath,metadata,filesize)=>{
+export const uploadFiles=async(filename,filePath,metadata,filesize,userid)=>{
     try{
-        await db.query("INSERT INTO DOCUMENTS(FILENAME,FILEPATH,METADATA,file_size) VALUES($1,$2,$3,$4)",[filename,filePath,JSON.stringify(metadata),filesize])
+        await db.query("INSERT INTO DOCUMENTS(FILENAME,FILEPATH,METADATA,file_size,user_id) VALUES($1,$2,$3,$4,$5)",[filename,filePath,JSON.stringify(metadata),filesize,userid])
         return { status: 201, message: "Document upload successful" };
     }
     catch(err){
@@ -18,10 +18,12 @@ export const filteredFiles=async(filteringLogic,orderlogic,id)=>{
             const allowedColumns = ['created_at', 'filename', 'id',"file_size"]; 
             const allowedOrders = ['ASC', 'DESC'];
         if(filteringLogic && orderlogic && allowedColumns.includes(filteringLogic) && allowedOrders.includes(orderlogic)){
-          data=await db.query(`SELECT * FROM DOCUMENTS WHERE user_id=$1 ORDER BY ${filteringLogic} ${orderlogic}`,[id])
+          data=await db.query(`SELECT DOCUMENTS.*,Folders.folder_name AS folder_name FROM DOCUMENTS LEFT JOIN FOLDERS ON DOCUMENTS.folder_id=FOLDERS.id WHERE DOCUMENTS.user_id=$1 ORDER BY DOCUMENTS.${filteringLogic} ${orderlogic}`,[id])
+
+          console.log(data)
         }
         else{
-         data=await db.query(`SELECT * FROM DOCUMENTS WHERE user_id=$1`,[2])
+         data=await db.query(`SELECT DOCUMENTS.*,Folders.folder_name AS folder_name FROM DOCUMENTS LEFT JOIN FOLDERS ON DOCUMENTS.folder_id=FOLDERS.id WHERE DOCUMENTS.user_id=$1`,[id])
         }
         return data;
         
@@ -57,17 +59,34 @@ export const deleteFile=async(id)=>{
     }
 }
 
-export const filetoFolder=async(file_id,folder_id)=>{
-
+export const filetoFolder=async(file_id,folder_id,user_id)=>{
+    console.log("user:"+user_id)
     try {
+                console.log("Inserting file:", file_id, "into folders:", folder_id," user",user_id);
         await Promise.all(
             folder_id.map(async (f_id)=>{
-                await db.query("INSERT INTO file_folders(file_id,folder_id) VALUES($1,$2) ON CONFLICT (file_id, folder_id) DO NOTHING",[file_id,f_id]);
+                                console.log(`Inserting file_id ${file_id} into folder_id ${f_id} and ${user_id}`);
+
+                await db.query("INSERT INTO file_folders(file_id,folder_id,user_id) VALUES($1,$2,$3) ON CONFLICT (file_id, folder_id) DO UPDATE SET user_id = EXCLUDED.user_id",[file_id,f_id,user_id]);
             })
         )
     return { status: 201, message: "file inserted successful" };
     } catch (error) {
         console.error("Upload failed:", error);
         throw new Error("Failed to upload document");    
+    }
+}
+
+export const fileinFolder=async(userId,FolderId)=>{
+    try {
+        console.log(userId,FolderId)
+        const query=await db.query("SELECT documents.*, folders.folder_name AS folder_name FROM documents JOIN file_folders ON documents.id = file_folders.file_id JOIN folders ON folders.id = file_folders.folder_id WHERE file_folders.folder_id = $1 AND file_folders.user_id = $2",[FolderId,userId])
+
+        console.log(query.rows)
+        return query.rows;
+    } catch (error) {
+        console.error("Upload failed:", error);
+        throw new Error("Failed to get documents");    
+    
     }
 }

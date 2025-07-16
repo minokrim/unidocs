@@ -2,20 +2,18 @@ import React, { useState,useEffect } from "react";
 import axios from "axios"
 import documenticon from "../images/document.png"
 import "./topfile.css"
+import UseFilteredData from "../components/filteringLogic";
+import { CiFileOn } from "react-icons/ci";
 
 export default function TopFile ({onFileCountUpdate}) {
     const [Data,setData]=useState([]);
-    function handlegetrequest(){
-        axios.post("http://localhost:5000/document/data/")
-        .then((response)=>{
-            console.log(response.data)
-            setData(response.data.rows)
-            onFileCountUpdate?.(response.data.rowCount)
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-    }
+        const[filteringLogic,setFilteringLogic]=useState("id")
+        const [orderLogic,setOrderLogic]=useState("ASC")
+        const[searchTerm,setSearchTerm]=useState("")
+
+    const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"document"})
+    const splicedData=filteredData.slice(0,9)
+    console.log(filteredData)
 
     function spliceFilename(filename){
         if (filename.length>10){
@@ -26,8 +24,9 @@ export default function TopFile ({onFileCountUpdate}) {
         }
     }
 
+
     function getFile(fileid){
-        axios.get(`http://localhost:5000/document/data/`, {params: { fileid: fileid },responseType: "blob"})        
+        axios.get(`http://localhost:5000/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
         .then((res)=>{
             console.log("Id sent succesfully")
 
@@ -45,15 +44,16 @@ export default function TopFile ({onFileCountUpdate}) {
         })
     }
 
+  useEffect(() => {
+    if (onFileCountUpdate) {
+      onFileCountUpdate(filteredData.length);
+    }
+  }, [filteredData, onFileCountUpdate]);
 
-    useEffect(()=>{
-        handlegetrequest()
-    },[])
-    
     return <main className="topfile-body grid grid-cols-3 justify-around gap-10 h-[100%] overflow-scroll">
-            {Data.map((docs)=>(
+            {splicedData.map((docs)=>(
                 <section key={docs.id} className="topfiles" onClick={() => getFile(docs.id)}>
-                <img src={documenticon} alt="file icon" className="w-auto h-[3em]"/>
+                <CiFileOn className="w-auto h-[3em]"/>
                 <p className="text-md md:text-xl">{spliceFilename(docs.filename)}</p>
             </section>
             ))}
