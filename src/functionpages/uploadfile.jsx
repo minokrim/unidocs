@@ -11,6 +11,8 @@ export default function UploadFiles() {
   const { user, loading: userLoading, user_id } = useContext(userContext);
 
   function handleFileUpload(e) {
+    console.log("clicked")
+    console.log(user.id)
     if (!file) {
       alert("Please select a file before uploading.");
       return;
@@ -22,7 +24,7 @@ export default function UploadFiles() {
 
     if (!userLoading && user.id) {
       axios
-        .post("http://localhost:5000/upload/file/metadata", formData)
+        .post("http://localhost/document/api/upload/file/metadata", formData)
         .then((response) => {
           Swal.fire({
             position: "center",

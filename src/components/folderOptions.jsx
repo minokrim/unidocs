@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
-import { deleteItem } from "./deleteLogic";
+import { DeleteItem } from "./deleteLogic";
 import { Link } from "react-router-dom";
 export default function FolderOptions({id,userid}){
     console.log("FolderOptions props:", { id, userid });
 
     function handleDelete(){
     console.log(id)
-    deleteItem({ type: "folder", id })
+    DeleteItem({ type: "folder", id })
     .then((res) => {
       console.log("Deleted successfully");
     })

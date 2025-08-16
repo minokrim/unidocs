@@ -16,7 +16,7 @@
 
 @media (max-width: 660px) {
     .taskFunction-holder{
-        gap: 30px;
-        justify-content: space-between;
+        gap: 1em;
+        justify-content: space-around;
     }
 }

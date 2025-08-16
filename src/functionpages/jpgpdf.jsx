@@ -9,7 +9,7 @@ export default function Jpgpdf(){
         const formData = new FormData();
         formData.append("file", file);
         axios
-          .post("http://localhost:5000/file/convert", formData, { responseType: "blob" })
+          .post("http://localhost/pdf/file/convert", formData, { responseType: "blob" })
           .then((res) => {
   
             const blob = new Blob([res.data], { type: "application/pdf" });

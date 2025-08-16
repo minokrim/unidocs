@@ -11,6 +11,7 @@ import dots from "../images/dots2.png";
 import FileOptions from "../components/fileOptions";
 import AddtoFolder from "../components/addtoFolder";
 import { useNavigate } from "react-router-dom";
+import SharePdf from "./sharedoc";
 
 export default function AllDocuments({setFrameData}){
     const [data,setData]=useState([])
@@ -22,11 +23,12 @@ export default function AllDocuments({setFrameData}){
     const[hoverPosition,setHoverPosition]=useState({x:0,y:0,bottom:0,top:0,right:0,left:0})
     const [showAddModal, setShowAddModal] = useState(false);
     const [selectedFileId, setSelectedFileId] = useState(null);
+    const [filePath,setFilePath]=useState("")
+    const [renderShareModal,setRenderShareModal]=useState(false)
     const navigate=useNavigate();
 
-    function handleMouseOver(e,id){
+    function handleMouseOver(e,id,filePath){
         const position=e.target.getBoundingClientRect()
-        console.log(position)
         setHoverPosition({
             x:position.x+ window.scrollX,
             y:position.y+ window.scrollY,
@@ -37,7 +39,9 @@ export default function AllDocuments({setFrameData}){
         })
         setHoverState(true)
         setFileId(id)
+        setFilePath(filePath)
     }
+
     function handleMouseOut(){
         setHoverState(false)
     }
@@ -53,7 +57,7 @@ export default function AllDocuments({setFrameData}){
     }
 
     function openFile(fileid){
-        axios.get(`http://localhost:5000/document/filedata/open`, {params: { fileid: fileid },responseType: "blob"})    
+        axios.get(`http://localhost/document/document/filedata/open`, {params: { fileid: fileid },responseType: "blob"})    
         .then((res)=>{
             const blob = new Blob([res.data], { type:'application/pdf' });
             const fileURL = URL.createObjectURL(blob);
@@ -64,32 +68,14 @@ export default function AllDocuments({setFrameData}){
 
     }
 
-        function getFile(fileid){
-        axios.get(`http://localhost:5000/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
-        .then((res)=>{
-            const fileURL = window.URL.createObjectURL(new Blob([res.data]), { type: 'application/pdf' });
-                const link = document.createElement('a');
-                link.href = fileURL;
-                console.log(fileURL)
-                link.setAttribute('download', "document.pdf");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-    }
-
 
 
     const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"document"})
-
     return <main className="flex flex-col h-full items-center">
         <UploadFiles/>
-        <section className="w-[90%] flex flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-10 md:justify-between">
-        <div className="flex items-center gap-3 text-black font-bold">
-        <FaSearch className="text-2xl text-black"/>
+        <section className="w-[100%] md:w-[90%] flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-0 md:mr-10 md:justify-between">
+        <div className="flex items-center gap-3 text-black font-bold  w-full">
+        <FaSearch className="text-2xl ml-3  md:ml-0 text-black"/>
         <input type="name" name="search" onChange={(e)=>{setSearchTerm(e.target.value)}} className="w-[15em] border-solid bg-gray-200 md:w-[20em] h-[2em] rounded-2xl pl-5"/>
         </div>
 
@@ -111,7 +97,7 @@ export default function AllDocuments({setFrameData}){
         </section>
 
         <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll">
-            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-full">
+            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full overflow-x-scroll "style={{scrollbarWidth:'none',msOverflowStyle: 'none'}}>
                 <thead className="flex justify-around w-full">
                     <tr className="flex w-full py-5 mb-0 justify-around">
                     <th className="w-[5em] text-end">Title</th>
@@ -133,7 +119,7 @@ export default function AllDocuments({setFrameData}){
                         <td className="w-[5em]">{docs.file_size}Mb</td>
                         <td className="w-[5em]">pdf</td>
                         <td className="cursor-pointer bg-purple-800 p-0.5 md:p-2 text-white text-lg rounded-md" onClick={() => openFile(docs.id)}>View</td>
-                        <td className="text-2xl" onMouseOut={handleMouseOut} onMouseOver={(e)=>{handleMouseOver(e,docs.id)}}><img src={dots} alt="" className="h-5 w-auto box-border cursor-pointer" /></td>
+                        <td className="text-2xl" onMouseOut={handleMouseOut} onMouseOver={(e)=>{handleMouseOver(e,docs.id,docs.filepath)}}><img src={dots} alt="" className="h-5 w-auto box-border cursor-pointer" /></td>
                     </tr>
                 ))}
                 </tbody>
@@ -146,12 +132,16 @@ export default function AllDocuments({setFrameData}){
                 x:hoverPosition.x,
                 y:hoverPosition.y
             }}>
-                <FileOptions id={fileId} addtoFolder={filetoFolder}/>
+                <FileOptions id={fileId} addtoFolder={filetoFolder} setRenderShareModal={setRenderShareModal}/>
                 </div>}
 
-            {showAddModal && <div className="relative z-100 bottom-100 left-80">
+            {showAddModal && <div className="fixed flex inset-0 z-100 items-center justify-center">
                 <AddtoFolder fileId={selectedFileId} userId={filteredData[0].user_id} onclose={() => setShowAddModal(false)} />
                 </div>}
+
+                {renderShareModal && <div className="fixed flex inset-0 z-100 items-center justify-center">
+                    <SharePdf filePath={filePath} onclose={() => setRenderShareModal(false)}/>
+                    </div>}
         </section>
 
     </main>

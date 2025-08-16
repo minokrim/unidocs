@@ -1,4 +1,4 @@
-import { uploadFiles,filteredFiles,downloadFile,deleteFile,filetoFolder,fileinFolder} from "../services/fileService.js";
+import { uploadFiles,filteredFiles,downloadFile,deleteFile,filetoFolder,fileinFolder,shareFile} from "../services/fileService.js";
 import path from "path";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -28,7 +28,6 @@ export const uploadfile=async(req,res)=>{
         res.status(result.status).send(result.message);
 
     } catch (error) {
-        res.error(error)
         res.status(500).send("Failed to upload file");
 
     }
@@ -58,7 +57,7 @@ export const downloadfile=async(req,res)=>{
         if (result.status && result.status !== 200) {
             return res.status(result.status).json({ message: result.message });
         }
-        const filePath = path.join(projectRoot, result.filepath);     
+        const filePath = path.join(projectRoot, result.filepath.replace(/\\/g, '/'));     
         res.download(filePath, result.filename);
     } catch (error) {
         console.error('Error downloading file:', error);
@@ -79,7 +78,8 @@ export const openFile=async(req,res)=>{
         if (result.status && result.status !== 200) {
             return res.status(result.status).json({ message: result.message });
         }
-        const filePath = path.join(projectRoot, result.filepath);
+        const filePath = path.join(projectRoot, result.filepath.replace(/\\/g, '/') );
+        console.log(filePath)
         if (!fs.existsSync(filePath)) {
             return res.status(404).json({ message: "File not found" });
         }
@@ -105,9 +105,10 @@ export const openFile=async(req,res)=>{
 
 export const deletefile=async(req,res)=>{
     const fileid=req.body.fileId
+    const userid=req.body.userId
 
     try {
-        const result=await deleteFile(fileid.id)
+        const result=await deleteFile(fileid.id,userid)
         console.log(result)
         res.status(result.status).send(result.message);
     } catch (error) {
@@ -137,8 +138,27 @@ export const fileinfolder=async(req,res)=>{
         console.log(userId,folder_id);
         const result=await fileinFolder(userId,folder_id)
         console.log(result)
-        res.status(200).json(result);   // Send JSON array with status 200
+        res.status(200).json(result);  
     } catch (error) {
         res.status(500).send("Failed to get file in folder");    
+    }
+}
+
+export const sharefile=async(req,res)=>{
+    const user_name=req.body.name;
+    const receiver=req.body.receivers_email;
+    const path=req.body.path;
+    console.log(path)
+
+    // const normalizedPath = path.filepath.replace(/\\/g, '/');
+    try {
+        const result=await shareFile(receiver,user_name,path);
+        if (result.accepted && result.accepted.length > 0) {
+            return res.status(200).json({ success: true, message: "File shared successfully" });
+        } else {
+            return res.status(500).json({ success: false, message: "Failed to share file" });
+        }
+    } catch (error) {
+        console.log(error)
     }
 }

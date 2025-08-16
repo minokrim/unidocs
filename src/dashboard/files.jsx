@@ -22,15 +22,13 @@ export default function Files() {
     labels:[
               "Files",
               "FOLDERS",
-              "Total space"
             ],
 datasets: [{
     label: 'My First Dataset',
-    data: [fileCount, folderCount, 100],
+    data: [fileCount, folderCount],
     backgroundColor: [
       'rgb(230, 230, 240)',
       'rgb(127, 255, 212)',
-      'rgb(255, 182, 193)'
     ],
     hoverOffset: 4
   }]
@@ -54,11 +52,13 @@ datasets: [{
   }
 };
   return (
-    <div className="files-con">
+    <div className="w-flex flex-col mb-5">
+      <section className="flex flex-col w-[100%] items-center justify-center p-1">
       <Dash/>
       <TaskFunction/>
+      </section>
 
-      <section className="home-containers flex">
+      <section className="home-containers flex mb-5">
       <div className="test">
         <div className="cng-con">
         </div>

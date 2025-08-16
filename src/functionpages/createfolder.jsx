@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { userContext } from "../context/userProvider";
 export default function CreateFolder(){
     const [folderName,setFolderName]=useState("")
     const [folderDescription,setFolderDescription]=useState("")
+    const{user,loading}=useContext(userContext)
 
     const handleSubmit=(e)=>{
         e.preventDefault();
         const data={
             folderName:folderName,
-            folderDescription:folderDescription
+            folderDescription:folderDescription,
+            userId:user.id
         }
-        axios.post("http://localhost:5000/folder/create",data)
+        axios.post("http://localhost/folder/folder/create",data)
         .then((res)=>{
             Swal.fire({
             position: "center",

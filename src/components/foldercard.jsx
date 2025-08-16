@@ -25,7 +25,6 @@ export default function FolderCard({name,filenum,time,onToggleMenu}){
         <div className="flex flex-col text-left w-[100%] pl-5">
         <h4 className="text-base md:text-lg border-solid w-full">{name}</h4>
         <p className="text-base md:text-lg font-medium pb-0" >{time}</p>
-        <p className="text-base md:text-lg font-medium mt-0 mb-0 pb-0" >{filenum}13 files</p>
         <img src={dots} onMouseEnter={handleMouseOver} onMouseLeave={handleMouseOut} alt="" className="w-[1.5em] h-auto self-end mt-0 pt-0 mb-1"/>
         </div>
     </main>

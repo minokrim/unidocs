@@ -20,10 +20,9 @@ export default function FolderProvider({children}){
 // }, [userLoading, user?.id]);
 
     const getFolders=(userid)=>{
-      axios.post("http://localhost:5000/folder/data",{id:userid}, { withCredentials: true } )
+      axios.post("http://localhost/folder/folder/data",{id:userid}, { withCredentials: true } )
         .then((response) => {
           setFolders(response.data.rows);
-          console.log(response.data.rows)
         })
         .catch((err) => {
           console.log("Error fetching folders:", err);

@@ -1,4 +1,8 @@
 import { db } from "../config/db.js";
+import env from "dotenv"
+
+env.config();
+const port = process.env.PORT;
 
 export const profilePic=async(filename)=>{
     try { 
@@ -38,7 +42,7 @@ export const userDetails=async (user_email)=>{
           const user = result.rows[0];
           console.log(user)
     
-          user.profile_pic_url = `http://localhost:5000/uploads/${user.profile_pic}`;
+          user.profile_pic_url = `http://localhost/uploads/${user.profile_pic}`;
   
     
           return{status:(200),data:(user)}

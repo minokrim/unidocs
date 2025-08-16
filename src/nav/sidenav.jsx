@@ -19,7 +19,7 @@ export default function Sidenav() {
 
 
   function handleSignOut(){
-  localStorage.removeItem('jwtToken');
+  localStorage.removeItem('jwt');
   navigate('/');
   }
   return (

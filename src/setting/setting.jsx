@@ -3,7 +3,6 @@ import dp from "../images/defaultdp.png"
 import { userContext } from "../context/userProvider";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
-import { CgProfile } from "react-icons/cg";
 
 export default function Settings(){
 
@@ -15,7 +14,6 @@ const[password,setPassword]=useState(user.password||"")
 const[profilePic,setProfilePic]=useState(user.profile_pic_url)
 const [editdetails,setEditDetails]=useState(false)
 const [previewPic, setPreviewPic] = useState(user.profile_pic_url);
-
 
 useEffect(()=>{
         setFirstName(user.first_name||"")
@@ -50,11 +48,10 @@ async function updatedetails(uploadedPath) {
         formData.append("profile_pic", profilePic);
       }
     try {
-        const response = await axios.post("http://localhost:5000/updated/details", formData, {
+        const response = await axios.post("http://localhost/user/api/updated/details", formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
-
         setUser((prevUser) => ({
             ...prevUser,
             first_name: firstName,
@@ -62,7 +59,6 @@ async function updatedetails(uploadedPath) {
             password: password,
             profile_pic_url: uploadedPath
         }));
-        console.log(uploadedPath)
     } catch (err) {
         console.log(err);
     }
@@ -76,12 +72,12 @@ async function uploadprofilePic() {
         formData.append("profile_pic",profilePic)
     
     try {
-        const response = await axios.post("http://localhost:5000/upload/profile-pic", formData, {
+        const response = await axios.post("http://localhost/user/api/upload/profile-pic", formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
         const uploadedPath = response.data.data.path;
-        const fullPicUrl = `http://localhost:5000/${uploadedPath}?t=${Date.now()}`;
+        const fullPicUrl = `http://localhost/${uploadedPath}?t=${Date.now()}`;
         setPreviewPic(fullPicUrl); 
         await updatedetails(fullPicUrl); 
         await refreshUser(); 
@@ -99,12 +95,12 @@ const handlePicChange = (e) => {
 };
 
     return <main className="bg-white h-full md:h-[100vh] flex flex-col justify-start md:justify-between pt-5 items-center w-full">
-            <h1 className="ml-0 md:ml-24 self-center justify-center w-[100%] text-purple-600">PROFILE SETTINGS</h1>
+            <h1 className="ml-10 md:ml-24 self-center justify-center w-[100%] text-purple-600">PROFILE SETTINGS</h1>
 
             <div className="flex w-full justify-around content-center items-center flex-col md:flex-row">
 
-            <section className="flex flex-col w-max mb-20 justify-center border border-solid border-1 border-purple-400 items-center p-5 rounded-lg gap-5">
-                <img src={previewPic} alt="profile" className="h-[5em] w-[5em] md:h-[10em] md:w-[10em] rounded-full border border-solid border-red-500"/>
+            <section className="flex flex-col w-max justify-center border border-solid border-1 border-purple-400 items-center p-5 rounded-lg gap-5">
+                <img src={previewPic||dp} alt="profile" className="h-[5em] w-[5em] md:h-[10em] md:w-[10em] rounded-full border border-solid border-red-500"/>
                 {editdetails && <label htmlFor="imageInput" className="bg-white text-purple-600 border-purple-600 rounded-lg w-max p-2 border-2 border-solid ">Upload Photo</label>}
                 <input type="file" name="file" id="imageInput" className="hidden" onChange={handlePicChange}/>
             </section>
@@ -128,16 +124,16 @@ const handlePicChange = (e) => {
                 <input type="text" value={email} disabled className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
                 </div>
 
-                <div className="flex flex-col gap-1 w-max">
+                {/* <div className="flex flex-col gap-1 w-max">
                 <h3 className="w-full md:w-[5em] font-normal text-xl">Password</h3>
                 {editdetails && <FaEdit color="purple" className="text-3xl self-start" />}
                 <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
-                </div>
+                </div> */}
             </form>
 
             </div>
 
-            <section className="w-full md:w-[70%] flex justify-end items-center gap-3 mt-5 BORDER">
+            <section className="w-full md:w-[70%] flex flex-col md:flex-row justify-end items-center gap-3 mt-5 BORDER">
                 <button className="w-[50%] md:w-[20%] bg-purple-700 text-white rounded-lg" onClick={toggleEditDetails}>
             {editdetails ? "Save Details" : "Edit Details"}
             </button>

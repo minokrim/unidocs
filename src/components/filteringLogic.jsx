@@ -9,7 +9,7 @@ export default function UseFilteredData({filteringLogic, orderLogic, searchTerm,
 
     useEffect(()=>{
         if(!userLoading && user?.id){
-        axios.post(`http://localhost:5000/${type}/data`,{logic:filteringLogic,order:orderLogic,id:user.id},{ withCredentials: true })
+        axios.post(`http://localhost/${type}/${type}/data`,{logic:filteringLogic,order:orderLogic,id:user.id},{ withCredentials: true })
         .then((response)=>{
             setData(response.data.rows)
         })

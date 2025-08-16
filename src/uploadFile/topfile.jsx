@@ -13,7 +13,6 @@ export default function TopFile ({onFileCountUpdate}) {
 
     const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"document"})
     const splicedData=filteredData.slice(0,9)
-    console.log(filteredData)
 
     function spliceFilename(filename){
         if (filename.length>10){
@@ -26,7 +25,7 @@ export default function TopFile ({onFileCountUpdate}) {
 
 
     function getFile(fileid){
-        axios.get(`http://localhost:5000/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
+        axios.get(`http://localhost/user/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
         .then((res)=>{
             console.log("Id sent succesfully")
 

@@ -1,12 +1,12 @@
 import { createFolder,allFolder,deleteFolder } from "../services/createFolderService.js";
 
 export const createfolder=async(req,res)=>{
-    const { folderName, folderDescription } = req.body;
+    const { folderName, folderDescription,userId } = req.body;
     if (!folderName || !folderDescription) {
         return res.status(400).send("Folder name and description are required");
     }
     try{
-        const folderBuffer=await createFolder(folderName,folderDescription);
+        const folderBuffer=await createFolder(folderName,folderDescription,userId);
         res.send(folderBuffer)
     }
     catch(error){
@@ -18,14 +18,11 @@ export const allfolder=async(req,res)=>{
     const logic=req.body.logic
     const orderlogic=req.body.order
     const id=req.body.id;
-console.log("User ID:", req.body.id); // logs: undefined
-    console.log("Request Body:", req.body); // Debug entire body
-    console.log("Request Body Keys:", Object.keys(req.body));
-console.log("req.body.id exists?", 'id' in req.body);
 
     try {
         const result=await allFolder(logic,orderlogic,id);
-        return res.status(200).json({ rows: result.rows });
+        console.log(result);
+        return res.status(200).json(result);
     } catch (error) {
         console.error(error);
         res.status(500).send('Failed to retrieve folders');
@@ -34,9 +31,10 @@ console.log("req.body.id exists?", 'id' in req.body);
 
 export const deletefolder=async(req,res)=>{
     const folderId=req.body.fileId
+    const userId=req.body.userId
     console.log(folderId)
     try {
-        const result=await deleteFolder(folderId)
+        const result=await deleteFolder(folderId,userId)
         console.log(result)
         res.status(result.status).send(result.message);
     } catch (error) {

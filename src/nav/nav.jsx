@@ -6,29 +6,24 @@ export default function Nav(){
       const navigate = useNavigate();
 
     function handleSignin(){
-    localStorage.removeItem('jwtToken');
-        window.location.href="http://localhost:5000/auth/google"
+    localStorage.removeItem('jwt');
+        window.location.href="http://localhost/auth/google"
     }
 
     useEffect(() => {
-    const handleAuthCallback = () => {
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-      const token = params.get('token');
+  
+      // const hash = window.location.hash.substring(1);
+      // const params = new URLSearchParams(hash);
+      // const token = params.get('token');
+    const token = localStorage.getItem('jwt');
 
       if (token) {
-        localStorage.setItem('jwtToken', token);
-        
-        window.history.pushState({}, document.title, window.location.pathname);
-        
-        navigate('/app');
+
+      navigate('/app');
       }
       else{
         navigate('/')
       }
-    };
-
-    handleAuthCallback();
   }, [navigate]);
 
     return <div className="bg-purple-900 flex justify-between items-center font-semibold text-lg shadow-black shadow-2xl">

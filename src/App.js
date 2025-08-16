@@ -17,8 +17,6 @@ import { HashRouter,Routes,Route} from 'react-router-dom';
 import ViewDoc from './documents/viewdoc';
 function App() {
   const[frameData,setFrameData]=useState("");
-  console.log(frameData)
-
 
   return (
     <div>

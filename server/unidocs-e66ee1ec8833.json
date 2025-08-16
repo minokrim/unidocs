@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "unidocs",
+  "private_key_id": "e66ee1ec8833e0f13607ee1396159fc1528892d9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCo/UUgsXMbyTba\nbcduxTrBbg24PT/RAtDOH6Ve0hwjwN6VDqX7Tb0i4ljFB4rY1HnwG5uqs0M5R1rJ\nZ/gFY6WCLQQmcMjOX7jVFkj43Z/JQtihf76KiFzRRJ9XvT48/oYlLCENxSPqTyza\nItRk1iBX/KU9Bce2hemXyg0JC4/eHkB8LAMVdfRSxn54QoXJntiBZAMYpNP3Lv21\nAWc7qEXwCYV0XKdylLC7kVazEpLUGUm/G/O2Y5OYyajXTUJSWgCdxhqW+xflnDn+\nH/WmnvKiRPM5f1fbzxxAomfxKrqeFWP3aSt/6BUu7GxEKI9akdptsy7Jlpo7SSjz\nbcd49E2PAgMBAAECggEAEprDnrb6kcS5eHBymZQ22kR9V9siaKaTNMY7eht5WUmq\nwk/5Cm2Yv5Dvg02dGy8VTPp1ImTBp2Te2WKhZdJ+eRJErTNoitPzW5OsV/2/pt7o\nTlYWilY7RcIfetTiV8ERJWGHiBERWa1QJk8vAU+pAuwqiEktH2qnI3zCqkwZZt4m\nyvE3iqxJbVwibeVA3LEhFe9GTKsCQA8LlDaVHcuu163IKMNLhk0lgB1lcPQlVPVU\nLsfLeiZxWNCJe+2b8uACQYJCHH8IBgeTKGQxyVIgoDaVz4T93gO1mbwDo1ArBYbk\nGSdQZmXEcQ9LOjcxjQonYykfF0cIb1Kuu3KIIr10nQKBgQDim3RveNY8rX3qgrLw\na02J/a1Vu8qclrp0e+BNCofzC2LVoyQs2QZeNZwg0iLsN9SvMWmucnPVdkfyrvyh\nss5eGSWMSZeYdIZ4tSjmO0rhiXwavd/oBUdClXAirK4P76jgWB9+hteY/3OA+ALa\n+D5pmgUrdgE/JRdt5VXiDk1FjQKBgQC+6Jlys4tvwBlRr5eWSvmWmPElriDF13iW\neNRSa+bE3k0ytdfHDryyaCVTjUZzTrB76vhmra2WvfC//6ydpjknsFPD5JjQHfY2\nOyH/XpsMTPyxr9P4YTp2aEB3qY4X+p89ydmjHpXYb49hT+3FgE/RgD2JKemoF1HP\nLg1cf5IyiwKBgFVBqZf6/ZeMqpAdplcf9+dP4vQbmEo7x2Dl7mjt6mI9yWyZWZXp\n/SRaxSfwB6WaB9H2JE22z+/i9YTP40qu7Eeo7GCQm5GHXcRyXDXq3uxl/qRNBb3U\npo/di3fwQfjK8V2eqhK/hsQQcBN4vBJITasLgKBuYF+yg9Mb8qj/OoFNAoGAaQKm\nzVoHe+vNwYn1tvz8tyLfmptieZDhStuh5shlgqrJCfjOfTcVAomY5pGSTADfwPnp\nswkbsAxArkvj1j/FtpgeK2XFzMx+TyxNshuG68g5Qz/1N+27a8BCnc/NUlFQYHt0\nVG6RfCE5XAzMPFQtE48Xyigc15IkNPMe9F9TuqsCgYEAtgPh92goNFJQULZ79oMa\niB6LPjndiuaEtXYSNlK1lON9BdDFQtDAgC0FPmDQyJ76UPtxkJmn4nb63EQAzTxr\nvF2qkObg3Jyw6rPVUuRQ6Ft03NnRmm/kPaHoGa4IKlRZcO50Q728671/ztKPooNO\nd0d04is5kND3N56U6coXIJo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "texttospeech@unidocs.iam.gserviceaccount.com",
+  "client_id": "116532102741958117378",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/texttospeech%40unidocs.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

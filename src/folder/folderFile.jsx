@@ -51,7 +51,7 @@ export default function FolderFiles(){
 console.log("folderId:", folderId, "userId:", userId);
     function renderFileinFolder(){
         console.log(userId,folderId)
-        axios.post("http://localhost:5000/document/fileinfolder",{userId:userId,folderId:folderId})
+        axios.post("http://localhost/document/document/fileinfolder",{userId:userId,folderId:folderId})
     .then((res)=>{
         console.log(res)
         setData(res.data)

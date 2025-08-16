@@ -22,7 +22,7 @@ export default function AddtoFolder({fileId,onclose,userId}){
         }
 
         function handleFiletoFolder(){
-            axios.post("http://localhost:5000/document/addtofolder",{file_id:fileId,folder_id:selectedFolder,userId:userId})
+            axios.post("http://localhost/document/document/addtofolder",{file_id:fileId,folder_id:selectedFolder,userId:userId})
             .then((res)=>{
                 onclose()
                 Swal.fire({
@@ -42,16 +42,16 @@ export default function AddtoFolder({fileId,onclose,userId}){
             })
         }
 
-    return <main className="text-black flex flex-col bg-white shadow-2xl rounded-xl w-[40%] p-5">
+    return <main className="text-black flex flex-col bg-white shadow-2xl rounded-xl w-[80%] md:w-[40%] p-5">
         <h3 className="text-xl">Add to Folder</h3>
-        <input type="search" onChange={(e)=>{setSearchTerm(e.target.value)}} className="bg-gray-100 rounded-md w-[80%] pl-3 py-1" placeholder="search Folders"/>
+        <input type="search" onChange={(e)=>{setSearchTerm(e.target.value)}} className="bg-gray-100 rounded-md w-[100%] md:w-[80%] pl-3 py-1" placeholder="search Folders"/>
 
-        <section className="flex flex-col gap-2 overflow-y-scroll py-3" style={{scrollbarWidth:'none',msOverflowStyle: 'none'}}>
+        <section className="flex flex-col gap-2 h-[15em] md:h-full overflow-y-scroll overflow-x-scroll mt-2 md:mt-0 py-3" style={{scrollbarWidth:'none',msOverflowStyle: 'none'}}>
             {filteredData.map((folders)=>(
                 <section key={folders.id} >
-                    <div className="flex gap-5 items-center">
+                    <div className="flex gap-2 md:gap-6 items-center">
                     <input type="checkbox" className="border-1 w-6 h-6 accent-purple-600" onChange={()=>handleCheckBoxToggle(folders.id)} checked={selectedFolder.includes(folders.id)}/>
-                    <FaFolder className="text-purple-600 text-4xl "/>
+                    <FaFolder className="text-purple-600 text-lg md:text-4xl "/>
                     <h5 className="text-xl font-semibold">{folders.folder_name}</h5>
                 </div>
                 <hr />
@@ -59,7 +59,7 @@ export default function AddtoFolder({fileId,onclose,userId}){
             ))}
         </section>
 
-        <section className="flex items-center justify-between">
+        <section className="flex flex-col md:flex-row gap-3 md:gap-0 mt-3 md:mt-0 items-center justify-between">
             <div className="flex items-center font-bold gap-2">
                 <FaPlus className="text-purple-600 text-4xl"/>
                 <h5 className="text-purple-600 text-xl font-bold">New Folder</h5>
@@ -68,7 +68,7 @@ export default function AddtoFolder({fileId,onclose,userId}){
             <div className="flex items-center gap-2 font-bold cursor-pointer">
                 <p className="border-1 rounded-md p-2" onClick={onclose}>Cancel</p>
                 <p className="bg-purple-600 first-line:rounded-md text-white p-2 rounded-md" onClick={handleFiletoFolder}>Done</p>
-            </div>
+             </div>
         </section>
     </main>
 }

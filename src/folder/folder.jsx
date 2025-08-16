@@ -44,8 +44,8 @@ function handleMenuToggle(e, status,folderIdArg) {
         const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"folder"})
         const selectedFolder = filteredData.find(f => f.id === folderId);
 
-    return <main className="flex flex-col justify-around mt-5">
-        <section>
+    return <main className="flex flex-col justify-around mt-5 p-2">
+        <section className="w-[100%] px-3 md:px-3">
             <div className="flex justify-between">
                 <h2 className="text-black">All Folders</h2>
 
@@ -58,10 +58,10 @@ function handleMenuToggle(e, status,folderIdArg) {
             </div>
 
 
-            <div className="flex justify-between pt-2">
-            <input type="search" name="" id="" placeholder="Search" onChange={(e)=>{setSearchTerm(e.target.value)}}  className="cursor-pointer py-1 px-3 border-solid border-gray-600 border-2 rounded-2xl w-[10em] md:w-[25em] text-black"/>
+            <div className="flex flex-col md:flex-row justify-between pt-2">
+            <input type="search" name="" id="" placeholder="Search" onChange={(e)=>{setSearchTerm(e.target.value)}}  className="cursor-pointer py-1 px-3 border-solid border-gray-600 border-2 rounded-2xl w-[905]  md:w-[25em] text-black"/>
 
-            <section className="flex gap-5 cursor-pointer">
+            <section className="flex justify-between mt-3 gap-5 cursor-pointer">
                         <div className="flex gap-3">
                             <AiOutlineSortDescending className="text-3xl text-black" onClick={()=>setOrderLogic("ASC")}/>
                             <TbSortDescendingLetters className="text-3xl text-black" onClick={()=>setOrderLogic("DESC")}/>
@@ -78,7 +78,7 @@ function handleMenuToggle(e, status,folderIdArg) {
         </section>
 
 
-        <section className="flex pt-5 flex-wrap gap-5 md:gap-0">
+        <section className="w-[100%]  flex pt-5 pl-5 flex-wrap gap-3 md:gap-0">
         {filteredData.map((fold)=>(
             <div key={fold.id}>
                 <FolderCard name={fold.folder_name} onToggleMenu={(e) => handleMenuToggle(e, true,fold.id)} onMouseLeave={() => handleMenuToggle(null, false)} time={new Date(fold.created_at).toLocaleDateString()}/>
@@ -95,7 +95,7 @@ function handleMenuToggle(e, status,folderIdArg) {
         }} 
         onMouseEnter={() => handleMenuToggle(null, true)} 
         onMouseLeave={() => handleMenuToggle(null, false)}>
-        {menuOpen && (<div><FolderOptions  id={folderId} userid={filteredData[3].user_id}/></div>)}
+        {menuOpen && (<div><FolderOptions  id={folderId} userid={filteredData[0].user_id}/></div>)}
         </div>)}
         </section>
     </main>

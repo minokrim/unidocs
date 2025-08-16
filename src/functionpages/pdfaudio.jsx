@@ -8,7 +8,7 @@ export default function Pdfaudio(){
     function convertfiletoaudio() {
         const formData = new FormData();
         formData.append("file", file);
-        axios.post("http://localhost:5000/file/audio", formData, { responseType: "blob" })
+        axios.post("http://localhost/pdf/file/audio", formData, { responseType: "blob" })
           .then((res) => {
   
             const blob = new Blob([res.data], { type: "audio/mp3" });

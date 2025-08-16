@@ -1,21 +1,23 @@
 import axios from "axios";
 import { useState } from "react";
-import { deleteItem } from "./deleteLogic";
-export default function FileOptions({id,addtoFolder}){
+import { DeleteItem } from "./deleteLogic";
+import { FaLess } from "react-icons/fa";
+export default function FileOptions({id,addtoFolder,setRenderShareModal}){
     const [fileId,setFileId]=useState({id})   
+    const [shareState,setShareState]=useState(false)
 
     function handleDelete(){
-    deleteItem({ type: "file", id: fileId })
+    DeleteItem({ type: "file", id: fileId })
     .then((res) => {
-      console.log("Deleted successfully");
+      alert("Deleted successfully");
     })
     .catch((err) => {
-      console.log("Failed to delete");
+      alert("Failed to delete");
     });
     }
 
         function getFile(fileId){
-        axios.get(`http://localhost:5000/document/filedata/`, {params: { fileid: fileId },responseType: "blob"})        
+        axios.get(`http://localhost/document/document/filedata/`, {params: { fileid: fileId },responseType: "blob"})        
         .then((res)=>{
             const fileURL = window.URL.createObjectURL(new Blob([res.data]), { type: 'application/pdf' });
                 const link = document.createElement('a');
@@ -27,13 +29,16 @@ export default function FileOptions({id,addtoFolder}){
                 document.body.removeChild(link);
         })
         .catch((err)=>{
-            console.log(err)
         })
+    }
+
+    function handleShare(){
+            setRenderShareModal(true)
     }
 
 
     return <main className="flex flex-col w-max items-center justify-center text-black rounded-2xl shadow-black shadow-2xl px-1 cursor-pointer text-sm font-bold">
-        <p>Share File</p>
+        <p onClick={handleShare}>Share File</p>
         <p onClick={()=>addtoFolder(id)}>Add to Folder</p>
         <p onClick={()=>getFile(id)}>Download File</p>
         <p className="text-red-700" onClick={handleDelete}>Delete File</p>

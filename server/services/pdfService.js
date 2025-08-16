@@ -31,7 +31,7 @@ export const audioService=async(filepath)=>{
         const task = ilovepdf.newTask("extract");
         await task.start();
 
-        const fullPath = path.join(filepath); // correct join
+        const fullPath = path.join(filepath); 
         const file = new ILovePDFFile(fullPath)
 
         await task.addFile(file);
@@ -68,8 +68,9 @@ export const mergeServices=async(filepath1, filepath2)=>{
 
     await task.start();
 
-    const file1 = new ILovePDFFile(path.resolve(filepath1));
-    const file2 = new ILovePDFFile(path.resolve(filepath2));
+    const file1 = new ILovePDFFile(path.join(filepath1));
+    const file2 = new ILovePDFFile(path.join(filepath2));
+  
 
     await task.addFile(file1);
     await task.addFile(file2)

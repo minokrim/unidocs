@@ -17,16 +17,9 @@ import configurePassport from './passport/googleStrategy.js';
 import fileRoutes from "./routes/fileRoute.js"
 import userRoutes from "./routes/userRoute.js"
 
-
 env.config();
 
-console.log("GOOGLE_CLIENTID:", process.env.GOOGLE_CLIENTID);
-console.log("GOOGLE_CLIENTSECRET:", process.env.GOOGLE_CLIENTSECRET);
-
 configurePassport();
-
-
-
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -40,24 +33,29 @@ const upload = multer({ storage: storage },)
 
 const app =express();
 const PORT=process.env.SERVER_PORT
+app.use(cors({
+    origin: 'http://localhost:3000',  
+    credentials: true   ,
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']             
+  }));
 
-app.use(
-    session({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-      cookie: { 
-        maxAge: 1000*60*60*24,
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,
-        sameSite: 'lax'
-      },
-    })
-  );
+// app.use(
+//     session({
+//       secret: process.env.SESSION_SECRET,
+//       resave: false,
+//       saveUninitialized: false,
+//       cookie: { 
+//         maxAge: 1000*60*60*24,
+//         secure: process.env.NODE_ENV === 'production',
+//         httpOnly: true,
+//         sameSite: 'lax'
+//       },
+//     })
+//   );
 
 app.use(passport.initialize());
-app.use(passport.session());
-
+// app.use(passport.session());
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const secretKey=process.env.ILOVEPDF_SECRET
@@ -67,61 +65,45 @@ const ilovepdf = new ILovePDFApi(publicKey, secretKey);
 
 await connectDB();
 
-app.use(cors({
-    origin: 'http://localhost:3000',  
-    credentials: true   ,
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']             
-  }));
+
 
 app.use(express.json());
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get('/', (req, res) => {
+  res.send('Backend is alive');
+});
 
-app.use('/',fileRoutes)
+const serviceType = process.env.SERVICE_TYPE;
 
-app.use('/', createfolderRoutes);
 
-app.use('/', pdfRoutes);
+console.log(serviceType)
+    // if(serviceType==="file"){
+    // console.log(serviceType)
+    // app.use('/file',fileRoutes)
+    // } else if(serviceType==="folder"){
+    // app.use('/folder', createfolderRoutes);
+    // }else if(serviceType==="pdf"){
+    // app.use('/pdf', pdfRoutes);
+    // }else if(serviceType==="user"){
+    // app.use("/user",userRoutes)
+    // }else if(serviceType==="auth"){
+    //   console.log(serviceType)
+    // app.use("/auth", authRoutes);
+    // }else if(serviceType==="upload"){
+    // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+    // }
 
-app.use("/",userRoutes)
+    app.use('/document',fileRoutes)
+    app.use('/folder', createfolderRoutes);
+    app.use('/pdf', pdfRoutes);
+    app.use("/user",userRoutes)
+    app.use("/auth", authRoutes);
+    app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use("/auth", authRoutes);
-
-app.post("/file/edit",upload.single("file"),async(req,res)=>{
-    const filepath=req.file.path;
-
-    try {
-        const task = ilovepdf.newTask("editpdf");
-        await task.start();
-
-        const file = new ILovePDFFile(path.resolve(__dirname, filepath));
-
-        await task.addFile(file);
-
-        const textElement = new Text({
-            coordinates: { x: 100, y: 100 },
-            dimensions: { w: 100, h: 100 },
-            text: 'test',
-        });
-        await task.addElement(textElement);
-        await task.process();
-        const data=await task.download();
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
-
-        res.send(data);
-
-    } catch (error) {
-        
-    }
-})
 
 app.get("/session/user",async(req,res)=>{
     if(req.session.email){
         res.json({ email: req.session.email })
-        console.log({email:req.session.email})
     }
     else{
         res.status(401).json({ error: "No user logged in" })

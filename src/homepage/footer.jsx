@@ -8,7 +8,7 @@ export default function Footer(){
     return <main className="bg-gradient-to-b from-black to-purple-950 flex flex-col p-5 gap-3 md:justify-around">
 
         <div className="flex flex-col md:flex-row gap-5 md:gap-0 w-full items-center justify-around font-serif">
-                    <section>
+        <section>
             <h2>About</h2>
             <p>About us</p>
             <p>Our Story</p>

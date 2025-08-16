@@ -2,17 +2,35 @@ import React,{ useState,useEffect, createContext,useRef } from "react";
 import axios from "axios";
 export const userContext=createContext();
 
+
 export default function UserProvider({children}){
     const [user,setUser]=useState({})
     const [loading,setloading]=useState(true)
     const user_id=useRef(null)
 
     useEffect(() => {
-      refreshUser(); // fetch once on mount
-    }, []);
+      const hash = window.location.hash.substring(1);
+      const queryString = hash.split('?')[1]; 
+      const params = new URLSearchParams(queryString);
+      const urlToken = params.get('token');
+    if (urlToken) {
+      localStorage.setItem("jwt", urlToken);
+      window.location.hash = ""; 
+    }
 
-    const refreshUser = () => {
-      axios.get("http://localhost:5000/database/details", { withCredentials: true })
+    refreshUser();
+  }, []);
+
+  const refreshUser = async() => {
+    const storedToken = localStorage.getItem("jwt");
+    if (!storedToken) {
+
+      console.log("No stored token");
+      setloading(false);
+      return;
+    }
+
+        const res=await axios.get("http://localhost/user/database/details", { withCredentials: true,headers:{Authorization:`Bearer ${storedToken}`} })
         .then((response) => {
           setUser(response.data);
           console.log(response.data.id)
@@ -24,7 +42,8 @@ export default function UserProvider({children}){
         .finally(() => {
           setloading(false);
         });
-    };
+  }
+
 
     return <userContext.Provider value={{user,setUser,loading,refreshUser,user_id}}>
     {children}

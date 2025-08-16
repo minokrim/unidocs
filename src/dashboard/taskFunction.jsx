@@ -24,14 +24,14 @@ export default function TaskFunction(){
       </Link>
 
       <Link to="/app/jpgpdf" className=" w-[40%] md:w-[25%] no-underline">
-      <FunctionCard task={"Convert PDF to JPG"} description={'Transform PDF pages into JPG images.'} icon={icon4}/>
+      <FunctionCard task={"Convert JPG to PDF"} description={'Transform PDF pages into JPG images.'} icon={icon4}/>
       </Link>
 
       <Link to="/app/pdfaudio" className=" w-[40%] md:w-[25%] no-underline">
       <FunctionCard task={"Convert PDF to Audio"} description={'Convert PDF documents into audio files for easy listening anytime.'} icon={icon2}/>
       </Link>
 
-      <Link className=" w-[40%] md:w-[25%] no-underline">
+      <Link to="/app/documents"className=" w-[40%] md:w-[25%] no-underline">
             <FunctionCard task={"Share PDF"} description={'Quickly share PDF files with others through secure links or email.'} icon={icon5}/>
       </Link>
 

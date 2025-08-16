@@ -1,9 +1,6 @@
-import sharePdf from "./sharedoc";
 export default function ViewDoc({frameData}){
-    console.log(frameData)
       if (!frameData) return <div className="text-black">Loading document...</div>;
-    return <main>
-        <iframe src={frameData} frameborder="0" className="w-full h-[100vh]"></iframe>
-        <sharePdf/>
+    return <main className="flex flex-col">
+        <iframe src={frameData} frameborder="0" className="w-[100%] h-[100vh]"></iframe>
     </main>
 }
