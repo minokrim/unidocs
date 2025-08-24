@@ -1,24 +1,25 @@
 import { useState,useContext } from "react"
-import { CgClose } from "react-icons/cg"
-import { MdEmail } from "react-icons/md"
 import axios from "axios";
 import { userContext } from "../context/userProvider";
 import Swal from "sweetalert2";
 
 export default function SharePdf({filePath,onclose}){
     const [email,setemail]=useState("");
-    const {user,loading}=useContext(userContext);
+    const {user}=useContext(userContext);
     const [sending, setSending] = useState(false);
-
     function shareFile(){
         if (!email || !email.includes('@')) {
-            alert('Please enter a valid email address');
+          Swal.fire({
+            icon: "error",
+            title: "invalid email entered",
+            text: "Enter valid email",
+          })
             return;
         }
 
+        console.log(filePath)
         setSending(true);
-
-        axios.post("http://localhost/share/file",{receivers_email:email,name:user.first_name,users_email:user.email,path:filePath})
+        axios.post("http://localhost/document/share/file",{receivers_email:email,name:user.first_name,users_email:user.email,path:filePath})
         .then((res)=>{
             onclose()
             Swal.fire({

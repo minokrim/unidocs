@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { userContext } from "../context/userProvider";
-export const DeleteItem = async ({ type, id }) => {
-  const {user,loading}=useContext(userContext)
+const DeleteItem = async ({ type, id,user }) => {
+    console.log(user)
+
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",
@@ -12,6 +11,7 @@ export const DeleteItem = async ({ type, id }) => {
     buttonsStyling: false,
   });
   try {
+    console.log(id)
     const result = await swalWithBootstrapButtons.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -21,11 +21,10 @@ export const DeleteItem = async ({ type, id }) => {
       cancelButtonText: "No, cancel!",
       reverseButtons: true,
     });
-
     if (result.isConfirmed) {
-      axios.post(`http://localhost/document/delete/${type}`, {
+     await axios.post(`http://localhost/${type}/document/delete/${type}`, {
         fileId: id,
-        userId:user.id
+        userId:user.user.id
       });
       Swal.fire("Deleted!", "Your file has been deleted.", "success");
     } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -40,3 +39,5 @@ export const DeleteItem = async ({ type, id }) => {
     );
   }
 };
+
+export default DeleteItem; 

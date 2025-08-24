@@ -1,28 +1,28 @@
 import axios from "axios";
-import { useState } from "react";
-import { DeleteItem } from "./deleteLogic";
-import { FaLess } from "react-icons/fa";
-export default function FileOptions({id,addtoFolder,setRenderShareModal}){
-    const [fileId,setFileId]=useState({id})   
-    const [shareState,setShareState]=useState(false)
+import { useContext, useState } from "react";
+import  DeleteItem  from "./deleteLogic";
+import { userContext } from "../context/userProvider";
+export default function FileOptions({id,addtoFolder,setRenderShareModal,onDelete}){
+    const user=useContext(userContext)
 
     function handleDelete(){
-    DeleteItem({ type: "file", id: fileId })
+    DeleteItem({ type: "document", id, user})
     .then((res) => {
-      alert("Deleted successfully");
+      if(onDelete){
+        onDelete()
+      }
     })
     .catch((err) => {
-      alert("Failed to delete");
+      console.log(err)
     });
     }
 
         function getFile(fileId){
         axios.get(`http://localhost/document/document/filedata/`, {params: { fileid: fileId },responseType: "blob"})        
         .then((res)=>{
-            const fileURL = window.URL.createObjectURL(new Blob([res.data]), { type: 'application/pdf' });
+            const fileURL = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
                 const link = document.createElement('a');
                 link.href = fileURL;
-                console.log(fileURL)
                 link.setAttribute('download', "document.pdf");
                 document.body.appendChild(link);
                 link.click();

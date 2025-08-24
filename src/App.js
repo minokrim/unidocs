@@ -36,7 +36,7 @@ function App() {
           <Route path="jpgpdf" element={<Jpgpdf />} />
           <Route path="uploadfile" element={<UploadFiles />} />
           <Route path="createfolder" element={<CreateFolder />} />
-          <Route path="folderfile" element={<FolderFiles/>} />
+          <Route path="folderfile" element={<FolderFiles setFrameData={setFrameData}/>} />
           <Route path="viewdoc" element={<ViewDoc frameData={frameData}/>} />
           </Route>
           </Routes>

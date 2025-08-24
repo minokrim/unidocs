@@ -31,8 +31,8 @@ export default function TaskFunction(){
       <FunctionCard task={"Convert PDF to Audio"} description={'Convert PDF documents into audio files for easy listening anytime.'} icon={icon2}/>
       </Link>
 
-      <Link to="/app/documents"className=" w-[40%] md:w-[25%] no-underline">
-            <FunctionCard task={"Share PDF"} description={'Quickly share PDF files with others through secure links or email.'} icon={icon5}/>
+      <Link to="https://contentsummarizer-1.onrender.com/" target="_blank" className=" w-[40%] md:w-[25%] no-underline">
+            <FunctionCard task={"summarize PDF"} description={'Quickly summarize PDF, url, and text with Content-summ.'} icon={icon5}/>
       </Link>
 
       <Link to="/app/mergepdf" className=" w-[40%] md:w-[25%] no-underline">

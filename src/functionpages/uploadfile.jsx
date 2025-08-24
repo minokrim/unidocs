@@ -4,15 +4,16 @@ import "./uploadfile.css";
 import DefaultFunction from "./functionDefault";
 import { userContext } from "../context/userProvider";
 import Swal from "sweetalert2";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export default function UploadFiles() {
   const [file, setFile] = useState(null);
   const [metaData, setMetaData] = useState("");
   const { user, loading: userLoading, user_id } = useContext(userContext);
+  const[loading,setLoading]=useState(false)
+  const loader=<DotLottieReact src="https://lottie.host/47714d5d-ab3c-4526-a8a1-ea14efc374f6/ohWfgGu9EF.lottie" loop autoplay className="w-auto h-[30em]"/>
 
   function handleFileUpload(e) {
-    console.log("clicked")
-    console.log(user.id)
     if (!file) {
       alert("Please select a file before uploading.");
       return;
@@ -23,6 +24,7 @@ export default function UploadFiles() {
     formData.append("userId", user.id);
 
     if (!userLoading && user.id) {
+      setLoading(true)
       axios
         .post("http://localhost/document/api/upload/file/metadata", formData)
         .then((response) => {
@@ -34,6 +36,8 @@ export default function UploadFiles() {
             timer: 1500,
           });
           setFile(null);
+          setLoading(false)
+
         })
         .catch((err) => {
           Swal.fire({
@@ -41,20 +45,21 @@ export default function UploadFiles() {
             title: "File upload failed",
             text: "Try again",
           });
+          setLoading(false)
         });
     }
   }
 
   return (
     <main>
-      <DefaultFunction
+      {loading ? loader: <DefaultFunction
         functionName={"upload File"}
         handleFileUpload={handleFileUpload}
         filestate={file}
         setFile={setFile}
         file={file}
         functionAction={"Upload File"}
-      />
+      />}
     </main>
   );
 }

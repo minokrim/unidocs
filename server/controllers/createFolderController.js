@@ -21,10 +21,8 @@ export const allfolder=async(req,res)=>{
 
     try {
         const result=await allFolder(logic,orderlogic,id);
-        console.log(result);
         return res.status(200).json(result);
     } catch (error) {
-        console.error(error);
         res.status(500).send('Failed to retrieve folders');
     }
 }
@@ -35,7 +33,6 @@ export const deletefolder=async(req,res)=>{
     console.log(folderId)
     try {
         const result=await deleteFolder(folderId,userId)
-        console.log(result)
         res.status(result.status).send(result.message);
     } catch (error) {
         res.status(500).send("Failed to delete file");

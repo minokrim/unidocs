@@ -2,12 +2,16 @@ import React,{useState} from "react";
 import DefaultFunction from "./functionDefault";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 export default function Pdfaudio(){
     const [file,setFile]=useState(null)
-    
+      const[loading,setLoading]=useState(false)
+  const loader=<DotLottieReact src="https://lottie.host/47714d5d-ab3c-4526-a8a1-ea14efc374f6/ohWfgGu9EF.lottie" loop autoplay className="w-auto h-[30em]"/>
     function convertfiletoaudio() {
         const formData = new FormData();
         formData.append("file", file);
+        setLoading(true)
         axios.post("http://localhost/pdf/file/audio", formData, { responseType: "blob" })
           .then((res) => {
   
@@ -31,7 +35,7 @@ export default function Pdfaudio(){
             timer: 1500,
             })
             setFile(null);
-            
+            setLoading(false);
           })
           .catch((err) => {
             console.error("Error downloading file:", err);
@@ -40,9 +44,11 @@ export default function Pdfaudio(){
             title: "File conversion to audio failed",
             text: "Try again",
           })
+          setLoading(false);
           });
       }
-    return <main>
-        <DefaultFunction functionName={"convert File to Audio"} handleFileUpload={convertfiletoaudio} file={file} setFile={setFile} functionAction={"Convert PDF to audio"}/>
+    return <main className="items-center justify-center">
+      {loading?loader:<DefaultFunction functionName={"convert File to Audio"} handleFileUpload={convertfiletoaudio} file={file} setFile={setFile} functionAction={"Convert PDF to audio"}/>
+}
     </main>
 }

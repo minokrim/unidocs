@@ -2,11 +2,15 @@ import React,{useState} from "react";
 import DefaultFunction from "./functionDefault";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 export default function Jpgpdf(){
-        const [file,setFile]=useState(null)
-    
+    const [file,setFile]=useState(null)
+    const[loading,setLoading]=useState(false)
+    const loader=<DotLottieReact src="https://lottie.host/47714d5d-ab3c-4526-a8a1-ea14efc374f6/ohWfgGu9EF.lottie" loop autoplay className="w-auto h-[30em]"/>
     function jpg2pdf() {
         const formData = new FormData();
+        setLoading(true)
         formData.append("file", file);
         axios
           .post("http://localhost/pdf/file/convert", formData, { responseType: "blob" })
@@ -34,17 +38,20 @@ export default function Jpgpdf(){
             timer: 1500,
             })
             setFile(null)
+            setLoading(false)
           })
           .catch((err) => {
           Swal.fire({
             icon: "error",
-            title: "File conversion to audio failed",
+            title: "File conversion to jpg failed",
             text: "Try again",
           })
+          setLoading(false)
           });
       }
       
-    return <main>
-        <DefaultFunction functionName={"convert File"} handleFileUpload={jpg2pdf} file={file} setFile={setFile} functionAction={"Download PDF"}/>
+    return <main className="flex items-center justify-center">
+      {loading?loader:<DefaultFunction functionName={"convert File"} handleFileUpload={jpg2pdf} file={file} setFile={setFile} functionAction={"Download PDF"}/>
+}
     </main>
 }

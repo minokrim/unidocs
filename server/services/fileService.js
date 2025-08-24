@@ -23,7 +23,6 @@ export const uploadFiles=async(filename,filePath,metadata,filesize,userid)=>{
         return { status: 201, message: "Document upload successful" };
     }
     catch(err){
-        console.error("Upload failed:", err);
         throw new Error("Failed to upload document");    
     }
 }
@@ -38,20 +37,17 @@ export const filteredFiles=async(filteringLogic,orderlogic,id)=>{
 
             const cachedData = await redis.get(cacheKey);
             if (cachedData) {
-                console.log('Serving filtered files from cache');
                 return { rows: JSON.parse(cachedData) };
     }
 
         if(filteringLogic && orderlogic && allowedColumns.includes(filteringLogic) && allowedOrders.includes(orderlogic)){
           data=await db.query(`SELECT DOCUMENTS.*,Folders.folder_name AS folder_name FROM DOCUMENTS LEFT JOIN FOLDERS ON DOCUMENTS.folder_id=FOLDERS.id WHERE DOCUMENTS.user_id=$1 ORDER BY DOCUMENTS.${filteringLogic} ${orderlogic}`,[id])
 
-          console.log(data)
         }
         else{
          data=await db.query(`SELECT DOCUMENTS.*,Folders.folder_name AS folder_name FROM DOCUMENTS LEFT JOIN FOLDERS ON DOCUMENTS.folder_id=FOLDERS.id WHERE DOCUMENTS.user_id=$1`,[id])
         }
         await redis.set(cacheKey, JSON.stringify(data.rows), 'EX', 300);
-        console.log('Serving fresh filtered files and caching result');
         return data
         
     } catch (error) {
@@ -62,7 +58,6 @@ export const filteredFiles=async(filteringLogic,orderlogic,id)=>{
 export const downloadFile=async(id)=>{
         try {
             const data=await db.query("SELECT * FROM DOCUMENTS WHERE id=$1",[id])
-            console.log("File fetched from DB:", data.rows);  
     
             if(data.rows.length===0){
                  return{status:(404),message:("Document not found")};
@@ -78,7 +73,7 @@ export const downloadFile=async(id)=>{
 
 export const deleteFile=async(id,userId)=>{
     try {
-        const query=await db.query("DELETE FROM DOCUMENTS WHERE id=$1",[id])
+        const query=await db.query("DELETE FROM DOCUMENTS WHERE id=$1 AND user_id=$2",[id,userId])
         await redis.del(`filteredFiles:user:${userId}`)
         return { status: 201, message: "Document delete successful" };
     } catch (error) {
@@ -87,32 +82,23 @@ export const deleteFile=async(id,userId)=>{
 }
 
 export const filetoFolder=async(file_id,folder_id,user_id)=>{
-    console.log("user:"+user_id)
     try {
-                console.log("Inserting file:", file_id, "into folders:", folder_id," user",user_id);
         await Promise.all(
             folder_id.map(async (f_id)=>{
-                                console.log(`Inserting file_id ${file_id} into folder_id ${f_id} and ${user_id}`);
-
                 await db.query("INSERT INTO file_folders(file_id,folder_id,user_id) VALUES($1,$2,$3) ON CONFLICT (file_id, folder_id) DO UPDATE SET user_id = EXCLUDED.user_id",[file_id,f_id,user_id]);
             })
         )
     return { status: 201, message: "file inserted successful" };
     } catch (error) {
-        console.error("Upload failed:", error);
         throw new Error("Failed to upload document");    
     }
 }
 
 export const fileinFolder=async(userId,FolderId)=>{
     try {
-        console.log(userId,FolderId)
         const query=await db.query("SELECT documents.*, folders.folder_name AS folder_name FROM documents JOIN file_folders ON documents.id = file_folders.file_id JOIN folders ON folders.id = file_folders.folder_id WHERE file_folders.folder_id = $1 AND file_folders.user_id = $2",[FolderId,userId])
-
-        console.log(query.rows)
         return query.rows;
     } catch (error) {
-        console.error("Upload failed:", error);
         throw new Error("Failed to get documents");    
     
     }

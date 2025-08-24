@@ -7,10 +7,10 @@ const authRateLimiter = rateLimit({
     sendCommand: (...args) => redis.send_command(...args),
   }),
   windowMs: 15 * 60 * 1000,
-  max: 5, 
+  max: 10, 
   message: {
     success: false,
-    message: "Too many login attempts. Please try again in 15 minutes.",
+    message: "Too many  attempts. Please try again in 15 minutes.",
   },
   keyGenerator: ipKeyGenerator, 
 });

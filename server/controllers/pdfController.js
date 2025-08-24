@@ -31,9 +31,7 @@ export const convertImageToPDF = async (req, res) => {
           const writeFile = util.promisify(fs.writeFile);
   
           await writeFile('output.mp3', response.audioContent, 'binary');
-  
-          console.log('Audio content written to file: output.mp3');
-  
+    
           res.setHeader('Content-Type', 'audio/mp3');
           res.setHeader('Content-Disposition', 'attachment; filename="output.mp3"');
   
@@ -41,7 +39,7 @@ export const convertImageToPDF = async (req, res) => {
           
       }
       catch (error) {
-          console.error("Error processing file:", error);
+        throw error;
       }
   }
   
@@ -64,16 +62,15 @@ export const convertImageToPDF = async (req, res) => {
         try {
             fs.unlinkSync(filepath1);
         } catch (err) {
-            console.error(`Error deleting file ${filepath1}:`, err.message);
+            return err
         }
         
         try {
             fs.unlinkSync(filepath2);
         } catch (err) {
-            console.error(`Error deleting file ${filepath2}:`, err.message);
+            return err
         }
     } catch (error) {
-        console.error("Error merging files:", error);
         res.status(500).json({ error: "An error occurred while converting the file." });
     }
   }

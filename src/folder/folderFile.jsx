@@ -8,8 +8,13 @@ import { useSearchParams } from 'react-router-dom';
 import dots from "../images/dots2.png";
 import FileOptions from "../components/fileOptions";
 import AddtoFolder from "../components/addtoFolder";
+import { useNavigate } from "react-router-dom";
+import SharePdf from "../documents/sharedoc";
+import UseFilteredData from "../components/filteringLogic";
 
-export default function FolderFiles(){
+
+
+export default function FolderFiles({setFrameData}){
     const [data,setData]=useState([])
     const[filteringLogic,setFilteringLogic]=useState("id")
     const [orderLogic,setOrderLogic]=useState("ASC")
@@ -17,16 +22,19 @@ export default function FolderFiles(){
     const[hoverState,setHoverState]=useState(false)
     const[fileId,setFileId]=useState(null)
     const[hoverPosition,setHoverPosition]=useState({x:0,y:0,bottom:0,top:0,right:0,left:0})
+    const [searchParams] = useSearchParams();
+    const folderId = searchParams.get('folderId');
+    const userId = searchParams.get('userId');
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [selectedFileId, setSelectedFileId] = useState(null);
+    const [filePath,setFilePath]=useState("")
+    const [renderShareModal,setRenderShareModal]=useState(false)
+    const navigate=useNavigate();
+      
 
 
-      const [searchParams] = useSearchParams();
-      const folderId = searchParams.get('folderId');
-      const userId = searchParams.get('userId');
-
-
-    function handleMouseOver(e,id){
+    function handleMouseOver(e,id,filePath){
         const position=e.target.getBoundingClientRect()
-        console.log(position)
         setHoverPosition({
             x:position.x+ window.scrollX,
             y:position.y+ window.scrollY,
@@ -37,6 +45,7 @@ export default function FolderFiles(){
         })
         setHoverState(true)
         setFileId(id)
+        setFilePath(filePath)
     }
     function handleMouseOut(){
         setHoverState(false)
@@ -47,30 +56,43 @@ export default function FolderFiles(){
         setHoverState(true)
     }
 
+        function openFile(fileid){
+        axios.get(`http://localhost/document/document/filedata/open`, {params: { fileid: fileid },responseType: "blob"})    
+        .then((res)=>{
+            const blob = new Blob([res.data], { type:'application/pdf' });
+            const fileURL = URL.createObjectURL(blob);
 
-console.log("folderId:", folderId, "userId:", userId);
+            setFrameData(fileURL)
+            navigate("/app/viewdoc")
+        })    
+
+    }
+
+        function filetoFolder(fileId){
+        setSelectedFileId(fileId);
+        setShowAddModal(true);
+    }
+
+
     function renderFileinFolder(){
-        console.log(userId,folderId)
         axios.post("http://localhost/document/document/fileinfolder",{userId:userId,folderId:folderId})
     .then((res)=>{
-        console.log(res)
         setData(res.data)
     })
     .catch((err)=>{
-        console.log(err)
     })
     }
-console.log("folderId:", folderId, "userId:", userId);
 
     useEffect(()=>{
-          console.log("useEffect triggered with:", folderId, userId);
   if (folderId && userId) {
     renderFileinFolder();
   }
     },[folderId, userId])
 
-    return <main className="flex flex-col h-full">
-        <section className="w-full flex flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-10 md:justify-between">
+    const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"document"})
+    console.log(filteredData);
+    return <main className="flex flex-col h-full items-center w-full">
+        {/* <section className="w-[90%] flex flex-row items-center justify-around gap-4 md:gap-2 mt-10 md:justify-between">
         <div className="flex items-center gap-3 text-black font-bold">
         <FaSearch className="text-2xl text-black"/>
         <input type="name" name="search" onChange={(e)=>{setSearchTerm(e.target.value)}} className="w-[15em] border-solid bg-gray-200 md:w-[20em] h-[2em] rounded-2xl pl-5"/>
@@ -91,9 +113,9 @@ console.log("folderId:", folderId, "userId:", userId);
                 <option value="File_type">File Type</option>
         </select>
         </section>
-        </section>
+        </section> */}
 
-        <section className="mt-5 h-full z-10">
+        <section className="mt-5 h-full z-10 w-full">
             <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full">
                 <thead className="flex justify-around w-full">
                     <tr className="flex bg-gray-200/20 w-full py-5 mb-0 justify-around">
@@ -115,8 +137,8 @@ console.log("folderId:", folderId, "userId:", userId);
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.folder_name||"Nil"}</td>
                         <td className="w-[5em]">{docs.file_size}Mb</td>
                         <td className="w-[5em]">pdf</td>
-                        <td className="cursor-pointer bg-purple-800 p-0.5 md:p-2 text-white text-lg rounded-md"><a href={docs.link} target="_blank" rel="noopener noreferrer">View</a></td>
-                        <td className="text-2xl" onMouseOut={handleMouseOut} onMouseOver={(e)=>{handleMouseOver(e,docs.id)}}><img src={dots} alt="" className="h-5 w-auto box-border cursor-pointer" /></td>
+                        <td className="cursor-pointer bg-purple-800 p-0.5 md:p-2 text-white text-lg rounded-md"><a href={docs.link} target="_blank" rel="noopener noreferrer" onClick={()=>openFile(docs.id)}>View</a></td>
+                        <td className="text-2xl" onMouseOut={handleMouseOut} onMouseOver={(e)=>{handleMouseOver(e,docs.id,docs.filepath)}}><img src={dots} alt="" className="h-5 w-auto box-border cursor-pointer" /></td>
                     </tr>
                 ))}
                 </tbody>
@@ -129,8 +151,15 @@ console.log("folderId:", folderId, "userId:", userId);
                 x:hoverPosition.x,
                 y:hoverPosition.y
             }}>
-                <FileOptions id={fileId}/>
+                <FileOptions id={fileId} addtoFolder={filetoFolder} setRenderShareModal={setRenderShareModal}/>
                 </div>}
+            {showAddModal && <div className="fixed flex inset-0 z-100 items-center justify-center">
+                <AddtoFolder fileId={selectedFileId} userId={filteredData[0].user_id} onclose={() => setShowAddModal(false)} />
+                </div>}
+
+                {renderShareModal && <div className="fixed flex inset-0 z-100 items-center justify-center">
+                    <SharePdf filePath={filePath} onclose={() => setRenderShareModal(false)}/>
+                    </div>}
         </section>
     </main>
 }

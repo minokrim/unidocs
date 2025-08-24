@@ -13,7 +13,7 @@ export const createFolder=async (folderName,folderDescription,userId)=>{
         await redis.del(`filteredFiles:user:${userId}`)
         return folderBuffer
     } catch (error) {
-        console.error(error)
+        throw error
     }
 }
 
@@ -26,7 +26,6 @@ export const allFolder=async(filteringLogic,orderlogic,id)=>{
             const cacheKey=`filteredFolders:user:${id}`
             const cachedData = await redis.get(cacheKey);
             if (cachedData) {
-                console.log('Serving filtered folders from cache');
                 return { rows: JSON.parse(cachedData) };
             }
 
@@ -38,10 +37,8 @@ export const allFolder=async(filteringLogic,orderlogic,id)=>{
          data=await db.query(`SELECT * FROM FOLDERS WHERE user_id=$1`,[id])
         }
         await redis.set(cacheKey, JSON.stringify(data.rows), 'EX', 300);
-        console.log('Serving fresh filtered folder and caching result');
         return data;
     } catch (error) {
-        throw new Error("Failed to get data from DB");
         return{status:(500),message:("Failed to get data from DB")}
     }
 }

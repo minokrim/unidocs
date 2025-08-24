@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState,useContext } from "react"
 import { userContext } from "../context/userProvider";
 
-export default function UseFilteredData({filteringLogic, orderLogic, searchTerm, type}){
+export default function useFilteredData({filteringLogic, orderLogic, searchTerm, type,reloadTrigger}){
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const {user,loading:userLoading,user_id}=useContext(userContext)
@@ -17,7 +17,7 @@ export default function UseFilteredData({filteringLogic, orderLogic, searchTerm,
             console.log(err)
         })
         }
-    }, [filteringLogic, orderLogic, type,user.id, userLoading])
+    }, [filteringLogic, orderLogic, type,user.id, userLoading,reloadTrigger])
 
         useEffect(()=>{
             const search = searchTerm.toLowerCase();

@@ -2,11 +2,14 @@ import React, { useState,useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { userContext } from "../context/userProvider";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 export default function CreateFolder(){
     const [folderName,setFolderName]=useState("")
     const [folderDescription,setFolderDescription]=useState("")
-    const{user,loading}=useContext(userContext)
-
+    const{user}=useContext(userContext)
+    const[loading,setLoading]=useState(false)
+    const loader=<DotLottieReact src="https://lottie.host/47714d5d-ab3c-4526-a8a1-ea14efc374f6/ohWfgGu9EF.lottie" loop autoplay className="w-auto h-[30em]"/>
     const handleSubmit=(e)=>{
         e.preventDefault();
         const data={
@@ -14,6 +17,7 @@ export default function CreateFolder(){
             folderDescription:folderDescription,
             userId:user.id
         }
+        setLoading(true)
         axios.post("http://localhost/folder/folder/create",data)
         .then((res)=>{
             Swal.fire({
@@ -23,6 +27,7 @@ export default function CreateFolder(){
             showConfirmButton: false,
             timer: 1500,
             })
+            setLoading(false)
         })
         .catch((err)=>{
           Swal.fire({
@@ -30,11 +35,12 @@ export default function CreateFolder(){
             title: "File creation failed",
             text: "Try again",
           })
+          setLoading(false)
         })
     }
 
     return <main className="flex flex-col h-full w-full bg-purple-200 text-black p-5">
-        <form action="" className="flex flex-col items-left justify-center gap-10 bg-white w-full h-[50%] rounded-2xl px-5">
+        {loading?loader:<form action="" className="flex flex-col items-left justify-center gap-10 bg-white w-full h-[50%] rounded-2xl px-5">
             <h4>Create New Folder</h4>
 
             <section className="mt-0 pt-0">
@@ -48,6 +54,6 @@ export default function CreateFolder(){
             </section>
 
             <button onClick={handleSubmit} className="w-1/4 bg-gradient-to-r from-blue-500 to-purple-500 flex text-center items-center justify-center">Create New Folder</button>
-        </form>
+        </form>}
     </main>
 }

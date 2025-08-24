@@ -21,7 +21,6 @@ export const convertToPDF = async (filepath, baseDir) => {
         const pdfBuffer = await task.download();
         return pdfBuffer;
       } catch (error) {
-        console.error("ILovePDF conversion error:", error.response?.data || error.message || error);
         throw error;
       }
 };
@@ -49,15 +48,14 @@ export const audioService=async(filepath)=>{
             audioConfig: {audioEncoding: 'MP3'},
         }
         const [response] =  await client.synthesizeSpeech(request);
-        console.log(response)
         return response;
 
     } catch (error) {
-        console.error("Error in Text-to-Speech:", error);
+      return error
     }
 
 }catch (error) {
-    console.error("Error processing file:", error);
+  return error
 }
 }
 
@@ -80,7 +78,6 @@ export const mergeServices=async(filepath1, filepath2)=>{
     const data=await task.download();
     return data;
   } catch (error) {
-    console.error("ILovePDF merge error:", error.response?.data || error.message || error);
     throw error;
   }
 }

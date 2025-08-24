@@ -9,7 +9,6 @@ export const profilePic=async(filename)=>{
         const imagePath = `uploads/${filename}`; 
         return{status:(200),data:{ path: imagePath }};
     } catch (err) {
-        console.error("Upload error:", err);
         return{status:(500),message: "Image upload failed"};
     }
 }
@@ -39,9 +38,7 @@ export const userDetails=async (user_email)=>{
     try {
         const result = await db.query("SELECT * FROM USERS WHERE EMAIL=$1", [user_email]);
         if (result.rows.length > 0) {
-          const user = result.rows[0];
-          console.log(user)
-    
+          const user = result.rows[0];    
           user.profile_pic_url = `http://localhost/uploads/${user.profile_pic}`;
   
     
@@ -50,7 +47,6 @@ export const userDetails=async (user_email)=>{
             return{status:(400),message:("Invalid email. Please sign up or use the correct email.")}
         }
       } catch (error) {
-        console.error("Error retrieving user:", error);
         return{status:(500),message:("Internal server error.")}
       }
 }

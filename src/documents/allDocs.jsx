@@ -3,10 +3,9 @@ import { FaSearch } from "react-icons/fa";
 import TopNav from "../nav/topnav";
 import axios from "axios";
 import UploadFiles from "../functionpages/uploadfile";
-import { MdDelete } from "react-icons/md";
 import { AiOutlineSortDescending } from "react-icons/ai";
 import { TbSortDescendingLetters } from "react-icons/tb";
-import UseFilteredData from "../components/filteringLogic";
+import useFilteredData from "../components/filteringLogic";
 import dots from "../images/dots2.png";
 import FileOptions from "../components/fileOptions";
 import AddtoFolder from "../components/addtoFolder";
@@ -14,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import SharePdf from "./sharedoc";
 
 export default function AllDocuments({setFrameData}){
-    const [data,setData]=useState([])
     const[filteringLogic,setFilteringLogic]=useState("id")
     const [orderLogic,setOrderLogic]=useState("ASC")
     const[searchTerm,setSearchTerm]=useState("")
@@ -25,8 +23,9 @@ export default function AllDocuments({setFrameData}){
     const [selectedFileId, setSelectedFileId] = useState(null);
     const [filePath,setFilePath]=useState("")
     const [renderShareModal,setRenderShareModal]=useState(false)
-    const navigate=useNavigate();
+    const [reloadTrigger, setReloadTrigger] = useState(0);
 
+    const navigate=useNavigate();
     function handleMouseOver(e,id,filePath){
         const position=e.target.getBoundingClientRect()
         setHoverPosition({
@@ -68,9 +67,24 @@ export default function AllDocuments({setFrameData}){
 
     }
 
+    const files= useFilteredData({
+      filteringLogic,
+      orderLogic,
+      searchTerm,
+      type: "document",
+      reloadTrigger, 
+    });
 
 
-    const filteredData=UseFilteredData({filteringLogic, orderLogic, searchTerm, type:"document"})
+//     useEffect(() => {
+//     files
+//   }, [filteringLogic, orderLogic, searchTerm]);
+
+    const handleFileDeleted = () => {
+        setReloadTrigger((prev) => prev + 1); 
+  };
+
+
     return <main className="flex flex-col h-full items-center">
         <UploadFiles/>
         <section className="w-[100%] md:w-[90%] flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-0 md:mr-10 md:justify-between">
@@ -111,7 +125,7 @@ export default function AllDocuments({setFrameData}){
                 </thead>
                 <tbody className="text-black w-full flex flex-col gap-10 h-full">
                 {
-                filteredData.map((docs)=>(
+                files.map((docs)=>(
                     <tr key={docs.id} className="flex w-full justify-around py-5 pb-5" >
                         <td className="text-left text-purple-800 text-base md:text-xl font-medium w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis border-solid">{docs.metadata}</td>
@@ -132,11 +146,11 @@ export default function AllDocuments({setFrameData}){
                 x:hoverPosition.x,
                 y:hoverPosition.y
             }}>
-                <FileOptions id={fileId} addtoFolder={filetoFolder} setRenderShareModal={setRenderShareModal}/>
+                <FileOptions id={fileId} addtoFolder={filetoFolder} setRenderShareModal={setRenderShareModal} onDelete={handleFileDeleted}/>
                 </div>}
 
             {showAddModal && <div className="fixed flex inset-0 z-100 items-center justify-center">
-                <AddtoFolder fileId={selectedFileId} userId={filteredData[0].user_id} onclose={() => setShowAddModal(false)} />
+                <AddtoFolder fileId={selectedFileId} userId={files[0].user_id} onclose={() => setShowAddModal(false)} />
                 </div>}
 
                 {renderShareModal && <div className="fixed flex inset-0 z-100 items-center justify-center">
