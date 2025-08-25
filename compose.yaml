@@ -9,10 +9,10 @@ services:
       - ./server/.env
     volumes:
       - ./server/uploads:/unidocs/server/uploads
-      - ./server/unidocs-e66ee1ec8833.json:/app/unidocs-e66ee1ec8833.json
+      - ./server/unidocs-e4fc2cea1f64.json:/app/unidocs-e4fc2cea1f64.json
     environment:
       - SUPABASE_DB_URL=postgresql://postgres.knzeiuvmewjpzgvdjmjh:Theterminator563@@aws-0-us-east-2.pooler.supabase.com:6543/postgres
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e66ee1ec8833.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e4fc2cea1f64.json
       - SERVICE_TYPE=document
     dns:
       - 8.8.8.8
@@ -29,10 +29,10 @@ services:
       - ./server/.env
     volumes:
       - ./server/uploads:/unidocs/server/uploads
-      - ./server/unidocs-e66ee1ec8833.json:/app/unidocs-e66ee1ec8833.json
+      - ./server/unidocs-e4fc2cea1f64.json:/app/unidocs-e4fc2cea1f64.json
     environment:
       - SUPABASE_DB_URL=postgresql://postgres.knzeiuvmewjpzgvdjmjh:Theterminator563@@aws-0-us-east-2.pooler.supabase.com:6543/postgres
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e66ee1ec8833.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e4fc2cea1f64.json
       - SERVICE_TYPE=folder
     dns:
       - 8.8.8.8
@@ -49,10 +49,10 @@ services:
       - ./server/.env
     volumes:
       - ./server/uploads:/unidocs/server/uploads
-      - ./server/unidocs-e66ee1ec8833.json:/app/unidocs-e66ee1ec8833.json
+      - ./server/unidocs-e4fc2cea1f64.json:/app/unidocs-e4fc2cea1f64.json
     environment:
       - SUPABASE_DB_URL=postgresql://postgres.knzeiuvmewjpzgvdjmjh:Theterminator563@@aws-0-us-east-2.pooler.supabase.com:6543/postgres
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e66ee1ec8833.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e4fc2cea1f64.json
       - SERVICE_TYPE=pdf
     dns:
       - 8.8.8.8
@@ -69,10 +69,10 @@ services:
       - ./server/.env
     volumes:
       - ./server/uploads:/unidocs/server/uploads
-      - ./server/unidocs-e66ee1ec8833.json:/app/unidocs-e66ee1ec8833.json
+      - ./server/unidocs-e4fc2cea1f64.json:/app/unidocs-e4fc2cea1f64.json
     environment:
       - SUPABASE_DB_URL=postgresql://postgres.knzeiuvmewjpzgvdjmjh:Theterminator563@@aws-0-us-east-2.pooler.supabase.com:6543/postgres
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e66ee1ec8833.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e4fc2cea1f64.json
       - SERVICE_TYPE=user
     dns:
       - 8.8.8.8
@@ -89,10 +89,10 @@ services:
       - ./server/.env
     volumes:
       - ./server/uploads:/unidocs/server/uploads
-      - ./server/unidocs-e66ee1ec8833.json:/app/unidocs-e66ee1ec8833.json
+      - ./server/unidocs-e4fc2cea1f64.json:/app/unidocs-e4fc2cea1f64.json
     environment:
       - SUPABASE_DB_URL=postgresql://postgres.knzeiuvmewjpzgvdjmjh:Theterminator563@@aws-0-us-east-2.pooler.supabase.com:6543/postgres
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e66ee1ec8833.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e4fc2cea1f64.json
       - SERVICE_TYPE=auth
     dns:
       - 8.8.8.8
@@ -109,10 +109,10 @@ services:
       - ./server/.env
     volumes:
       - ./server/uploads:/unidocs/server/uploads
-      - ./server/unidocs-e66ee1ec8833.json:/app/unidocs-e66ee1ec8833.json
+      - ./server/unidocs-e4fc2cea1f64.json:/app/unidocs-e4fc2cea1f64.json
     environment:
       - SUPABASE_DB_URL=postgresql://postgres.knzeiuvmewjpzgvdjmjh:Theterminator563@@aws-0-us-east-2.pooler.supabase.com:6543/postgres
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e66ee1ec8833.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/unidocs-e4fc2cea1f64.json
       - SERVICE_TYPE=upload
     dns:
       - 8.8.8.8

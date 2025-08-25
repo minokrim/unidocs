@@ -7,7 +7,7 @@
 
 #environment variables
 .env
-
+.json
 # testing
 /coverage
 

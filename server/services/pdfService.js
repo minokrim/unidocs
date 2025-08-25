@@ -9,6 +9,7 @@ dotenv.config();
 const publicKey = process.env.ILOVEPDF_PUBLIC;
 const secretKey = process.env.ILOVEPDF_SECRET;
 const ilovepdf = new ILovePDFApi(publicKey, secretKey);
+const googleCredentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
 
 
 export const convertToPDF = async (filepath, baseDir) => {
@@ -41,7 +42,12 @@ export const audioService=async(filepath)=>{
 
         const textData = data.toString('utf16le'); 
     try {
-        const client = new speech.TextToSpeechClient();
+        const client = new speech.TextToSpeechClient({  credentials: {
+    client_email: googleCredentials.client_email,
+    private_key: googleCredentials.private_key,
+  },
+  projectId: googleCredentials.project_id,
+});
         const request={
             input: { ssml: `<speak>${textData}</speak>` },
             voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
