@@ -1,11 +1,11 @@
 import { profilePic,updatedDetails,userDetails } from "../services/userService.js";
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from "uuid";
-
+import { supabase } from "../config/db.js";
 export const profilepic=async(req,res)=>{
     try {
         if (!req.file) return res.status(400).json({ message: "No file uploaded" });
-        const result=await profilePic(req.file.filename)
+        // const result=await profilePic(req.file.filename)
         console.log(req.file.filename)
         // res.status(result.status).json(result); 
         const fileBuffer = req.file.buffer;
@@ -28,7 +28,18 @@ export const profilepic=async(req,res)=>{
       .from("profile-pic")
       .getPublicUrl(filename);
 
-    res.status(200).json({ path: publicUrlData.publicUrl });
+      const email = req.body.email; 
+        const first_name = req.body.firstName;
+        const last_name = req.body.lastName;
+
+        const updateResult = await updatedDetails(email, first_name, publicUrlData.publicUrl, last_name);
+
+        return res.status(updateResult.status).json({
+            message: updateResult.message,
+            profile_pic_url: publicUrlData.publicUrl,
+        });
+
+    // res.status(200).json({ path: publicUrlData.publicUrl });
     } catch (error) {
         res.status(500).send('error uploading profile picture');
     }
@@ -37,7 +48,7 @@ export const profilepic=async(req,res)=>{
 export const updatedetails = async (req, res) => {
     const email=req.body.email;
     const first_name=req.body.firstName;
-    const profile_pic = req.file?.filename;
+    const profile_pic = req.body.profile_pic;
     const last_name=req.body.lastName;
     try {
         const updateResult = await updatedDetails(email, first_name, profile_pic, last_name);

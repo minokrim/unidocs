@@ -4,11 +4,11 @@ import env from "dotenv"
 env.config();
 const port = process.env.PORT;
 
-export const profilePic=async(filename)=>{
+export const profilePic=async(supabasePath)=>{
     try { 
-        const imagePath = `uploads/${filename}`; 
-        console.log(imagePath)
-        return{status:(200),data:{ path: imagePath }};
+        // const imagePath = `uploads/${filename}`; 
+        // console.log(imagePath)
+        return{status:(200),data:{ path: supabasePath }};
     } catch (err) {
         return{status:(500),message: "Image upload failed"};
     }
@@ -40,7 +40,7 @@ export const userDetails=async (user_email)=>{
         const result = await db.query("SELECT * FROM USERS WHERE EMAIL=$1", [user_email]);
         if (result.rows.length > 0) {
           const user = result.rows[0];    
-          user.profile_pic_url = `https://unidocs-ukv1.onrender.com/uploads/${user.profile_pic}`;
+          user.profile_pic_url = `${user.profile_pic}`;
   
     
           return{status:(200),data:(user)}

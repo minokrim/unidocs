@@ -11,7 +11,7 @@ const[firstName,setFirstName]=useState(user.first_name||"")
 const[lastName,setLastName]=useState(user.last_name||"")
 const[email,setEmail]=useState(user.email)
 const[password,setPassword]=useState(user.password||"")
-const[profilePic,setProfilePic]=useState(user.profile_pic_url)
+const[profilePic,setProfilePic]=useState(user.profile_pic_url||null)
 const [editdetails,setEditDetails]=useState(false)
 const [previewPic, setPreviewPic] = useState(user.profile_pic_url);
 
@@ -38,17 +38,17 @@ async function toggleEditDetails() {
 }
 
 
-async function updatedetails(uploadedPath) {
+async function updatedetails(profilePicUrl) {
     const formData = new FormData();
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append("email", email);
-    formData.append("password", password);
-    if (profilePic) {
-        formData.append("profile_pic", profilePic);
-      }
+  const payload = {
+    firstName,
+    lastName,
+    email,
+    password,
+    profile_pic: profilePicUrl,
+  };
     try {
-        const response = await axios.post("https://unidocs-ukv1.onrender.com/user/api/updated/details", formData, {
+        const response = await axios.post("https://unidocs-ukv1.onrender.com/user/api/updated/details", payload, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
@@ -57,7 +57,7 @@ async function updatedetails(uploadedPath) {
             first_name: firstName,
             last_name: lastName,
             password: password,
-            profile_pic_url: uploadedPath
+            profile_pic_url: profilePicUrl
         }));
     } catch (err) {
         console.log(err);
@@ -80,7 +80,7 @@ async function uploadprofilePic() {
         console.log(response)
         const uploadedPath = response.data.data.path;
         console.log(uploadedPath)
-        const fullPicUrl = response.data.path;;
+        const fullPicUrl = response.data.profile_pic_url;;
         console.log(fullPicUrl)
         setPreviewPic(fullPicUrl); 
         await updatedetails(fullPicUrl); 
