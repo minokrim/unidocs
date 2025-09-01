@@ -11,7 +11,7 @@ const { Client } = pg;
 
 const supabaseUrl = process.env.supabaseUrl;
 const supabaseKey = process.env.supabaseKey;
-
+console.log(supabaseUrl,supabaseKey)
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
 
