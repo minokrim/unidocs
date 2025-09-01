@@ -1,6 +1,5 @@
 import { profilePic,updatedDetails,userDetails } from "../services/userService.js";
 import jwt from 'jsonwebtoken';
-import { db } from "../config/db.js";
 import { v4 as uuidv4 } from "uuid";
 
 export const profilepic=async(req,res)=>{
@@ -17,7 +16,7 @@ export const profilepic=async(req,res)=>{
     console.log(fileBuffer)
 
     const { data, error } = await supabase.storage
-      .from("profile-pics")
+      .from("profile-pic")
       .upload(filename, fileBuffer, {
         contentType: req.file.mimetype,
         upsert: false,
@@ -26,7 +25,7 @@ export const profilepic=async(req,res)=>{
     if (error) throw error;
 
     const { data: publicUrlData } = supabase.storage
-      .from("profile-pics")
+      .from("profile-pic")
       .getPublicUrl(filename);
 
     res.status(200).json({ path: publicUrlData.publicUrl });
