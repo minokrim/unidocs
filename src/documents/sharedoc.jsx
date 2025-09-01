@@ -19,7 +19,7 @@ export default function SharePdf({filePath,onclose}){
 
         console.log(filePath)
         setSending(true);
-        axios.post("http://localhost/document/share/file",{receivers_email:email,name:user.first_name,users_email:user.email,path:filePath})
+        axios.post("https://unidocs-ukv1.onrender.com/document/share/file",{receivers_email:email,name:user.first_name,users_email:user.email,path:filePath})
         .then((res)=>{
             onclose()
             Swal.fire({

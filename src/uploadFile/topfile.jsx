@@ -25,7 +25,7 @@ export default function TopFile ({onFileCountUpdate}) {
 
 
     function getFile(fileid){
-        axios.get(`http://localhost/user/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
+        axios.get(`https://unidocs-ukv1.onrender.com/user/document/filedata/`, {params: { fileid: fileid },responseType: "blob"})        
         .then((res)=>{
             console.log("Id sent succesfully")
 

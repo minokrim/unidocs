@@ -12,7 +12,7 @@ export default function Pdfaudio(){
         const formData = new FormData();
         formData.append("file", file);
         setLoading(true)
-        axios.post("http://localhost/pdf/file/audio", formData, { responseType: "blob" })
+        axios.post("https://unidocs-ukv1.onrender.com/pdf/file/audio", formData, { responseType: "blob" })
           .then((res) => {
   
             const blob = new Blob([res.data], { type: "audio/mp3" });

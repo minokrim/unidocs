@@ -20,7 +20,7 @@ export default function FolderProvider({children}){
 // }, [userLoading, user?.id]);
 
     const getFolders=(userid)=>{
-      axios.post("http://localhost/folder/folder/data",{id:userid}, { withCredentials: true } )
+      axios.post("https://unidocs-ukv1.onrender.com/folder/folder/data",{id:userid}, { withCredentials: true } )
         .then((response) => {
           setFolders(response.data.rows);
         })

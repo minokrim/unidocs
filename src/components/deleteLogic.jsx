@@ -22,7 +22,7 @@ const DeleteItem = async ({ type, id,user }) => {
       reverseButtons: true,
     });
     if (result.isConfirmed) {
-     await axios.post(`http://localhost/${type}/document/delete/${type}`, {
+     await axios.post(`https://unidocs-ukv1.onrender.com/${type}/document/delete/${type}`, {
         fileId: id,
         userId:user.user.id
       });

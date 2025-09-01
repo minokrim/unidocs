@@ -30,7 +30,7 @@ export default function UserProvider({children}){
       return;
     }
 
-        const res=await axios.get("http://localhost/user/database/details", { withCredentials: true,headers:{Authorization:`Bearer ${storedToken}`} })
+        const res=await axios.get("https://unidocs-ukv1.onrender.com/user/database/details", { withCredentials: true,headers:{Authorization:`Bearer ${storedToken}`} })
         .then((response) => {
           setUser(response.data);
           console.log(response.data.id)

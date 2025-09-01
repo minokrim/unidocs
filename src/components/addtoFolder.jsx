@@ -22,7 +22,7 @@ export default function AddtoFolder({fileId,onclose,userId}){
         }
 
         function handleFiletoFolder(){
-            axios.post("http://localhost/document/document/addtofolder",{file_id:fileId,folder_id:selectedFolder,userId:userId})
+            axios.post("https://unidocs-ukv1.onrender.com/document/document/addtofolder",{file_id:fileId,folder_id:selectedFolder,userId:userId})
             .then((res)=>{
                 onclose()
                 Swal.fire({

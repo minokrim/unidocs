@@ -7,7 +7,7 @@ export default function Nav(){
 
     function handleSignin(){
     localStorage.removeItem('jwt');
-        window.location.href="http://localhost/auth/google"
+        window.location.href="https://unidocs-ukv1.onrender.com/auth/google"
     }
 
     useEffect(() => {

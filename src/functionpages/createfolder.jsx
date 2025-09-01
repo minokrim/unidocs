@@ -18,7 +18,7 @@ export default function CreateFolder(){
             userId:user.id
         }
         setLoading(true)
-        axios.post("http://localhost/folder/folder/create",data)
+        axios.post("https://unidocs-ukv1.onrender.com/folder/folder/create",data)
         .then((res)=>{
             Swal.fire({
             position: "center",

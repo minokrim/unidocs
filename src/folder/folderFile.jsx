@@ -57,7 +57,7 @@ export default function FolderFiles({setFrameData}){
     }
 
         function openFile(fileid){
-        axios.get(`http://localhost/document/document/filedata/open`, {params: { fileid: fileid },responseType: "blob"})    
+        axios.get(`https://unidocs-ukv1.onrender.com/document/document/filedata/open`, {params: { fileid: fileid },responseType: "blob"})    
         .then((res)=>{
             const blob = new Blob([res.data], { type:'application/pdf' });
             const fileURL = URL.createObjectURL(blob);
@@ -75,7 +75,7 @@ export default function FolderFiles({setFrameData}){
 
 
     function renderFileinFolder(){
-        axios.post("http://localhost/document/document/fileinfolder",{userId:userId,folderId:folderId})
+        axios.post("https://unidocs-ukv1.onrender.com/document/document/fileinfolder",{userId:userId,folderId:folderId})
     .then((res)=>{
         setData(res.data)
     })

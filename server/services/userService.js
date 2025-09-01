@@ -39,7 +39,7 @@ export const userDetails=async (user_email)=>{
         const result = await db.query("SELECT * FROM USERS WHERE EMAIL=$1", [user_email]);
         if (result.rows.length > 0) {
           const user = result.rows[0];    
-          user.profile_pic_url = `http://localhost/uploads/${user.profile_pic}`;
+          user.profile_pic_url = `https://unidocs-ukv1.onrender.com/uploads/${user.profile_pic}`;
   
     
           return{status:(200),data:(user)}

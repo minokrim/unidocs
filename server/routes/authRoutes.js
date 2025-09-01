@@ -20,7 +20,7 @@ router.get("/google/callback",authRateLimiter,  (req, res, next) => {
       { expiresIn: '1h' }
     );
     console.log(req.user.email)
-    res.redirect(`http://localhost:3000/#/app?token=${token}`);
+    res.redirect(`https://unidocs-ukv1.onrender.com/#/app?token=${token}`);
     } catch (error) {
     console.error('Session error:', error);
     }

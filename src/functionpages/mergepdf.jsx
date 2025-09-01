@@ -29,7 +29,7 @@ export default function Mergepdf() {
         formData.append("files", file2);
         setLoading(true);
         axios
-            .post("http://localhost/pdf/file/merge", formData, { responseType: "blob" })
+            .post("https://unidocs-ukv1.onrender.com/pdf/file/merge", formData, { responseType: "blob" })
             .then((res) => {
                 const blob = new Blob([res.data], { type: "application/pdf" });
 

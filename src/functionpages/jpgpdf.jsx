@@ -13,7 +13,7 @@ export default function Jpgpdf(){
         setLoading(true)
         formData.append("file", file);
         axios
-          .post("http://localhost/pdf/file/convert", formData, { responseType: "blob" })
+          .post("https://unidocs-ukv1.onrender.com/pdf/file/convert", formData, { responseType: "blob" })
           .then((res) => {
   
             const blob = new Blob([res.data], { type: "application/pdf" });

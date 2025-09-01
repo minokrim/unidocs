@@ -48,7 +48,7 @@ async function updatedetails(uploadedPath) {
         formData.append("profile_pic", profilePic);
       }
     try {
-        const response = await axios.post("http://localhost/user/api/updated/details", formData, {
+        const response = await axios.post("https://unidocs-ukv1.onrender.com/user/api/updated/details", formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
@@ -72,12 +72,12 @@ async function uploadprofilePic() {
         formData.append("profile_pic",profilePic)
     
     try {
-        const response = await axios.post("http://localhost/user/api/upload/profile-pic", formData, {
+        const response = await axios.post("https://unidocs-ukv1.onrender.com/user/api/upload/profile-pic", formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
         const uploadedPath = response.data.data.path;
-        const fullPicUrl = `http://localhost/${uploadedPath}?t=${Date.now()}`;
+        const fullPicUrl = `https://unidocs-ukv1.onrender.com/${uploadedPath}?t=${Date.now()}`;
         setPreviewPic(fullPicUrl); 
         await updatedetails(fullPicUrl); 
         await refreshUser(); 
