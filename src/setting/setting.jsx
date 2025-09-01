@@ -20,7 +20,6 @@ useEffect(()=>{
         setLastName(user.last_name||"")
         setEmail(user.email)
         setPassword(user.password||"")
-        setProfilePic(dp)
         setPreviewPic(user.profile_pic_url);
     
 },[user])
@@ -67,7 +66,7 @@ async function uploadprofilePic() {
     if(!profilePic) return;
 
         const formData=new FormData()
-        formData.append("file",profilePic)
+        formData.append("profile_pic",profilePic)
         formData.append("email", email);
         formData.append("firstName", firstName);
         formData.append("lastName", lastName);    

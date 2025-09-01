@@ -42,8 +42,8 @@ export const profilepic=async(req,res)=>{
 
     // res.status(200).json({ path: publicUrlData.publicUrl });
     } catch (error) {
-      console.log(error)
-        res.status(500).send('error uploading profile picture');
+      console.log(error);
+      res.status(500).json({ message: error.message, stack: error.stack });    
     }
 }
 
