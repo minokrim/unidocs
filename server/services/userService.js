@@ -8,6 +8,7 @@ export const profilePic=async(supabasePath)=>{
     try { 
         return{status:(200),data:{ path: supabasePath }};
     } catch (err) {
+        console.log(err)
         return{status:(500),message: "Image upload failed"};
     }
 }
@@ -29,6 +30,7 @@ export const updatedDetails=async(email,first_name,profile_pic,last_name)=>{
     
 
     } catch (error) {
+        console.log(err)
         return{status:400,message:"server error during lookup"}
     }
 }

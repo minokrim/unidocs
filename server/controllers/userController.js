@@ -4,10 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import { supabase } from "../config/db.js";
 export const profilepic=async(req,res)=>{
     try {
-        if (!req.file) return res.status(400).json({ message: "No file uploaded" });
-        // const result=await profilePic(req.file.filename)
-        // res.status(result.status).json(result); 
-        const fileBuffer = req.file.buffer;
+    if (!req.file) return res.status(400).json({ message: "No file uploaded" }); 
+    const fileBuffer = req.file.buffer;
     const ext = req.file.originalname.split('.').pop();
     const filename = `${uuidv4()}.${ext}`;
     console.log(filename)
@@ -21,7 +19,10 @@ export const profilepic=async(req,res)=>{
         upsert: false,
       });
 
-    if (error) throw error;
+    if (error){
+      console.error("Supabase upload error:", error);
+      throw error;
+    } 
 
     const { data: publicUrlData } = supabase.storage
       .from("profile-pic")
@@ -40,6 +41,7 @@ export const profilepic=async(req,res)=>{
 
     // res.status(200).json({ path: publicUrlData.publicUrl });
     } catch (error) {
+      console.log(error)
         res.status(500).send('error uploading profile picture');
     }
 }
@@ -53,6 +55,7 @@ export const updatedetails = async (req, res) => {
         const updateResult = await updatedDetails(email, first_name, profile_pic, last_name);
         res.status(updateResult.status).json({ message: updateResult.message });
     } catch (error) {
+      console.log(error)
         res.status(500).json({ message: 'Details update failed' });
     }
 };
