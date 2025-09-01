@@ -1,6 +1,7 @@
 import { profilePic,updatedDetails,userDetails } from "../services/userService.js";
 import jwt from 'jsonwebtoken';
 import { db } from "../config/db.js";
+import { v4 as uuidv4 } from "uuid";
 
 export const profilepic=async(req,res)=>{
     try {
