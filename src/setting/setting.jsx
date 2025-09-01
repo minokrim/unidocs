@@ -70,14 +70,18 @@ async function uploadprofilePic() {
 
         const formData=new FormData()
         formData.append("profile_pic",profilePic)
+        console.log(profilePic)
     
     try {
         const response = await axios.post("https://unidocs-ukv1.onrender.com/user/api/upload/profile-pic", formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
+        console.log(response)
         const uploadedPath = response.data.data.path;
+        console.log(uploadedPath)
         const fullPicUrl = `https://unidocs-ukv1.onrender.com/${uploadedPath}?t=${Date.now()}`;
+        console.log(fullPicUrl)
         setPreviewPic(fullPicUrl); 
         await updatedetails(fullPicUrl); 
         await refreshUser(); 
