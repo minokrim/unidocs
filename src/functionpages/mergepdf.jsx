@@ -5,7 +5,6 @@ import documenticon from "../images/document.png";
 import "./mergepdf.css";
 import { FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
-import loader from "../images/loader.svg";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export default function Mergepdf() {
