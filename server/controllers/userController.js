@@ -27,6 +27,7 @@ export const profilepic=async(req,res)=>{
     const { data: publicUrlData } = supabase.storage
       .from("profile-pic")
       .getPublicUrl(filename);
+      console.log("sb-file",filename,data.publicUrl)
 
       const email = req.body.email; 
         const first_name = req.body.firstName;

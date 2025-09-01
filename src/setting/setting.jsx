@@ -39,7 +39,6 @@ async function toggleEditDetails() {
 
 
 async function updatedetails(profilePicUrl) {
-    const formData = new FormData();
   const payload = {
     firstName,
     lastName,
@@ -49,7 +48,6 @@ async function updatedetails(profilePicUrl) {
   };
     try {
         const response = await axios.post("https://unidocs-ukv1.onrender.com/user/api/updated/details", payload, {
-            headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
         setUser((prevUser) => ({
@@ -69,19 +67,17 @@ async function uploadprofilePic() {
     if(!profilePic) return;
 
         const formData=new FormData()
-        formData.append("profile_pic",profilePic)
-        console.log(profilePic)
-    
+        formData.append("file",profilePic)
+        formData.append("email", email);
+        formData.append("firstName", firstName);
+        formData.append("lastName", lastName);    
     try {
         const response = await axios.post("https://unidocs-ukv1.onrender.com/user/api/upload/profile-pic", formData, {
             headers: { "Content-Type": "multipart/form-data" },
             withCredentials: true
         });
-        console.log(response)
-        const uploadedPath = response.data.data.path;
-        console.log(uploadedPath)
+        const uploadedPath = response.data.profile_pic_url
         const fullPicUrl = response.data.profile_pic_url;;
-        console.log(fullPicUrl)
         setPreviewPic(fullPicUrl); 
         await updatedetails(fullPicUrl); 
         await refreshUser(); 
