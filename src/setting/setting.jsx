@@ -80,7 +80,7 @@ async function uploadprofilePic() {
         console.log(response)
         const uploadedPath = response.data.data.path;
         console.log(uploadedPath)
-        const fullPicUrl = `https://unidocs-ukv1.onrender.com/${uploadedPath}?t=${Date.now()}`;
+        const fullPicUrl = response.data.path;;
         console.log(fullPicUrl)
         setPreviewPic(fullPicUrl); 
         await updatedetails(fullPicUrl); 

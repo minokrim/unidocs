@@ -7,6 +7,7 @@ const port = process.env.PORT;
 export const profilePic=async(filename)=>{
     try { 
         const imagePath = `uploads/${filename}`; 
+        console.log(imagePath)
         return{status:(200),data:{ path: imagePath }};
     } catch (err) {
         return{status:(500),message: "Image upload failed"};

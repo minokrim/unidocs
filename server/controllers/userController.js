@@ -1,10 +1,34 @@
 import { profilePic,updatedDetails,userDetails } from "../services/userService.js";
 import jwt from 'jsonwebtoken';
+import { db } from "../config/db.js";
 
 export const profilepic=async(req,res)=>{
     try {
+        if (!req.file) return res.status(400).json({ message: "No file uploaded" });
         const result=await profilePic(req.file.filename)
-        res.status(result.status).json(result); 
+        console.log(req.file.filename)
+        // res.status(result.status).json(result); 
+        const fileBuffer = req.file.buffer;
+    const ext = req.file.originalname.split('.').pop();
+    const filename = `${uuidv4()}.${ext}`;
+    console.log(filename)
+    console.log(ext)
+    console.log(fileBuffer)
+
+    const { data, error } = await supabase.storage
+      .from("profile-pics")
+      .upload(filename, fileBuffer, {
+        contentType: req.file.mimetype,
+        upsert: false,
+      });
+
+    if (error) throw error;
+
+    const { data: publicUrlData } = supabase.storage
+      .from("profile-pics")
+      .getPublicUrl(filename);
+
+    res.status(200).json({ path: publicUrlData.publicUrl });
     } catch (error) {
         res.status(500).send('error uploading profile picture');
     }
