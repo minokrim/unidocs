@@ -6,7 +6,6 @@ export const profilepic=async(req,res)=>{
     try {
         if (!req.file) return res.status(400).json({ message: "No file uploaded" });
         // const result=await profilePic(req.file.filename)
-        console.log(req.file.filename)
         // res.status(result.status).json(result); 
         const fileBuffer = req.file.buffer;
     const ext = req.file.originalname.split('.').pop();
