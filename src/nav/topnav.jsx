@@ -6,7 +6,7 @@
 export default function TopNav({handleToggle}){
 
     return <main className=' bg-gradient-to-b from-purple-700 to-black'>
-        <div className="flex justify-between w-full content-center items-center">
+        <div className="flex justify-around w-full content-center items-center">
             <IoIosMenu  onClick={handleToggle} className='text-4xl md:text-8xl'/>
             <div className='w-max mr-[1em] flex justify-between items-center'>
             <img src={logo} alt="" className='w-auto h-[4em] md:h-[6em]'/>

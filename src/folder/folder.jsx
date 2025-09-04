@@ -78,7 +78,7 @@ function handleMenuToggle(e, status,folderIdArg) {
         </section>
 
 
-        <section className="w-[100%]  flex pt-5 pl-5 flex-wrap gap-3 md:gap-0">
+        <section className="w-[100%] flex pt-5 pl-5 flex-wrap gap-3 md:gap-0 items-center justify-center" >
         {filteredData.map((fold)=>(
             <div key={fold.id}>
                 <FolderCard name={fold.folder_name} onToggleMenu={(e) => handleMenuToggle(e, true,fold.id)} onMouseLeave={() => handleMenuToggle(null, false)} time={new Date(fold.created_at).toLocaleDateString()}/>

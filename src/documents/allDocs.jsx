@@ -110,8 +110,8 @@ export default function AllDocuments({setFrameData}){
         </section>
         </section>
 
-        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll">
-            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full overflow-x-scroll "style={{scrollbarWidth:'none',msOverflowStyle: 'none'}}>
+        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll scroll">
+            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full overflow-x-scroll">
                 <thead className="flex justify-around w-full">
                     <tr className="flex w-full py-5 mb-0 justify-around">
                     <th className="w-[5em] text-end">Title</th>

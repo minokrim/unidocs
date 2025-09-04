@@ -15,7 +15,7 @@ export default function Footer(){
             <p>Security</p>
         </section>
 
-        <section >
+        <section>
             <h2>Socials</h2>
             <div className="grid grid-cols-2 items-center gap-2">
             <TiSocialFacebook className="text-4xl"/>
@@ -25,7 +25,7 @@ export default function Footer(){
             </div>
         </section>
 
-        <section className="flex flex-col items-center">
+        <section>
             <h2>Support</h2>
             <p>Contact</p>
             <p>Help Center</p>

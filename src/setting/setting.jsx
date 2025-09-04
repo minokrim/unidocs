@@ -94,32 +94,32 @@ const handlePicChange = (e) => {
 };
 
     return <main className="bg-white h-full md:h-[100vh] flex flex-col justify-start md:justify-between pt-5 items-center w-full">
-            <h1 className="ml-10 md:ml-24 self-center justify-center w-[100%] text-purple-600">PROFILE SETTINGS</h1>
+            <h1 className="ml-10 font-bold md:ml-24 self-center justify-center w-[100%] text-purple-600">PROFILE SETTINGS</h1>
 
-            <div className="flex w-full justify-around content-center items-center flex-col md:flex-row">
+            <div className="flex w-full justify-around content-center items-center flex-col md:flex-row mt-3">
 
             <section className="flex flex-col w-max justify-center border border-solid border-1 border-purple-400 items-center p-5 rounded-lg gap-5">
-                <img src={previewPic||dp} alt="profile" className="h-[5em] w-[5em] md:h-[10em] md:w-[10em] rounded-full border border-solid border-red-500"/>
+                <img src={previewPic||dp} alt="profile" className="h-[10em] w-[10em] md:h-[10em] md:w-[10em] rounded-full border border-solid border-red-500"/>
                 {editdetails && <label htmlFor="imageInput" className="bg-white text-purple-600 border-purple-600 rounded-lg w-max p-2 border-2 border-solid ">Upload Photo</label>}
                 <input type="file" name="file" id="imageInput" className="hidden" onChange={handlePicChange}/>
             </section>
 
-            <form className="w-max flex flex-col justify-center content-center md:justify-around gap-3 text-black">
+            <form className="w-max flex flex-col justify-center content-center md:justify-around gap-3 text-black mt-3">
                 
                 <div className="flex flex-col gap-1 w-max">
-                <h3 className="w-full md:w-[5em] font-normal text-xl">First-Name</h3>
+                <h3 className="w-full md:w-[5em] font-semibold text-xl">First-Name</h3>
                 {editdetails && <FaEdit color="purple" className="text-3xl self-start" />}
                 <input type="text" value={firstName} onChange={(e)=>{setFirstName(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
                 </div>
 
                 <div className="flex flex-col gap-1 w-max">
-                <h3 className="w-full md:w-[5em] font-normal text-xl">Last-Name</h3>
+                <h3 className="w-full md:w-[5em] font-semibold text-xl">Last-Name</h3>
                 {editdetails && <FaEdit color="purple" className="text-3xl self-start" />}
                 <input type="text" value={lastName} onChange={(e)=>{setLastName(e.target.value)}} disabled={!editdetails} className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
                 </div>
 
                 <div className="flex flex-col gap-1 w-max">
-                <h3 className="w-full md:w-[5em] font-normal text-xl">Email</h3>
+                <h3 className="w-full md:w-[5em] font-semibold text-xl">Email</h3>
                 <input type="text" value={email} disabled className="w-full md:w-[25em] border border-solid border-gray-800 rounded-lg text-black font-bold pl-5 py-2"/>
                 </div>
 

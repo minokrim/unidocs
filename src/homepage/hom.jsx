@@ -36,7 +36,7 @@ export default function HomeOne () {
       </div>
 
 
-      <section className="section-2 p-5 bg-gradient-to-b from-purple-700 to-black" data-aos="fade-up" data-aos-duration="1000">
+      <section className="section-2 p-5 bg-gradient-to-b from-purple-700 to-black" >
         <div className="function-card-holder">
         <Card title={"Seamless Document Upload"} description={"Effortlessly upload assignments, reports, and forms with our secure and user-friendly submission portal"} dataAos="zoom-in-up"/>
         <Card title={"Access Records"} description={"View and download your academic records, transcripts, and certificates anytime, anywhere."}/>
@@ -47,15 +47,10 @@ export default function HomeOne () {
       </section>
 
 
-      <section className="p-4 md:p-20 bg-gradient-to-b from-purple-950 to-black">
-        <img src={hero} alt="" data-aos="zoom-in-up" data-aos-duration='3000'/>
+      <section className="p-8 md:p-20 bg-gradient-to-b from-purple-950 to-black">
+        <img src={hero} alt="dasboard" data-aos="zoom-in-up" data-aos-duration='3000'/>
       </section>
 
-      <section className="bg-gradient-to-l from-black to-purple-600 p-5 items-center flex flex-col">
-        <h3 className="text-sm font-bold md:text-lg">Ready to simplify your work? </h3>
-        <p>Get started with UniDocs today.</p>
-        <button className="w-full rounded-2xl md:w-1/4 text-2xl text-white">Get Started</button>
-      </section>
       <Footer/>
     </main>;
 }
