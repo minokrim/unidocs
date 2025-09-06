@@ -42,7 +42,7 @@ const corsOption={
 app.use(cors({
     origin: 'https://unidocs-1.onrender.com',  
     credentials: true   ,
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']             
   }));
 app.options("*", cors(corsOption)); 
@@ -60,6 +60,8 @@ await connectDB();
 
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.get('/', (req, res) => {
   res.send('Backend is alive');
@@ -105,6 +107,11 @@ app.get("/session/user",async(req,res)=>{
 app.use((err, req, res, next) => {
   console.error("🔥 Error:", err.stack);
   res.status(500).json({ error: "Something went wrong", details: err.message });
+});
+
+app.post("/ping", (req, res) => {
+  console.log("POST /ping hit, body:", req.body);
+  res.json({ message: "pong" });
 });
 
 app.listen(PORT,(req,res)=>{
