@@ -88,14 +88,14 @@ export default function AllDocuments({setFrameData}){
     return <main className="flex flex-col h-full items-center">
         <UploadFiles/>
         <section className="w-[100%] md:w-[90%] flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-0 md:mr-10 md:justify-between">
-        <div className="flex items-center gap-3 text-black font-bold  w-full">
+        <div className="flex items-center gap-3 text-black font-bold w-full px-2">
         <FaSearch className="text-2xl ml-3  md:ml-0 text-black"/>
         <input type="name" name="search" onChange={(e)=>{setSearchTerm(e.target.value)}} className="w-[15em] border-solid bg-gray-200 md:w-[20em] h-[2em] rounded-2xl pl-5"/>
         </div>
 
 
         <section className="flex gap-5 cursor-pointer">
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-end justify-end">
             <AiOutlineSortDescending className="text-3xl text-black" onClick={()=>setOrderLogic("ASC")}/>
             <TbSortDescendingLetters className="text-3xl text-black" onClick={()=>setOrderLogic("DESC")}/>
         </div>
@@ -110,7 +110,7 @@ export default function AllDocuments({setFrameData}){
         </section>
         </section>
 
-        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll scroll">
+        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll">
             <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full overflow-x-scroll">
                 <thead className="flex justify-around w-full">
                     <tr className="flex w-full py-5 mb-0 justify-around">

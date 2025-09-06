@@ -12,7 +12,7 @@ import icon6 from "../images/icon6.png"
 
 
 export default function TaskFunction(){
-    return <main className="taskFunction-body">
+    return <main className="taskFunction-body justify-center items-center">
       <section className="taskFunction-holder">
 
       <Link to="/app/uploadfile" className=" w-[40%] h-[70%] md:w-[25%] no-underline">
