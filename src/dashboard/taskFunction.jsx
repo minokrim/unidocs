@@ -13,7 +13,7 @@ import icon6 from "../images/icon6.png"
 
 export default function TaskFunction(){
     return <main className="taskFunction-body justify-center items-center">
-      <section className="taskFunction-holder">
+      <section className="flex flex-wrap gap-3 md:gap-5 justify-center items-center md:justify-around">
 
       <Link to="/app/uploadfile" className=" w-[40%] h-[70%] md:w-[25%] no-underline">
       <FunctionCard task={"Upload PDF"} description={'Easily upload PDF files to begin organizing, merging, or converting.'} icon={icon6}/>

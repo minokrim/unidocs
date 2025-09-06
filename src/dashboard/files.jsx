@@ -53,7 +53,7 @@ datasets: [{
 };
   return (
     <div className="w-flex flex-col mb-5">
-      <section className="flex flex-col w-[100%] items-center justify-center p-1">
+      <section className="flex flex-col w-full items-center justify-center p-1 h-full scroll-smooth m-0">
       <Dash/>
       <TaskFunction/>
       </section>

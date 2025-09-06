@@ -33,29 +33,21 @@ const upload = multer({ storage: storage },)
 
 const app =express();
 const PORT=process.env.SERVER_PORT
+const corsOption={
+    origin: 'https://unidocs-1.onrender.com',  
+    credentials: true   ,
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']             
+  }
 app.use(cors({
     origin: 'https://unidocs-1.onrender.com',  
     credentials: true   ,
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']             
   }));
-
-// app.use(
-//     session({
-//       secret: process.env.SESSION_SECRET,
-//       resave: false,
-//       saveUninitialized: false,
-//       cookie: { 
-//         maxAge: 1000*60*60*24,
-//         secure: process.env.NODE_ENV === 'production',
-//         httpOnly: true,
-//         sameSite: 'lax'
-//       },
-//     })
-//   );
+app.options("*", cors(corsOption)); 
 
 app.use(passport.initialize());
-// app.use(passport.session());
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const secretKey=process.env.ILOVEPDF_SECRET
