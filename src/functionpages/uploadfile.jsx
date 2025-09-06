@@ -26,7 +26,7 @@ export default function UploadFiles() {
     if (!userLoading && user.id) {
       setLoading(true)
       axios
-        .post("https://unidocs-ukv1.onrender.com/document/api/upload/file/metadata", formData)
+        .post("https://unidocs-ukv1.onrender.com/document/api/upload/file/metadata", formData,{headers:{"Content-Type":"multipart/formData"},withCredentials:true})
         .then((response) => {
           Swal.fire({
             position: "center",

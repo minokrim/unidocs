@@ -19,6 +19,11 @@ export const uploadfile=async(req,res)=>{
     const roundedFilesize=filesize.toFixed(4)
     const userid=req.body.userId
 
+      if (!req.file) {
+    console.error("❌ No file found in request");
+    return res.status(400).send("No file uploaded");
+  }
+
     if (!filePath || !filename) {
         return res.status(400).send("No file uploaded");
     }
