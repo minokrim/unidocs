@@ -102,6 +102,11 @@ app.get("/session/user",async(req,res)=>{
     }
 })
 
+app.use((err, req, res, next) => {
+  console.error("🔥 Error:", err.stack);
+  res.status(500).json({ error: "Something went wrong", details: err.message });
+});
+
 app.listen(PORT,(req,res)=>{
     console.log(`Server running on port ${PORT}`)
 })

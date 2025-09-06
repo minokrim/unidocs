@@ -22,12 +22,14 @@ export const uploadfile=async(req,res)=>{
     if (!filePath || !filename) {
         return res.status(400).send("No file uploaded");
     }
+        console.log("File path:", filePath,filename);
 
     try {
         const result=await uploadFiles(filename,filePath,metadata,roundedFilesize,userid)
         res.status(result.status).send(result.message);
 
     } catch (error) {
+            console.error("Upload error:", err);
         res.status(500).send("Failed to upload file");
 
     }
