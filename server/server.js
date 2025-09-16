@@ -40,8 +40,8 @@ const corsOption={
   allowedHeaders: ['Content-Type', 'Authorization']             
   }
 app.use(cors({
-    origin: 'https://unidocs-1.onrender.com',  
-    credentials: true   ,
+    origin: '*',  
+    credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']             
   }));
@@ -66,26 +66,6 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.send('Backend is alive');
 });
-
-const serviceType = process.env.SERVICE_TYPE;
-
-
-console.log(serviceType)
-    // if(serviceType==="file"){
-    // console.log(serviceType)
-    // app.use('/file',fileRoutes)
-    // } else if(serviceType==="folder"){
-    // app.use('/folder', createfolderRoutes);
-    // }else if(serviceType==="pdf"){
-    // app.use('/pdf', pdfRoutes);
-    // }else if(serviceType==="user"){
-    // app.use("/user",userRoutes)
-    // }else if(serviceType==="auth"){
-    //   console.log(serviceType)
-    // app.use("/auth", authRoutes);
-    // }else if(serviceType==="upload"){
-    // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-    // }
 
     app.use('/document',fileRoutes)
     app.use('/folder', createfolderRoutes);
@@ -114,6 +94,6 @@ app.post("/ping", (req, res) => {
   res.json({ message: "pong" });
 });
 
-app.listen(PORT,(req,res)=>{
+app.listen(PORT,"0.0.0.0",(req,res)=>{
     console.log(`Server running on port ${PORT}`)
 })
