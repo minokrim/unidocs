@@ -38,7 +38,7 @@ export const uploadfile=async(req,res)=>{
       throw error;
     }
 
-    const { data: publicUrlData ,filrBuffer} = supabase.storage
+    const { data: publicUrlData} = supabase.storage
       .from("document")
       .getPublicUrl(filename);
 
