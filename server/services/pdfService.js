@@ -12,11 +12,11 @@ const ilovepdf = new ILovePDFApi(publicKey, secretKey);
 const googleCredentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
 
 
-export const convertToPDF = async (filepath, baseDir) => {
+export const convertToPDF = async (publicUrl, baseDir) => {
     try {
         const task = ilovepdf.newTask('imagepdf');
         await task.start();
-        const file = new ILovePDFFile(filepath);  
+        const file = new ILovePDFFile(publicUrl);  
         await task.addFile(file);
         await task.process();
         const pdfBuffer = await task.download();
@@ -26,12 +26,12 @@ export const convertToPDF = async (filepath, baseDir) => {
       }
 };
 
-export const audioService=async(filepath)=>{
+export const audioService=async(publicUrl)=>{
     try {
         const task = ilovepdf.newTask("extract");
         await task.start();
 
-        const fullPath = path.join(filepath); 
+        const fullPath = path.join(publicUrl); 
         const file = new ILovePDFFile(fullPath)
 
         await task.addFile(file);
