@@ -2,6 +2,7 @@ import { profilePic,updatedDetails,userDetails } from "../services/userService.j
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "../config/db.js";
+
 export const profilepic=async(req,res)=>{
     try {
     if (!req.file) return res.status(400).json({ message: "No file uploaded" }); 
@@ -40,7 +41,6 @@ export const profilepic=async(req,res)=>{
             profile_pic_url: publicUrlData.publicUrl,
         });
 
-    // res.status(200).json({ path: publicUrlData.publicUrl });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: error.message, stack: error.stack });    

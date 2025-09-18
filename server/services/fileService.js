@@ -15,9 +15,9 @@ const transporter = nodemailer.createTransport({
 });
 
 
-export const uploadFiles=async(filename,filePath,metadata,filesize,userid)=>{
+export const uploadFiles=async(filename,filePath,metadata,filesize,userid,publicUrl)=>{
     try{
-        await db.query("INSERT INTO DOCUMENTS(FILENAME,FILEPATH,METADATA,file_size,user_id) VALUES($1,$2,$3,$4,$5)",[filename,filePath,JSON.stringify(metadata),filesize,userid])
+        await db.query("INSERT INTO DOCUMENTS(FILENAME,FILEPATH,METADATA,file_size,user_id) VALUES($1,$2,$3,$4,$5)",[filename,publicUrl,JSON.stringify(metadata),filesize,userid])
         await redis.del(`filteredFiles:user:${userid}`)
 
         return { status: 201, message: "Document upload successful" };

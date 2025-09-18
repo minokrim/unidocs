@@ -15,14 +15,34 @@ export const uploadfile=async(req,res)=>{
     const metadata=req.body.metadata;
     const filePath=req.file.path;
     const filename=req.file.originalname;
+    const fileBuffer=req.file.buffer;
     const filesize=(req.file.size/(1024*1024))
     const roundedFilesize=filesize.toFixed(4)
     const userid=req.body.userId
+    console.log(metadata,filePath,filename,userid)
 
-      if (!req.file) {
+    if (!req.file) {
     console.error("❌ No file found in request");
     return res.status(400).send("No file uploaded");
   }
+
+   const { error } = await supabase.storage
+      .from("documents")
+      .upload(filename, fileBuffer, {
+        contentType: req.file.mimetype,
+        upsert: false,
+      });
+
+    if (error) {
+      console.error("Supabase upload error:", error);
+      throw error;
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from("documents")
+      .getPublicUrl(filename);
+
+    const publicUrl = publicUrlData.publicUrl;
 
     if (!filePath || !filename) {
         return res.status(400).send("No file uploaded");
@@ -30,7 +50,7 @@ export const uploadfile=async(req,res)=>{
         console.log("File path:", filePath,filename);
 
     try {
-        const result=await uploadFiles(filename,filePath,metadata,roundedFilesize,userid)
+        const result=await uploadFiles(filename,filePath,metadata,roundedFilesize,userid,publicUrl)
         res.status(result.status).send(result.message);
 
     } catch (error) {
