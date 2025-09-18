@@ -44,10 +44,10 @@ export const uploadfile=async(req,res)=>{
 
     const publicUrl = publicUrlData.publicUrl;
 
-    if (!filePath || !filename) {
-        return res.status(400).send("No file uploaded");
-    }
-        console.log("File path:", filePath,filename);
+    // if (!filePath || !filename) {
+    //     return res.status(400).send("No file uploaded");
+    // }
+    //     console.log("File path:", filePath,filename);
 
     try {
         const result=await uploadFiles(filename,filePath,metadata,roundedFilesize,userid,publicUrl)
