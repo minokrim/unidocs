@@ -19,7 +19,7 @@ export const uploadfile=async(req,res)=>{
     const filesize=(req.file.size/(1024*1024))
     const roundedFilesize=filesize.toFixed(4)
     const userid=req.body.userId
-    console.log(metadata,filePath,filename,userid)
+    console.log(metadata,filename,userid,filrBuffer)
 
     if (!req.file) {
     console.error("❌ No file found in request");
@@ -27,7 +27,7 @@ export const uploadfile=async(req,res)=>{
   }
 
    const { error } = await supabase.storage
-      .from("documents")
+      .from("document")
       .upload(filename, fileBuffer, {
         contentType: req.file.mimetype,
         upsert: false,
@@ -38,8 +38,8 @@ export const uploadfile=async(req,res)=>{
       throw error;
     }
 
-    const { data: publicUrlData } = supabase.storage
-      .from("documents")
+    const { data: publicUrlData ,filrBuffer} = supabase.storage
+      .from("document")
       .getPublicUrl(filename);
 
     const publicUrl = publicUrlData.publicUrl;
