@@ -4,7 +4,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { application } from "express";
-
+import { supabase } from "../config/db.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..'); 
