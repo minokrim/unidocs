@@ -19,7 +19,7 @@ export const uploadfile=async(req,res)=>{
     const filesize=(req.file.size/(1024*1024))
     const roundedFilesize=filesize.toFixed(4)
     const userid=req.body.userId
-    console.log(metadata,filename,userid,filrBuffer)
+    console.log(metadata,filename,userid,fileBuffer)
 
     if (!req.file) {
     console.error("❌ No file found in request");
