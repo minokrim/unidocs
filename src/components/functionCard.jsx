@@ -1,7 +1,7 @@
 import { GrDocumentPdf } from "react-icons/gr";
 import "./functionCard.css";
 export default function FunctionCard({task,description,icon}) {
-  return <main className="bg-[#E6E6FA] w-[8em] h-[8em] md:w-[20em] md:h-[12em] text-black rounded-xl px-2 md:px-3 py-3">
+  return <main className="bg-[#E6E6FA] w-[full] h-[full] md:w-[full] md:h-[full] text-black rounded-xl px-2 md:px-3 py-3">
     <section className="flex flex-col w-[100%] h-[100%]">
             <div>
               <img src={icon} alt="" className="w-auto h-[1.5em] md:h-[3em]"/>

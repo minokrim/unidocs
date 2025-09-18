@@ -11,6 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const convertImageToPDF = async (req, res) => {
     const fileBuffer = req.file.buffer;
+    const ext = req.file.originalname.split('.').pop();
     const filename = `${uuidv4()}.${ext}`;
 
 
@@ -46,6 +47,7 @@ export const convertImageToPDF = async (req, res) => {
 
   export const convertPdftoaudio=async(req,res)=>{
       const fileBuffer=req.file.buffer;
+      const ext = req.file.originalname.split('.').pop();
       const filename = `${uuidv4()}.${ext}`;
 
          const { error } = await supabase.storage
