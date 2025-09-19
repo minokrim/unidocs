@@ -16,24 +16,6 @@ export const convertImageToPDF = async (req, res) => {
     const tempPath = path.join("/tmp", filename);
 
     fs.writeFileSync(tempPath, fileBuffer);
-
-       const { error } = await supabase.storage
-      .from("document")
-      .upload(filename, fileBuffer, {
-        contentType: req.file.mimetype,
-        upsert: false,
-      });
-
-    if (error) {
-      console.error("Supabase upload error:", error);
-      throw error;
-    }
-
-    const { data: publicUrlData} = supabase.storage
-      .from("document")
-      .getPublicUrl(filename);
-
-    const publicUrl = publicUrlData.publicUrl;
   
     try {
       const pdfBuffer = await convertToPDF(tempPath);
@@ -52,7 +34,9 @@ export const convertImageToPDF = async (req, res) => {
       const fileBuffer=req.file.buffer;
       const ext = req.file.originalname.split('.').pop();
       const filename = `${uuidv4()}.${ext}`;
+    const tempPath = path.join("/tmp", filename);
 
+    fs.writeFileSync(tempPath, fileBuffer);
          const { error } = await supabase.storage
       .from("document")
       .upload(filename, fileBuffer, {
@@ -72,7 +56,7 @@ export const convertImageToPDF = async (req, res) => {
     const publicUrl = publicUrlData.publicUrl;
   
       try{
-          const response= await audioService(publicUrl);
+          const response= await audioService(tempPath);
           const writeFile = util.promisify(fs.writeFile);
           console.log(response)
   
