@@ -83,8 +83,17 @@ export const downloadfile=async(req,res)=>{
         if (result.status && result.status !== 200) {
             return res.status(result.status).json({ message: result.message });
         }
-        const filePath = path.join(projectRoot, result.filepath.replace(/\\/g, '/'));     
-        res.download(filePath, result.filename);
+        const fileUrl = result.filepath;
+        const response = await axios.get(fileUrl, { responseType: "stream" });
+
+        // const filePath = path.join(projectRoot, result.filepath.replace(/\\/g, '/'));     
+        // res.download(filePath, result.filename);
+
+            res.setHeader("Content-Disposition", `attachment; filename="${result.filename}"`);
+    res.setHeader("Content-Type", response.headers["content-type"]);
+
+    // Pipe the Supabase file stream to client
+    response.data.pipe(res);
     } catch (error) {
         return res.status(500).json({ 
             message: "Internal server error",
