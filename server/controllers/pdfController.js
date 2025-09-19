@@ -73,7 +73,7 @@ export const convertImageToPDF = async (req, res) => {
           const writeFile = util.promisify(fs.writeFile);
           console.log(response)
   
-          await writeFile('output.mp3', response, 'binary');
+          await writeFile('output.mp3', response.audioContent, 'binary');
     
           res.setHeader('Content-Type', 'audio/mp3');
           res.setHeader('Content-Disposition', 'attachment; filename="output.mp3"');

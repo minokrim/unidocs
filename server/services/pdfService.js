@@ -58,11 +58,11 @@ export const audioService=async(publicUrl)=>{
         return response;
 
     } catch (error) {
-      return error
+      throw error
     }
 
 }catch (error) {
-  return error
+  throw error
 }
 }
 
