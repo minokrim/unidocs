@@ -13,7 +13,9 @@ export const convertImageToPDF = async (req, res) => {
     const fileBuffer = req.file.buffer;
     const ext = req.file.originalname.split('.').pop();
     const filename = `${uuidv4()}.${ext}`;
+    const tempPath = path.join("/tmp", filename);
 
+    fs.writeFileSync(tempPath, fileBuffer);
 
        const { error } = await supabase.storage
       .from("document")
@@ -34,10 +36,11 @@ export const convertImageToPDF = async (req, res) => {
     const publicUrl = publicUrlData.publicUrl;
   
     try {
-      const pdfBuffer = await convertToPDF(publicUrl, __dirname);
+      const pdfBuffer = await convertToPDF(tempPath);
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader("Content-Disposition", "attachment; filename=output.pdf");
       res.send(pdfBuffer);
+      fs.unlinkSync(pdfBuffer)
     } catch (err) {
       console.log(err)
       res.status(500).send("Conversion failed");
