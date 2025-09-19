@@ -38,8 +38,8 @@ export const convertImageToPDF = async (req, res) => {
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader("Content-Disposition", "attachment; filename=output.pdf");
       res.send(pdfBuffer);
-      fs.unlinkSync(publicUrl);
     } catch (err) {
+      console.log(err)
       res.status(500).send("Conversion failed");
     }
   };
@@ -71,8 +71,9 @@ export const convertImageToPDF = async (req, res) => {
       try{
           const response= await audioService(publicUrl);
           const writeFile = util.promisify(fs.writeFile);
+          console.log(response)
   
-          await writeFile('output.mp3', response.audioContent, 'binary');
+          await writeFile('output.mp3', response, 'binary');
     
           res.setHeader('Content-Type', 'audio/mp3');
           res.setHeader('Content-Disposition', 'attachment; filename="output.mp3"');
