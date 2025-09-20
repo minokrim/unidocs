@@ -20,7 +20,7 @@ export default function FileOptions({id,addtoFolder,setRenderShareModal,onDelete
         function getFile(fileId){
         axios.get(`https://unidocs-ukv1.onrender.com/document/document/filedata/`, {params: { fileid: fileId },responseType: "blob"})        
         .then((res)=>{
-            const fileURL = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+            const fileURL = window.URL.createObjectURL(new Blob([res.data], { type: res.data.type }));
                 const link = document.createElement('a');
                 link.href = fileURL;
                 link.setAttribute('download', "document.pdf");

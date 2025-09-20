@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { application } from "express";
 import { supabase } from "../config/db.js";
-
+import axios from "axios";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, '..'); 
 
@@ -84,7 +84,7 @@ export const downloadfile=async(req,res)=>{
             return res.status(result.status).json({ message: result.message });
         }
         const fileUrl = result.filepath;
-        const response = await axios.get(fileUrl, { responseType: "stream" });
+        const response = await axios.get(result.filepath, { responseType: "stream" });
 
         // const filePath = path.join(projectRoot, result.filepath.replace(/\\/g, '/'));     
         // res.download(filePath, result.filename);
