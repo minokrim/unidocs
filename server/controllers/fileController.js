@@ -83,17 +83,11 @@ export const downloadfile=async(req,res)=>{
         if (result.status && result.status !== 200) {
             return res.status(result.status).json({ message: result.message });
         }
-        const fileUrl = result.filepath;
         const response = await axios.get(result.filepath, { responseType: "stream" });
 
-        // const filePath = path.join(projectRoot, result.filepath.replace(/\\/g, '/'));     
-        // res.download(filePath, result.filename);
-
-            res.setHeader("Content-Disposition", `attachment; filename="${result.filename}"`);
-    res.setHeader("Content-Type", response.headers["content-type"]);
-
-    // Pipe the Supabase file stream to client
-    response.data.pipe(res);
+        res.setHeader("Content-Disposition", `attachment; filename="${result.filename}"`);
+        res.setHeader("Content-Type", response.headers["content-type"]);
+        response.data.pipe(res);
     } catch (error) {
         return res.status(500).json({ 
             message: "Internal server error",
@@ -112,18 +106,11 @@ export const openFile=async(req,res)=>{
         if (result.status && result.status !== 200) {
             return res.status(result.status).json({ message: result.message });
         }
-        const filePath = path.join(projectRoot, result.filepath.replace(/\\/g, '/') );
-        if (!fs.existsSync(filePath)) {
-            return res.status(404).json({ message: "File not found" });
-        }
-        const stat = fs.statSync(filePath);
+        const response = await axios.get(result.filepath, { responseType: "stream" });
 
-        res.setHeader('Content-Type', "application/pdf");
-        res.setHeader('Content-Length', stat.size);
-        res.setHeader('Content-Disposition', `inline; filename="${path.basename(filePath)}"`);
-
-        const fileStream = fs.createReadStream(filePath);
-        fileStream.pipe(res);
+        res.setHeader("Content-Disposition", `attachment; filename="${result.filename}"`);
+        res.setHeader("Content-Type", response.headers["content-type"]);
+        response.data.pipe(res);
     } catch (error) {
         return res.status(500).json({ 
             message: "Internal server error",
