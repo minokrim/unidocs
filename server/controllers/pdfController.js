@@ -74,38 +74,53 @@ export const convertImageToPDF = async (req, res) => {
   }
   
   export const filemerge=async (req,res)=>{
-    const files = req.files.buffer;
-    console.log(files)
-    console.log(req.files.buffer);
+    const files = req.files;;
 
     if (!files || files.length < 2) {
         return res.status(400).json({ error: "Please upload two files for merging." });
     }
+
 
     const [filepath1, filepath2] = files.map(file => file.path);
     const ext = req.file.originalname.split('.').pop();
     const filename = `${uuidv4()}.${ext}`;
     const tempPath = path.join("/tmp", filename);
     try {
-          const response= await mergeServices(filepath1,filepath2);
+    // You now have Buffers directly
+    const buffers = files.map(file => file.buffer);
 
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
+    // Call your merge service with Buffers
+    const mergedPdf = await mergeServices(buffers[0], buffers[1]); 
 
-        res.send(response);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "attachment; filename=output.pdf");
 
-        try {
-            fs.unlinkSync(filepath1);
-        } catch (err) {
-            return err
-        }
+    res.send(mergedPdf);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred while merging the files." });
+  }
+    // try {
+    //       const response= await mergeServices(filepath1,filepath2);
+
+    //     res.setHeader('Content-Type', 'application/pdf');
+    //     res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
+
+    //     res.send(response);
+
+    //     try {
+    //         fs.unlinkSync(filepath1);
+    //     } catch (err) {
+    //         return err
+    //     }
         
-        try {
-            fs.unlinkSync(filepath2);
-        } catch (err) {
-            return err
-        }
-    } catch (error) {
-        res.status(500).json({ error: "An error occurred while converting the file." });
-    }
+    //     try {
+    //         fs.unlinkSync(filepath2);
+    //     } catch (err) {
+    //         return err
+    //     }
+    // } catch (error) {
+    //     res.status(500).json({ error: "An error occurred while converting the file." });
+    // }
   }

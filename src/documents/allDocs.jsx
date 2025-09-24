@@ -110,8 +110,8 @@ export default function AllDocuments({setFrameData}){
         </section>
         </section>
 
-        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll">
-            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full overflow-x-scroll md:overflow-x-hidden pb-10">
+        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll pb-10">
+            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full overflow-x-scroll">
                 <thead className="flex justify-around w-full border border-solid border-purple-900">
                     <tr className="flex w-full py-5 mb-0 justify-around">
                     <th className="w-[5em] text-end">Title</th>
@@ -123,10 +123,10 @@ export default function AllDocuments({setFrameData}){
                     <th className="w-[5em] text-end">Options</th>
                 </tr>
                 </thead>
-                <tbody className="text-black w-full flex flex-col gap-10 h-full">
+                <tbody className="text-black w-full flex flex-col gap-0 h-full">
                 {
                 files.map((docs)=>(
-                    <tr key={docs.id} className="flex w-full justify-around py-0 pb-0 border border-solid border-purple-900" >
+                    <tr key={docs.id} className="flex w-full justify-around py-5 pb-5 border border-solid border-purple-900" >
                         <td className="text-left text-purple-800 text-base md:text-xl font-medium w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis border-solid">{docs.metadata}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.folder_name||"Nil"}</td>
