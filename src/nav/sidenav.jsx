@@ -27,7 +27,7 @@ export default function Sidenav() {
   <div className="sidenav-holder">
         <section className="logged-user">
           <h5>Welcome</h5>
-          <img src={user?.profile_pic_url} alt="" className="rounded-full w-1/2"/>
+          <img src={user?.profile_pic_url} alt="" className="rounded-full w-1/2 h-1/2"/>
           <p>{user.first_name}</p>
         </section>
         <section className="nav-con">

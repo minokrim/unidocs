@@ -76,12 +76,16 @@ export const convertImageToPDF = async (req, res) => {
   export const filemerge=async (req,res)=>{
     const files = req.files.buffer;
     console.log(files)
+    console.log(req.files.buffer);
 
     if (!files || files.length < 2) {
         return res.status(400).json({ error: "Please upload two files for merging." });
     }
 
     const [filepath1, filepath2] = files.map(file => file.path);
+    const ext = req.file.originalname.split('.').pop();
+    const filename = `${uuidv4()}.${ext}`;
+    const tempPath = path.join("/tmp", filename);
     try {
           const response= await mergeServices(filepath1,filepath2);
 

@@ -5,10 +5,12 @@ import { TiSocialLinkedin } from "react-icons/ti";
 import { TiSocialYoutube } from "react-icons/ti";
 import "./hom.css"
 export default function Footer(){
-    return <main className="bg-gradient-to-b from-black to-purple-950 flex flex-col p-5 gap-3 md:justify-around">
+    return <main className="bg-gradient-to-b from-black to-purple-950 flex flex-col p-5 gap-3 md:justify-around  [box-shadow:inset_0_0_1px_rgba(255,255,255)]">
 
         <div className="flex flex-col md:flex-row gap-5 md:gap-0 w-full items-center justify-around font-serif">
-        <section>
+
+            <div className="flex justify-between w-full">
+                <section>
             <h2>About</h2>
             <p>About us</p>
             <p>Our Story</p>
@@ -16,7 +18,7 @@ export default function Footer(){
         </section>
 
         <section>
-            <h2>Socials</h2>
+            <h2 className="hidden md:flex">Socials</h2>
             <div className="grid grid-cols-2 items-center gap-2">
             <TiSocialFacebook className="text-4xl"/>
             <TiSocialInstagram className="text-4xl"/>
@@ -25,12 +27,13 @@ export default function Footer(){
             </div>
         </section>
 
-        <section>
+                <section>
             <h2>Support</h2>
             <p>Contact</p>
             <p>Help Center</p>
             <p>Terms</p>
         </section>
+            </div>
         </div>
 
         <hr />
