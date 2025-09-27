@@ -72,13 +72,6 @@ export const convertImageToPDF = async (req, res) => {
         throw error;
       }
   }
-  
-import fs from "fs";
-import path from "path";
-import { v4 as uuidv4 } from "uuid";
-import util from "util";
-import { supabase } from "../config/supabaseClient.js";
-import { mergeServices } from "../services/pdfService.js";
 
 export const filemerge = async (req, res) => {
   const files = req.files;
