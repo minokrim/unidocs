@@ -74,27 +74,20 @@ export const convertImageToPDF = async (req, res) => {
   }
   
   export const filemerge=async (req,res)=>{
-    const files = req.files;;
+const files = req.files;
 
-    if (!files || files.length < 2) {
-        return res.status(400).json({ error: "Please upload two files for merging." });
-    }
+  if (!files || files.length < 2) {
+    return res.status(400).json({ error: "Please upload two files for merging." });
+  }
 
-
-    const [filepath1, filepath2] = files.map(file => file.path);
-    const ext = req.file.originalname.split('.').pop();
-    const filename = `${uuidv4()}.${ext}`;
-    const tempPath = path.join("/tmp", filename);
-    try {
-    // You now have Buffers directly
+  try {
     const buffers = files.map(file => file.buffer);
 
-    // Call your merge service with Buffers
-    const mergedPdf = await mergeServices(buffers[0], buffers[1]); 
+    // Merge PDFs
+    const mergedPdf = await mergeServices(buffers[0], buffers[1]);
 
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Content-Disposition", "attachment; filename=output.pdf");
-
     res.send(mergedPdf);
 
   } catch (error) {

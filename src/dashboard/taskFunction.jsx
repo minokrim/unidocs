@@ -12,7 +12,7 @@ import icon6 from "../images/icon6.png"
 
 
 export default function TaskFunction(){
-    return <main className="w-[80%] md:w-full flex items-center justify-center mb-2 h-full">
+    return <main className="w-[70%] md:w-full flex items-center justify-center mb-2 h-full">
       <section className="flex flex-wrap gap-3 md:gap-5 justify-center items-center md:justify-around">
 
       <Link to="/app/uploadfile" className="w-[40%] h-[70%] md:w-[25%] no-underline">
