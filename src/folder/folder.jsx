@@ -59,14 +59,14 @@ function handleMenuToggle(e, status,folderIdArg) {
 
 
             <div className="flex flex-col md:flex-row justify-between pt-2">
-            <input type="search" name="" id="" placeholder="Search" onChange={(e)=>{setSearchTerm(e.target.value)}}  className="cursor-pointer py-1 px-3 border-solid border-gray-600 border-2 rounded-2xl w-[905]  md:w-[25em] text-black"/>
+            <input type="search" name="" id="" placeholder="Search" onChange={(e)=>{setSearchTerm(e.target.value)}}  className="cursor-pointer py-1 px-3 border-solid border-purple-600 border-2 rounded-2xl w-[905]  md:w-[25em] text-black"/>
 
             <section className="flex justify-between mt-3 gap-5 cursor-pointer">
                         <div className="flex gap-3">
-                            <AiOutlineSortDescending className="text-3xl text-black" onClick={()=>setOrderLogic("ASC")}/>
-                            <TbSortDescendingLetters className="text-3xl text-black" onClick={()=>setOrderLogic("DESC")}/>
+                            <AiOutlineSortDescending className="text-3xl text-black border-[0.05em] border-purple-900" onClick={()=>setOrderLogic("ASC")}/>
+                            <TbSortDescendingLetters className="text-3xl text-black border-[0.05em] border-purple-900" onClick={()=>setOrderLogic("DESC")}/>
                         </div>
-            <select name="" id="" value={filteringLogic} onChange={(e)=>{setFilteringLogic(e.target.value);}} className="border-solid border-gray-600 border-2 rounded-2xl w-[8em] md:w-[20em] text-black px-3 text-sm md:text-base">
+            <select name="" id="" value={filteringLogic} onChange={(e)=>{setFilteringLogic(e.target.value);}} className="border-solid border-purple-600 border-2 rounded-2xl w-[8em] md:w-[20em] text-black px-3 text-sm md:text-base">
                 <option value="last_updated">Sort Last updated</option>
                 <option value="folder_name">Sort by Name (A-Z)</option>
                 <option value="created_at">Sort by Created Date</option>

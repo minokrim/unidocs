@@ -45,15 +45,15 @@ export default function CreateFolder(){
 
             <section className="mt-0 pt-0">
                 <p className="mb-0 pb-0">Folder Name</p>
-            <input type="text" name="folder_name" id="folder_name" className="border border-black border-solid w-[80%] active:border-none mt-0 pt-0 py-3 px-2 rounded-lg" onChange={((e)=>setFolderName(e.target.value))}/>
+            <input type="text" name="folder_name" id="folder_name" className="border border-black border-solid w-full md:w-[80%] active:border-none mt-0 pt-0 py-3 px-2 rounded-lg" onChange={((e)=>setFolderName(e.target.value))}/>
             </section>
             
             <section>
             <p className="mb-0 pb-0">Folder description</p>
-            <input type="text" name="folder_description" id="folder_description" placeholder="Enter short folder Description" className="border border-black border-solid w-[80%] active:border-none mt-0 pt-0 py-28 px-2 rounded-lg" onChange={((e)=>setFolderDescription(e.target.value))}/>
+            <input type="text" name="folder_description" id="folder_description" placeholder="Enter short folder Description" className="border border-black border-solid w-full md:w-[80%] active:border-none mt-0 pt-0 py-28 px-2 rounded-lg" onChange={((e)=>setFolderDescription(e.target.value))}/>
             </section>
 
-            <button onClick={handleSubmit} className="w-1/4 bg-gradient-to-r from-blue-500 to-purple-500 flex text-center items-center justify-center">Create New Folder</button>
+            <button onClick={handleSubmit} className="w-full md:w-1/4 bg-gradient-to-r from-blue-500 to-purple-500 flex text-center items-center justify-center">Create New Folder</button>
         </form>}
     </main>
 }

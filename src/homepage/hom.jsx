@@ -3,7 +3,7 @@ import { FaArrowRight } from "react-icons/fa";
 import Nav from "../nav/nav";
 import sora1 from "../images/sora1.png"
 import Card from "../components/card";
-import hero from "../images/HERO.png"
+import hero from "../images/uni1.png"
 import flowchart from "../images/logo.png"
 import Footer from "./footer";
 import AOS from 'aos';
@@ -47,7 +47,7 @@ export default function HomeOne () {
       </section>
 
 
-      <section className="p-8 md:p-20 bg-gradient-to-b from-purple-950 to-black">
+      <section className="p-8 md:p-40 bg-gradient-to-b from-purple-950 to-black">
         <img src={hero} alt="dasboard" data-aos="zoom-in-up" data-aos-duration='3000'/>
       </section>
 

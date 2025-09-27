@@ -90,18 +90,18 @@ export default function AllDocuments({setFrameData}){
         <section className="w-[100%] md:w-[90%] flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2 mt-10 mr-0 md:mr-10 md:justify-between">
         <div className="flex items-center gap-3 text-black font-bold w-full px-2">
         <FaSearch className="text-2xl ml-3  md:ml-0 text-black"/>
-        <input type="name" name="search" onChange={(e)=>{setSearchTerm(e.target.value)}} className="w-[15em] border-solid bg-gray-200 md:w-[20em] h-[2em] rounded-2xl pl-5"/>
+        <input type="name" name="search" onChange={(e)=>{setSearchTerm(e.target.value)}} className="w-[15em] border-solid bg-purple-200 md:w-[20em] h-[2em] rounded-2xl pl-5"/>
         </div>
 
 
         <section className="flex gap-5 cursor-pointer">
         <div className="flex gap-3 items-end justify-end">
-            <AiOutlineSortDescending className="text-3xl text-black" onClick={()=>setOrderLogic("ASC")}/>
-            <TbSortDescendingLetters className="text-3xl text-black" onClick={()=>setOrderLogic("DESC")}/>
+            <AiOutlineSortDescending className="text-3xl text-black border-[0.05em] border-purple-900" onClick={()=>setOrderLogic("ASC")}/>
+            <TbSortDescendingLetters className="text-3xl text-black border-[0.05em] border-purple-900" onClick={()=>setOrderLogic("DESC")}/>
         </div>
 
 
-        <select  value={filteringLogic} onChange={(e)=>{setFilteringLogic(e.target.value);}} className="border-solid border-gray-600 border-2 rounded-2xl w-[8em] md:w-[20em] text-black px-3 text-sm md:text-base">
+        <select  value={filteringLogic} onChange={(e)=>{setFilteringLogic(e.target.value);}} className="border-solid border-purple-600 border-2 rounded-2xl w-[8em] md:w-[20em] text-black px-3 text-sm md:text-base">
                 <option value="filename">Sort by Name (A-Z)</option>
                 <option value="created_at">Sort by Created Date</option>
                 <option value="file_size">File Size</option>
@@ -110,8 +110,8 @@ export default function AllDocuments({setFrameData}){
         </section>
         </section>
 
-        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-scroll pb-10">
-            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full overflow-x-scroll">
+        <section className="bg-gray-200/20 mt-5 h-full w-full z-10 overflow-y-auto pb-40">
+            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full">
                 <thead className="flex justify-around w-full border border-solid border-purple-900">
                     <tr className="flex w-full py-5 mb-0 justify-around">
                     <th className="w-[5em] text-end">Title</th>
