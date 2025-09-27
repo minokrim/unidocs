@@ -73,31 +73,52 @@ export const convertImageToPDF = async (req, res) => {
       }
   }
 
-export const mergeServices = async (url1, url2) => {
+export const filemerge = async (req, res) => {
+  const files = req.files.buffer;
+
+  if (!files || files.length < 2) {
+    return res.status(400).json({ error: "Please upload two files for merging." });
+  }
+
   try {
-    const task = ilovepdf.newTask("merge");
-    await task.start();
+    const uploadedUrls = [];
 
-    // Download from Supabase
-    const downloadFile = async (url, filename) => {
-      const response = await axios.get(url, { responseType: "arraybuffer" });
-      const filePath = path.join("/tmp", filename); // temp directory
-      fs.writeFileSync(filePath, response.data);
-      return new ILovePDFFile(filePath);
-    };
+    for (const file of files) {
+      const ext = file.originalname.split(".").pop();
+      const filename = `${uuidv4()}.${ext}`;
+      const tempPath = path.join("/tmp", filename);
 
-    const file1 = await downloadFile(url1, "file1.pdf");
-    const file2 = await downloadFile(url2, "file2.pdf");
+      uploadedUrls.push(tempPath)
 
-    await task.addFile(file1);
-    await task.addFile(file2);
+      // fs.writeFileSync(tempPath, file.buffer);
 
-    await task.process();
-    const data = await task.download();
+      // const { error } = await supabase.storage
+      //   .from("document") 
+      //   .upload(filename, file.buffer, {
+      //     contentType: file.mimetype,
+      //     upsert: false,
+      //   });
 
-    return data;
+      // if (error) {
+      //   console.error("Supabase upload error:", error);
+      //   throw error;
+      // }
+
+      // const { data: publicUrlData } = supabase.storage
+      //   .from("document")
+      //   .getPublicUrl(filename);
+
+      // uploadedUrls.push(publicUrlData.publicUrl);
+    }
+
+    const mergedPdf = await mergeServices(uploadedUrls[0], uploadedUrls[1]);
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", 'attachment; filename="output.pdf"');
+    res.send(mergedPdf);
+
   } catch (error) {
-    throw error;
+    console.error("Merge error:", error);
+    res.status(500).json({ error: "An error occurred while merging the files." });
   }
 };
-
