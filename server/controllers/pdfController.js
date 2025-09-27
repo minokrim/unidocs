@@ -82,8 +82,19 @@ const files = req.files;
 
   try {
     const buffers = files.map(file => file.buffer);
+    const ext1 = files[0].originalname.split('.').pop().toLowerCase();
+    const ext2 = files[1].originalname.split('.').pop().toLowerCase();
 
-    // Merge PDFs
+    if (ext1 !== "pdf" || ext2 !== "pdf") {
+      return res.status(400).json({ error: "Only PDF files are supported." });
+    }
+
+    const filename1 = `${uuidv4()}.${ext1}`;
+    const filename2 = `${uuidv4()}.${ext2}`;
+    const tempPath1 = path.join("/tmp", filename1);
+    const tempPath2 = path.join("/tmp", filename2);
+
+    // Merge PDFs (your mergeServices must accept Buffers)
     const mergedPdf = await mergeServices(buffers[0], buffers[1]);
 
     res.setHeader("Content-Type", "application/pdf");
@@ -94,26 +105,5 @@ const files = req.files;
     console.error(error);
     res.status(500).json({ error: "An error occurred while merging the files." });
   }
-    // try {
-    //       const response= await mergeServices(filepath1,filepath2);
 
-    //     res.setHeader('Content-Type', 'application/pdf');
-    //     res.setHeader('Content-Disposition', 'attachment; filename="output.pdf"');
-
-    //     res.send(response);
-
-    //     try {
-    //         fs.unlinkSync(filepath1);
-    //     } catch (err) {
-    //         return err
-    //     }
-        
-    //     try {
-    //         fs.unlinkSync(filepath2);
-    //     } catch (err) {
-    //         return err
-    //     }
-    // } catch (error) {
-    //     res.status(500).json({ error: "An error occurred while converting the file." });
-    // }
   }
