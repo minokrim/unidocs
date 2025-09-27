@@ -73,37 +73,57 @@ export const convertImageToPDF = async (req, res) => {
       }
   }
   
-  export const filemerge=async (req,res)=>{
-const files = req.files;
+import fs from "fs";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
+import util from "util";
+import { supabase } from "../config/supabaseClient.js";
+import { mergeServices } from "../services/pdfService.js";
+
+export const filemerge = async (req, res) => {
+  const files = req.files;
 
   if (!files || files.length < 2) {
     return res.status(400).json({ error: "Please upload two files for merging." });
   }
 
   try {
-    const buffers = files.map(file => file.buffer);
-    const ext1 = files[0].originalname.split('.').pop().toLowerCase();
-    const ext2 = files[1].originalname.split('.').pop().toLowerCase();
+    const uploadedUrls = [];
 
-    if (ext1 !== "pdf" || ext2 !== "pdf") {
-      return res.status(400).json({ error: "Only PDF files are supported." });
+    for (const file of files) {
+      const ext = file.originalname.split(".").pop();
+      const filename = `${uuidv4()}.${ext}`;
+      const tempPath = path.join("/tmp", filename);
+
+      fs.writeFileSync(tempPath, file.buffer);
+
+      const { error } = await supabase.storage
+        .from("document") 
+        .upload(filename, file.buffer, {
+          contentType: file.mimetype,
+          upsert: false,
+        });
+
+      if (error) {
+        console.error("Supabase upload error:", error);
+        throw error;
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from("document")
+        .getPublicUrl(filename);
+
+      uploadedUrls.push(publicUrlData.publicUrl);
     }
 
-    const filename1 = `${uuidv4()}.${ext1}`;
-    const filename2 = `${uuidv4()}.${ext2}`;
-    const tempPath1 = path.join("/tmp", filename1);
-    const tempPath2 = path.join("/tmp", filename2);
-
-    // Merge PDFs (your mergeServices must accept Buffers)
-    const mergedPdf = await mergeServices(buffers[0], buffers[1]);
+    const mergedPdf = await mergeServices(uploadedUrls[0], uploadedUrls[1]);
 
     res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", "attachment; filename=output.pdf");
+    res.setHeader("Content-Disposition", 'attachment; filename="output.pdf"');
     res.send(mergedPdf);
 
   } catch (error) {
-    console.error(error);
+    console.error("Merge error:", error);
     res.status(500).json({ error: "An error occurred while merging the files." });
   }
-
-  }
+};
