@@ -46,6 +46,7 @@ export default function UploadFiles() {
             text: "Try again",
           });
           setLoading(false)
+          
         });
     }
   }

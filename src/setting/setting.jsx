@@ -52,7 +52,7 @@ async function updatedetails(profilePicUrl) {
         setUser((prevUser) => ({
             ...prevUser,
             first_name: firstName,
-            last_name: lastName,
+            last_name: lastName ,
             password: password,
             profile_pic_url: profilePicUrl
         }));

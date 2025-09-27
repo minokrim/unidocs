@@ -7,7 +7,7 @@ import "./hom.css"
 export default function Footer(){
     return <main className="bg-gradient-to-b from-black to-purple-950 flex flex-col px-3 gap-3 md:justify-around items-center">
 
-        <div className="flex flex-col md:flex-row gap-5 md:gap-0 w-full items-center justify-between md:justify-around font-serif md:w-[80%]">
+        <div className="flex flex-col md:flex-row gap-5 md:gap-0 w-full items-center justify-between md:justify-around font-serif md:w-[80%] pt-5">
 
             <div className="flex justify-between w-full">
                 <section>

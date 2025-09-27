@@ -87,29 +87,9 @@ export const filemerge = async (req, res) => {
       const ext = file.originalname.split(".").pop();
       const filename = `${uuidv4()}.${ext}`;
       const tempPath = path.join("/tmp", filename);
-      
-      fs.writeFileSync(tempPath, file.buffer); // save locally
+
+      fs.writeFileSync(tempPath, file.buffer); 
       uploadedUrls.push(tempPath)
-
-      // fs.writeFileSync(tempPath, file.buffer);
-
-      // const { error } = await supabase.storage
-      //   .from("document") 
-      //   .upload(filename, file.buffer, {
-      //     contentType: file.mimetype,
-      //     upsert: false,
-      //   });
-
-      // if (error) {
-      //   console.error("Supabase upload error:", error);
-      //   throw error;
-      // }
-
-      // const { data: publicUrlData } = supabase.storage
-      //   .from("document")
-      //   .getPublicUrl(filename);
-
-      // uploadedUrls.push(publicUrlData.publicUrl);
     }
 
     const mergedPdf = await mergeServices(uploadedUrls[0], uploadedUrls[1]);
