@@ -74,7 +74,7 @@ export const convertImageToPDF = async (req, res) => {
   }
 
 export const filemerge = async (req, res) => {
-  const files = req.files.buffer;
+  const files = req.files;
 
   if (!files || files.length < 2) {
     return res.status(400).json({ error: "Please upload two files for merging." });
@@ -87,7 +87,8 @@ export const filemerge = async (req, res) => {
       const ext = file.originalname.split(".").pop();
       const filename = `${uuidv4()}.${ext}`;
       const tempPath = path.join("/tmp", filename);
-
+      
+      fs.writeFileSync(tempPath, file.buffer); // save locally
       uploadedUrls.push(tempPath)
 
       // fs.writeFileSync(tempPath, file.buffer);
