@@ -1,12 +1,22 @@
 import { db } from "../config/db.js";
 import env from "dotenv"
+import redis from '../config/redis.js';
 
 env.config();
 const port = process.env.PORT;
 
 export const profilePic=async(supabasePath)=>{
     try { 
-        return{status:(200),data:{ path: supabasePath }};
+         let cacheKey = `images:${supabasePath}`;
+
+            const cachedData = await redis.get(cacheKey);
+            if (cachedData) {
+                return { rows: JSON.parse(cachedData),fromCache: tru };
+            }
+            const imageData = { path: supabasePath };
+            await redis.set(cacheKey, JSON.stringify(imageData), 'EX', 300);
+            return{status:(200),data:{ imageData }};
+
     } catch (err) {
         console.log(err)
         return{status:(500),message: "Image upload failed"};

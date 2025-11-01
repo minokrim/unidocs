@@ -111,7 +111,7 @@ export default function AllDocuments({setFrameData}){
 
         </section>
 
-        <section className="bg-gray-200/20 mt-5 h-100 w-full z-10 overflow-y-auto pb-40">
+        <section className="bg-gray-200/20 mt-5 h-100 w-full z-10 overflow-y-auto pb-40 scroll-smooth">
 
         
             <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full mb-20">
