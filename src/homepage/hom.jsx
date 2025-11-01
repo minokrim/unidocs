@@ -14,22 +14,25 @@ export default function HomeOne () {
   useEffect(()=>{
     AOS.init()
   })
+      function handleSignin(){
+    localStorage.removeItem('jwt');
+        window.location.href="https://unidocs-ukv1.onrender.com/auth/google"
+    }
     return <main className="home-container">
       <Nav />
       <div className="home-con md:pt-20 bg-gradient-to-b from-purple-700 to-black">
         <div className="box1">
           <div className="header-img"></div>
           <h1 className="mb-3 text-center w-3/4">Get to work, with a lot less work</h1>
-          <h4 className="mb-4 text-center">
+          <h4 className="mb-4 text-center w-[90%] md:w-full">
             Unidocs delivers tools that help you move your work forward faster,
             keep it safe, and let you collaborate with ease.
           </h4>
-          <div className="mt-4">
+          <div className="my-4">
             <div className="flex flex-col items-center justify-center w-full">
-            <button className="signin hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-xl">
+            <button className="signin hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-xl" onClick={handleSignin}>
               Sign In <FaArrowRight className="ms-2" />
             </button>
-            <p className="text-center color">Lets Get Started</p>
             </div>
           </div>
         </div>

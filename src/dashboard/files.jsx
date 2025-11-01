@@ -52,41 +52,25 @@ datasets: [{
   }
 };
   return (
-    <div className="w-flex flex-col mb-5">
-      <section className="flex flex-col w-full items-center justify-center p-1 h-full scroll-smooth m-0">
+    <div className="w-flex flex-col">
+      <section className="flex flex-col w-full items-center justify-center">
       <Dash/>
       <TaskFunction/>
       </section>
 
-      <section className="home-containers flex mb-5 p-4">
-      <div className="test">
-        <div className="cng-con">
-        </div>
-        <div className="fil-con">
+      <section className="flex flex-col md:flex-row py-5 justify-around">
 
-        <div className="fil fill-cont p-2 bg-gradient-to-b from-black to-purple-950">
-          <TopFile onFileCountUpdate={setFileCount}/>
+        <div className="h-[20em] md:w-[25em] rounded-lg p-2 bg-gradient-to-b from-black to-purple-950">
+          <TopFile onFileCountUpdate={setFileCount}/>        
         </div>
         
-        </div>
-        
-      </div>
-
-      <div className="test">
-        <div className="fil-con">
-        <div className="fil fill-cont p-2 bg-gradient-to-b from-black to-purple-950">
+        <div className="h-[20em] md:w-[25em] rounded-lg p-2 bg-gradient-to-b from-black to-purple-950">
           <TopFolder onFolderCount={setFolderCount}/>
         </div>
-        </div>
         
-      </div>
 
-      <div className="test">
-        <div className="fil-con">
-        <div className="fil fill-cont bg-gradient-to-b from-black to-purple-950">
+        <div className="h-[20em] md:w-[25em] rounded-lg bg-gradient-to-b from-black to-purple-950">
           <Doughnut data={data} options={options}/>
-        </div>
-        </div>
       </div>
       </section>
     </div>
