@@ -111,9 +111,11 @@ export default function AllDocuments({setFrameData}){
 
         </section>
 
-        <section className="bg-gray-200/20 mt-5 mb-20 h-100 w-full z-10 overflow-y-auto pb-40">
-            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full">
-                <thead className="flex justify-around w-full border border-solid border-purple-900 fixed">
+        <section className="bg-gray-200/20 mt-5 h-100 w-full z-10 overflow-y-auto pb-40">
+
+        
+            <table className="flex flex-col justify-around gap-0 items-center text-black relative h-full w-[50em] md:w-full mb-20">
+                <thead className="flex justify-around w-full border-1 border-solid border-purple-900">
                     <tr className="flex w-full py-5 mb-0 justify-around">
                     <th className="w-[5em] text-end">Title</th>
                     <th className="w-[5em] text-end">Descr</th>
@@ -127,7 +129,7 @@ export default function AllDocuments({setFrameData}){
                 <tbody className="text-black w-full flex flex-col gap-0 h-full">
                 {
                 files.map((docs)=>(
-                    <tr key={docs.id} className="flex w-full justify-around py-5 pb-5 border border-solid border-purple-900" >
+                    <tr key={docs.id} className="flex w-full justify-around py-5 pb-5 border-1 border-solid border-purple-900" >
                         <td className="text-left text-purple-800 text-base md:text-xl font-medium w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.filename}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis border-solid">{docs.metadata}</td>
                         <td className="text-left w-[5em] whitespace-nowrap overflow-hidden text-ellipsis">{docs.folder_name||"Nil"}</td>
@@ -139,6 +141,8 @@ export default function AllDocuments({setFrameData}){
                 ))}
                 </tbody>
             </table>
+
+
             {hoverState && <div onMouseOut={handleMouseOut} onMouseOver={handleMouseOver2} className="w-max absolute z-60" style={{
                 top:hoverPosition.top+20,
                 left:hoverPosition.left-50,

@@ -58,18 +58,18 @@ datasets: [{
       <TaskFunction/>
       </section>
 
-      <section className="flex flex-col md:flex-row py-5 justify-around">
+      <section className="flex flex-col md:flex-row py-5 px-4 md:px-0 justify-around gap-5">
 
-        <div className="h-[20em] md:w-[25em] rounded-lg p-2 bg-gradient-to-b from-black to-purple-950">
+        <div className="h-[20em] md:w-[20em] rounded-lg p-2 bg-gradient-to-b from-black to-purple-950">
           <TopFile onFileCountUpdate={setFileCount}/>        
         </div>
         
-        <div className="h-[20em] md:w-[25em] rounded-lg p-2 bg-gradient-to-b from-black to-purple-950">
+        <div className="h-[20em]   md:w-[20em] rounded-lg p-2 bg-gradient-to-b from-black to-purple-950">
           <TopFolder onFolderCount={setFolderCount}/>
         </div>
         
 
-        <div className="h-[20em] md:w-[25em] rounded-lg bg-gradient-to-b from-black to-purple-950">
+        <div className="h-[20em] md:w-[20em] rounded-lg bg-gradient-to-b from-black to-purple-950">
           <Doughnut data={data} options={options}/>
       </div>
       </section>
